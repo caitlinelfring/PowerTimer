@@ -11,12 +11,17 @@ import UIKit
 class ViewController: UIViewController, TimerDelegate {
   let timerLabel = TimerLabel()
   let timer = CountUpTimer()
-  let startStopBtn = Button(color: .green)
-  let resetBtn = Button(color: .red)
-
+  let startStopBtn = Button(color: Colors.green)
 
   override func viewDidLoad() {
     super.viewDidLoad()
+
+    self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+    self.navigationController?.navigationBar.shadowImage = UIImage()
+    self.navigationController?.navigationBar.isTranslucent = true
+    self.navigationController?.view.backgroundColor = UIColor.clear
+    self.navigationController?.navigationBar.tintColor = .white
+    self.navigationController?.setNavigationBarHidden(true, animated: false)
 
     self.view.backgroundColor = .black
     self.timer.delegate = self
@@ -29,27 +34,26 @@ class ViewController: UIViewController, TimerDelegate {
     self.startStopBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
     self.startStopBtn.addTarget(self, action: #selector(self.startStopBtnTapped), for: .touchUpInside)
 
-    self.resetBtn.isHidden = true
-    self.resetBtn.label.text = "Reset"
-    self.view.addSubview(self.resetBtn)
-    self.resetBtn.translatesAutoresizingMaskIntoConstraints = false
-    self.resetBtn.bottomAnchor.constraint(equalTo: self.startStopBtn.topAnchor, constant: -10).isActive = true
-    self.resetBtn.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.8).isActive = true
-    self.resetBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-    self.resetBtn.addTarget(self, action: #selector(self.resetBtnTapped), for: .touchUpInside)
-
     self.timerLabel.textAlignment = .center
     self.view.addSubview(self.timerLabel)
     self.timerLabel.translatesAutoresizingMaskIntoConstraints = false
     self.timerLabel.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
     self.timerLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
     self.timerLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+
+    let reset = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(self.resetBtnTapped))
+    self.navigationItem.rightBarButtonItem = reset
+  }
+
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+
   }
 
   @objc private func resetBtnTapped(sender: Button) {
     print(#function)
     self.timer.reset()
-    self.resetBtn.isHidden = true
+    self.navigationController?.setNavigationBarHidden(true, animated: true)
   }
   @objc private func startStopBtnTapped(sender: Button) {
     print(#function)
@@ -69,16 +73,16 @@ class ViewController: UIViewController, TimerDelegate {
     print(#function)
     self.timerLabel.textColor = .orange
     self.startStopBtn.label.text = "Start"
-    self.startStopBtn.set(color: .green)
-    self.resetBtn.isHidden = false
+    self.startStopBtn.set(color: Colors.green)
+    self.navigationController?.setNavigationBarHidden(false, animated: true)
   }
 
   func onStart() {
     print(#function)
     self.timerLabel.textColor = .green
-    self.resetBtn.isHidden = true
+    self.navigationController?.setNavigationBarHidden(true, animated: true)
     self.startStopBtn.label.text = "Pause"
-    self.startStopBtn.set(color: .yellow)
+    self.startStopBtn.set(color: Colors.orange)
   }
 
   func onReset() {
