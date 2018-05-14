@@ -111,6 +111,8 @@ extension ViewController: TimerDelegate {
     print(#function, seconds)
     if self.restTimerView.timer.isActive {
       self.timerLabel.soften()
+    } else {
+      self.timerLabel.reset()
     }
     self.timerLabel.setTime(seconds: seconds)
   }
@@ -157,6 +159,18 @@ class TimerLabel: UILabel {
   var labelFont: UIFont! = Constants.font
   var labelTextColor: UIColor = Constants.textColor
 
+  private var currentText = "00:00" {
+    didSet {
+      let attributes: [NSAttributedStringKey: Any] = [
+        NSAttributedStringKey.kern: 5,
+        NSAttributedStringKey.font: self.labelFont,
+        NSAttributedStringKey.foregroundColor: self.labelTextColor,
+      ]
+      let attributedText = NSAttributedString(string: self.currentText, attributes: attributes)
+      self.attributedText = attributedText
+    }
+  }
+
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.adjustsFontSizeToFitWidth = true
@@ -166,14 +180,7 @@ class TimerLabel: UILabel {
   func setTime(seconds: Int) {
     let minutesValue =  seconds % (1000 * 60) / 60
     let secondsValue = seconds % 60
-    let time = String(format: "%02d:%02d", minutesValue, secondsValue)
-    let attributes: [NSAttributedStringKey: Any] = [
-      NSAttributedStringKey.kern: 5,
-      NSAttributedStringKey.font: self.labelFont,
-      NSAttributedStringKey.foregroundColor: self.labelTextColor,
-    ]
-    let attributedText = NSAttributedString(string: time, attributes: attributes)
-    self.attributedText = attributedText
+    self.currentText = String(format: "%02d:%02d", minutesValue, secondsValue)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -181,13 +188,21 @@ class TimerLabel: UILabel {
   }
 
   func soften() {
-    self.labelFont = Constants.font.withSize(Constants.font.pointSize - 6)
-    self.labelTextColor = .gray
+    UIView.animate(withDuration: 1) {
+      self.labelFont = Constants.font.withSize(Constants.font.pointSize - 6)
+      self.labelTextColor = .gray
+      let text = self.currentText
+      self.currentText = text
+    }
   }
 
   func reset() {
-    self.labelFont = Constants.font
-    self.labelTextColor = Constants.textColor
+    UIView.animate(withDuration: 1) {
+      self.labelFont = Constants.font
+      self.labelTextColor = Constants.textColor
+      let text = self.currentText
+      self.currentText = text
+    }
   }
 }
 
