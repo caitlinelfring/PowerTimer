@@ -70,7 +70,7 @@ class SettingsViewController: UIViewController {
     self.view.backgroundColor = .white
 
     let close = UIButton(type: .custom)
-    close.setTitle("X", for: .normal)
+    close.setTitle("x", for: .normal) // TODO: Better close button
     close.titleLabel?.textAlignment = .center
     close.setTitleColor(.black, for: .normal)
     close.addTarget(self, action: #selector(self.close), for: .touchUpInside)

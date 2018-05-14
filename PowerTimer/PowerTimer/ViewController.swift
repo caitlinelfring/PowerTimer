@@ -47,32 +47,18 @@ class ViewController: UIViewController {
     self.startStopBtn.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
     self.startStopBtn.addTarget(self, action: #selector(self.startStopBtnTapped), for: .touchUpInside)
 
-    self.timerLabel.textAlignment = .center
+    self.timerLabel.timerTextLabel.text = "Total Time"
     self.view.addSubview(self.timerLabel)
     self.timerLabel.translatesAutoresizingMaskIntoConstraints = false
     self.timerLabel.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
     self.timerLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-    self.timerLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
-
-    let timerTextLabel = UILabel()
-    timerTextLabel.text = "Total Time"
-    timerTextLabel.textColor = .white
-    timerTextLabel.textAlignment = .center
-    timerTextLabel.font = UIFont.systemFont(ofSize: 20)
-    timerTextLabel.adjustsFontSizeToFitWidth = true
-    self.view.addSubview(timerTextLabel)
-    timerTextLabel.translatesAutoresizingMaskIntoConstraints = false
-    timerTextLabel.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
-    timerTextLabel.topAnchor.constraint(equalTo: self.timerLabel.bottomAnchor).isActive = true
-    timerTextLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+    self.timerLabel.topAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
 
     self.view.addSubview(self.restTimerView)
     self.restTimerView.translatesAutoresizingMaskIntoConstraints = false
     self.restTimerView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
     self.restTimerView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-    var navHeight = self.navigationController?.navigationBar.bounds.height ?? 0
-    navHeight += UIApplication.shared.statusBarFrame.height
-    self.restTimerView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: navHeight).isActive = true
+    self.restTimerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
 
     let reset = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(self.resetBtnTapped))
     self.navigationItem.rightBarButtonItem = reset
@@ -134,7 +120,7 @@ extension ViewController: TimerDelegate {
 
   func onPaused() {
     print(#function)
-    self.timerLabel.textColor = .orange
+    self.timerLabel.labelTextColor = .orange
     self.startStopBtn.label.text = "Start"
     self.startStopBtn.set(color: Colors.green)
     self.setIdleTimer(enabled: true)
@@ -146,7 +132,7 @@ extension ViewController: TimerDelegate {
 
   func onStart() {
     print(#function)
-    self.timerLabel.textColor = .white
+    self.timerLabel.labelTextColor = .white
     self.startStopBtn.label.text = "Pause"
     self.startStopBtn.set(color: Colors.orange)
     self.setIdleTimer(enabled: false)
@@ -155,7 +141,7 @@ extension ViewController: TimerDelegate {
 
   func onReset() {
     print(#function)
-    self.timerLabel.textColor = .white
+    self.timerLabel.labelTextColor = .white
     self.timerLabel.setTime(seconds: 0)
     self.setIdleTimer(enabled: true)
     self.restTimerView.timerLabel.soften()
@@ -165,14 +151,20 @@ extension ViewController: TimerDelegate {
   }
 }
 
-class TimerLabel: UILabel {
+class TimerLabel: UIView {
 
   class Constants {
     static let font = UIFont(name: "HelveticaNeue-Medium", size: UIScreen.main.bounds.width * 0.2)!
     static let textColor: UIColor = .white
   }
   var labelFont: UIFont! = Constants.font
-  var labelTextColor: UIColor = Constants.textColor
+  var labelTextColor: UIColor = Constants.textColor {
+    didSet {
+      self.timerTextLabel.textColor = self.labelTextColor
+    }
+  }
+  let timerLabel = UILabel()
+  let timerTextLabel = UILabel()
 
   private var currentText = "00:00" {
     didSet {
@@ -182,14 +174,31 @@ class TimerLabel: UILabel {
         NSAttributedStringKey.foregroundColor: self.labelTextColor,
       ]
       let attributedText = NSAttributedString(string: self.currentText, attributes: attributes)
-      self.attributedText = attributedText
+      self.timerLabel.attributedText = attributedText
     }
   }
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-    self.adjustsFontSizeToFitWidth = true
+    self.timerLabel.adjustsFontSizeToFitWidth = true
+    self.timerLabel.textAlignment = .center
+    self.addSubview(self.timerLabel)
+    self.timerLabel.translatesAutoresizingMaskIntoConstraints = false
+    self.timerLabel.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+    self.timerLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+    self.timerLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
     self.setTime(seconds: 0)
+
+    self.timerTextLabel.textColor = .white
+    self.timerTextLabel.textAlignment = .center
+    self.timerTextLabel.font = UIFont.systemFont(ofSize: 20)
+    self.timerTextLabel.adjustsFontSizeToFitWidth = true
+    self.addSubview(self.timerTextLabel)
+    self.timerTextLabel.translatesAutoresizingMaskIntoConstraints = false
+    self.timerTextLabel.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
+    self.timerTextLabel.topAnchor.constraint(equalTo: self.timerLabel.bottomAnchor).isActive = true
+    self.timerTextLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+    self.timerTextLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
   }
 
   func setTime(seconds: Int) {

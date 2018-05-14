@@ -20,8 +20,6 @@ class RestTimerView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.timer.delegate = self
-
-    self.timerLabel.textAlignment = .center
     self.addSubview(self.timerLabel)
     self.timerLabel.translatesAutoresizingMaskIntoConstraints = false
     self.timerLabel.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
@@ -32,18 +30,7 @@ class RestTimerView: UIView {
 
     self.timerLabel.soften()
     self.timerLabel.setTime(seconds: 0)
-
-    let timerTextLabel = UILabel()
-    timerTextLabel.text = "Rest Time"
-    timerTextLabel.textColor = .white
-    timerTextLabel.textAlignment = .center
-    timerTextLabel.font = UIFont.systemFont(ofSize: 16)
-    timerTextLabel.adjustsFontSizeToFitWidth = true
-    self.addSubview(timerTextLabel)
-    timerTextLabel.translatesAutoresizingMaskIntoConstraints = false
-    timerTextLabel.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
-    timerTextLabel.topAnchor.constraint(equalTo: self.timerLabel.bottomAnchor).isActive = true
-    timerTextLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+    self.timerLabel.timerTextLabel.text = "Rest Time"
 
     self.tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.startTap))
     self.addGestureRecognizer(self.tapGestureRecognizer)
@@ -81,7 +68,7 @@ extension RestTimerView: TimerDelegate {
     if seconds >= restTimerSeconds {
       textColor = .red
     }
-    self.timerLabel.textColor = textColor
+    self.timerLabel.labelTextColor = textColor
   }
 
   func onPaused() {
