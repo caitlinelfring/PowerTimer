@@ -55,25 +55,32 @@ class ViewController: UIViewController {
     self.restTimerView.translatesAutoresizingMaskIntoConstraints = false
     self.restTimerView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
     self.restTimerView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-    let navHeight = self.navigationController?.navigationBar.bounds.height ?? 20
+    var navHeight = self.navigationController?.navigationBar.bounds.height ?? 0
+    navHeight += UIApplication.shared.statusBarFrame.height
     self.restTimerView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: navHeight).isActive = true
-    self.restTimerView.showRestTimerInput = { [weak self] (alert) in
-      self?.present(alert, animated: true, completion: nil)
-    }
 
     let reset = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(self.resetBtnTapped))
     self.navigationItem.rightBarButtonItem = reset
+
+    let settings = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(self.presentSettings))
+    self.navigationItem.leftBarButtonItem = settings
 
     self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
     self.navigationController?.navigationBar.shadowImage = UIImage()
     self.navigationController?.navigationBar.isTranslucent = true
     self.navigationController?.view.backgroundColor = UIColor.clear
     self.navigationController?.navigationBar.tintColor = .white
-    self.setNavigationBarHidden(true)
+    if Settings.ShowSettingsOnEachLaunch {
+      self.presentSettings()
+    }
   }
 
-  func setNavigationBarHidden(_ hidden: Bool, animated: Bool = true) {
-    self.navigationController?.setToolbarHidden(hidden, animated: animated)
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+  }
+
+  @objc private func presentSettings() {
+    UIApplication.shared.keyWindow?.rootViewController?.present(SettingsViewController(), animated: true, completion: nil)
   }
 
   func setIdleTimer(enabled: Bool) {
@@ -85,7 +92,6 @@ class ViewController: UIViewController {
     let alert = UIAlertController(title: "Are you sure you want to reset the timer?", message: nil, preferredStyle: .alert)
     alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: { _ in
       self.timer.reset()
-      self.setNavigationBarHidden(true)
     }))
     alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
     self.present(alert, animated: true, completion: nil)
@@ -111,18 +117,18 @@ extension ViewController: TimerDelegate {
     self.timerLabel.textColor = .orange
     self.startStopBtn.label.text = "Start"
     self.startStopBtn.set(color: Colors.green)
-    self.setNavigationBarHidden(false)
     self.setIdleTimer(enabled: true)
     self.restTimerView.timer.reset()
+    self.restTimerView.isEnabled = false
   }
 
   func onStart() {
     print(#function)
     self.timerLabel.textColor = .white
-    self.setNavigationBarHidden(true)
     self.startStopBtn.label.text = "Pause"
     self.startStopBtn.set(color: Colors.orange)
     self.setIdleTimer(enabled: false)
+    self.restTimerView.isEnabled = true
   }
 
   func onReset() {
@@ -131,6 +137,7 @@ extension ViewController: TimerDelegate {
     self.timerLabel.setTime(seconds: 0)
     self.setIdleTimer(enabled: true)
     self.restTimerView.timer.reset()
+    self.restTimerView.isEnabled = false
   }
 }
 
