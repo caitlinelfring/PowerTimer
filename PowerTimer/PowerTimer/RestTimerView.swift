@@ -15,11 +15,13 @@ class RestTimerView: UIView {
   let timer = CountUpTimer()
   var tapGestureRecognizer: UITapGestureRecognizer!
 
-  private let timerLabel = TimerLabel()
+  let timerLabel = TimerLabel()
 
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.timer.delegate = self
+    self.layer.borderColor = UIColor.white.cgColor
+    self.layer.borderWidth = 2
     self.timerLabel.textAlignment = .center
     self.addSubview(self.timerLabel)
     self.timerLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -28,6 +30,9 @@ class RestTimerView: UIView {
     self.timerLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     self.timerLabel.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
     self.isUserInteractionEnabled = true
+
+    self.timerLabel.soften()
+    self.timerLabel.setTime(seconds: 0)
 
     let timerTextLabel = UILabel()
     timerTextLabel.text = "Rest Time"
@@ -50,8 +55,10 @@ class RestTimerView: UIView {
       return
     }
     if self.timer.isActive {
+      self.timerLabel.soften()
       self.timer.reset()
     } else {
+      self.timerLabel.reset()
       self.timer.start()
     }
   }

@@ -110,6 +110,9 @@ extension ViewController: TimerDelegate {
   func onTimeChanged(seconds: Int) {
     print(#function, seconds)
     self.timerLabel.setTime(seconds: seconds)
+    if self.restTimerView.timer.isActive {
+      self.timerLabel.soften()
+    }
   }
 
   func onPaused() {
@@ -120,6 +123,8 @@ extension ViewController: TimerDelegate {
     self.setIdleTimer(enabled: true)
     self.restTimerView.timer.reset()
     self.restTimerView.isEnabled = false
+    self.restTimerView.timerLabel.soften()
+    self.timerLabel.reset()
   }
 
   func onStart() {
@@ -138,10 +143,19 @@ extension ViewController: TimerDelegate {
     self.setIdleTimer(enabled: true)
     self.restTimerView.timer.reset()
     self.restTimerView.isEnabled = false
+    self.restTimerView.timerLabel.soften()
+    self.timerLabel.reset()
   }
 }
 
 class TimerLabel: UILabel {
+
+  class Constants {
+    static let font = UIFont(name: "HelveticaNeue-Medium", size: UIScreen.main.bounds.width * 0.2)!
+    static let textColor: UIColor = .white
+  }
+  var labelFont: UIFont! = Constants.font
+  var labelTextColor: UIColor = Constants.textColor
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -155,8 +169,8 @@ class TimerLabel: UILabel {
     let time = String(format: "%02d:%02d", minutesValue, secondsValue)
     let attributes: [NSAttributedStringKey: Any] = [
       NSAttributedStringKey.kern: 5,
-      NSAttributedStringKey.font: UIFont(name: "HelveticaNeue-Medium", size: UIScreen.main.bounds.width * 0.2)!,
-      NSAttributedStringKey.foregroundColor: UIColor.white,
+      NSAttributedStringKey.font: self.labelFont,
+      NSAttributedStringKey.foregroundColor: self.labelTextColor,
     ]
     let attributedText = NSAttributedString(string: time, attributes: attributes)
     self.attributedText = attributedText
@@ -164,6 +178,16 @@ class TimerLabel: UILabel {
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  func soften() {
+    self.labelFont = Constants.font.withSize(Constants.font.pointSize - 6)
+    self.labelTextColor = .gray
+  }
+
+  func reset() {
+    self.labelFont = Constants.font
+    self.labelTextColor = Constants.textColor
   }
 }
 
