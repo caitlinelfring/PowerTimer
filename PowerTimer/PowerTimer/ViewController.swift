@@ -109,10 +109,10 @@ class ViewController: UIViewController {
 extension ViewController: TimerDelegate {
   func onTimeChanged(seconds: Int) {
     print(#function, seconds)
-    self.timerLabel.setTime(seconds: seconds)
     if self.restTimerView.timer.isActive {
       self.timerLabel.soften()
     }
+    self.timerLabel.setTime(seconds: seconds)
   }
 
   func onPaused() {
@@ -121,10 +121,10 @@ extension ViewController: TimerDelegate {
     self.startStopBtn.label.text = "Start"
     self.startStopBtn.set(color: Colors.green)
     self.setIdleTimer(enabled: true)
+    self.timerLabel.reset()
+    self.restTimerView.timerLabel.soften()
     self.restTimerView.timer.reset()
     self.restTimerView.isEnabled = false
-    self.restTimerView.timerLabel.soften()
-    self.timerLabel.reset()
   }
 
   func onStart() {
@@ -141,9 +141,9 @@ extension ViewController: TimerDelegate {
     self.timerLabel.textColor = .white
     self.timerLabel.setTime(seconds: 0)
     self.setIdleTimer(enabled: true)
+    self.restTimerView.timerLabel.soften()
     self.restTimerView.timer.reset()
     self.restTimerView.isEnabled = false
-    self.restTimerView.timerLabel.soften()
     self.timerLabel.reset()
   }
 }
