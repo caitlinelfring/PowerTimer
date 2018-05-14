@@ -41,6 +41,18 @@ class ViewController: UIViewController, TimerDelegate {
     self.timerLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
     self.timerLabel.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
 
+    let timerTextLabel = UILabel()
+    timerTextLabel.text = "Total Time"
+    timerTextLabel.textColor = .white
+    timerTextLabel.textAlignment = .center
+    timerTextLabel.font = UIFont.systemFont(ofSize: 20)
+    timerTextLabel.adjustsFontSizeToFitWidth = true
+    self.view.addSubview(timerTextLabel)
+    timerTextLabel.translatesAutoresizingMaskIntoConstraints = false
+    timerTextLabel.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
+    timerTextLabel.topAnchor.constraint(equalTo: self.timerLabel.bottomAnchor).isActive = true
+    timerTextLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+
     let reset = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(self.resetBtnTapped))
     self.navigationItem.rightBarButtonItem = reset
   }
@@ -97,9 +109,6 @@ class TimerLabel: UILabel {
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-
-    self.textColor = .white
-    self.font = UIFont.boldSystemFont(ofSize: UIScreen.main.bounds.width * 0.2)
     self.adjustsFontSizeToFitWidth = true
     self.setTime(seconds: 0)
   }
@@ -107,8 +116,16 @@ class TimerLabel: UILabel {
   func setTime(seconds: Int) {
     let minutesValue =  seconds % (1000 * 60) / 60
     let secondsValue = seconds % 60
-    self.text = String(format: "%02d:%02d", minutesValue, secondsValue)
+    let time = String(format: "%02d:%02d", minutesValue, secondsValue)
+    let attributes: [NSAttributedStringKey: Any] = [
+      NSAttributedStringKey.kern: 5,
+      NSAttributedStringKey.font: UIFont(name: "HelveticaNeue-Medium", size: UIScreen.main.bounds.width * 0.2)!,
+      NSAttributedStringKey.foregroundColor: UIColor.white,
+    ]
+    let attributedText = NSAttributedString(string: time, attributes: attributes)
+    self.attributedText = attributedText
   }
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
