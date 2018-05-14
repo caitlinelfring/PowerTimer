@@ -71,7 +71,7 @@ extension RestTimerView: TimerDelegate {
     print(#function, seconds)
     self.timerLabel.setTime(seconds: seconds)
     let totalRestSeconds = Settings.RestTimerMinutes * 60
-    self.timerLabel.textColor = seconds > totalRestSeconds ? Colors.red : .white
+    self.timerLabel.textColor = seconds > totalRestSeconds ? .red : .white
   }
 
   func onPaused() {

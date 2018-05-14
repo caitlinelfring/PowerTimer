@@ -52,6 +52,10 @@ class Settings {
 }
 
 class SettingsViewController: UIViewController {
+
+  override var preferredStatusBarStyle: UIStatusBarStyle {
+    return .default
+  }
   var pickerSet: [String] = {
     var set = [String]()
     for i in 1...10 {

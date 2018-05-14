@@ -12,6 +12,18 @@
 
 import UIKit
 
+// Since I'm not subclassing UINavigationController, this is the simplist way
+// to get the status bar styles working correctly in a navigation stack
+// https://stackoverflow.com/questions/19108513/uistatusbarstyle-preferredstatusbarstyle-does-not-work-on-ios-7
+extension UINavigationController {
+  open override var preferredStatusBarStyle: UIStatusBarStyle {
+    if let first = self.viewControllers.first {
+      return first.preferredStatusBarStyle
+    }
+    return super.preferredStatusBarStyle
+  }
+}
+
 class ViewController: UIViewController {
   let timerLabel = TimerLabel()
   let timer = CountUpTimer()
@@ -19,6 +31,9 @@ class ViewController: UIViewController {
   let restTimerView = RestTimerView()
   private var restTimerViewTopConstraint: NSLayoutConstraint!
 
+  override var preferredStatusBarStyle: UIStatusBarStyle {
+    return .lightContent
+  }
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = .black
