@@ -13,6 +13,7 @@
 		4870AFBA20A9B0E900DAB1C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4870AFB820A9B0E900DAB1C1 /* LaunchScreen.storyboard */; };
 		4870AFC220A9CBD200DAB1C1 /* Timers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4870AFC120A9CBD200DAB1C1 /* Timers.swift */; };
 		4870AFC420A9D52D00DAB1C1 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4870AFC320A9D52D00DAB1C1 /* Colors.swift */; };
+		4870AFC620A9E2A300DAB1C1 /* RestTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4870AFC520A9E2A300DAB1C1 /* RestTimerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		4870AFBB20A9B0E900DAB1C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4870AFC120A9CBD200DAB1C1 /* Timers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timers.swift; sourceTree = "<group>"; };
 		4870AFC320A9D52D00DAB1C1 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		4870AFC520A9E2A300DAB1C1 /* RestTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestTimerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +60,7 @@
 			children = (
 				4870AFAF20A9B0E800DAB1C1 /* AppDelegate.swift */,
 				4870AFB120A9B0E800DAB1C1 /* ViewController.swift */,
+				4870AFC520A9E2A300DAB1C1 /* RestTimerView.swift */,
 				4870AFB620A9B0E900DAB1C1 /* Assets.xcassets */,
 				4870AFB820A9B0E900DAB1C1 /* LaunchScreen.storyboard */,
 				4870AFBB20A9B0E900DAB1C1 /* Info.plist */,
@@ -138,6 +141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4870AFB220A9B0E800DAB1C1 /* ViewController.swift in Sources */,
+				4870AFC620A9E2A300DAB1C1 /* RestTimerView.swift in Sources */,
 				4870AFC420A9D52D00DAB1C1 /* Colors.swift in Sources */,
 				4870AFC220A9CBD200DAB1C1 /* Timers.swift in Sources */,
 				4870AFB020A9B0E800DAB1C1 /* AppDelegate.swift in Sources */,

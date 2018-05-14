@@ -20,6 +20,10 @@ class CountUpTimer {
   private var timer: Timer?
   weak var delegate: TimerDelegate?
 
+  var isActive: Bool {
+    return self.timer != nil
+  }
+
   func start() {
     if self.timer != nil {
       return
