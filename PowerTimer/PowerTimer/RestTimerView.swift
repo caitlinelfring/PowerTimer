@@ -70,8 +70,18 @@ extension RestTimerView: TimerDelegate {
   func onTimeChanged(seconds: Int) {
     print(#function, seconds)
     self.timerLabel.setTime(seconds: seconds)
-    let totalRestSeconds = Settings.RestTimerMinutes * 60
-    self.timerLabel.textColor = seconds > totalRestSeconds ? .red : .white
+    let restTimerSeconds = Settings.RestTimerMinutes * 60
+    var textColor: UIColor = .white
+
+    // Only use the warning label a minute before the restTimer is over
+    // if the restTimeOver is more than a minute
+    if restTimerSeconds >= 60 && seconds >= restTimerSeconds - 60 {
+      textColor = .orange
+    }
+    if seconds >= restTimerSeconds {
+      textColor = .red
+    }
+    self.timerLabel.textColor = textColor
   }
 
   func onPaused() {
