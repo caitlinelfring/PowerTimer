@@ -20,8 +20,7 @@ class RestTimerView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.timer.delegate = self
-    self.layer.borderColor = UIColor.white.cgColor
-    self.layer.borderWidth = 2
+
     self.timerLabel.textAlignment = .center
     self.addSubview(self.timerLabel)
     self.timerLabel.translatesAutoresizingMaskIntoConstraints = false
