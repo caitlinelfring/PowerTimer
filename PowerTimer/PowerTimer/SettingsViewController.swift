@@ -46,7 +46,7 @@ class Settings {
       UserDefaults.standard.set(value, forKey: "restTimerMinutes")
     }
     get {
-      return UserDefaults.standard.integer(forKey: "restTimerMinutes")
+      return UserDefaults.standard.value(forKey: "restTimerMinutes") as? Int ?? 1
     }
   }
 }
@@ -95,7 +95,6 @@ class SettingsViewController: UIViewController {
     stackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
     stackView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
     stackView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.9).isActive = true
-//    stackView.heightAnchor.constraint(equalTo: self.view.heightAnchor).isActive = true
   }
 
   private func restMinutesView() -> UIView {

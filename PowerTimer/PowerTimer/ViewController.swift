@@ -158,11 +158,8 @@ class TimerLabel: UIView {
     static let textColor: UIColor = .white
   }
   var labelFont: UIFont! = Constants.font
-  var labelTextColor: UIColor = Constants.textColor {
-    didSet {
-      self.timerTextLabel.textColor = self.labelTextColor
-    }
-  }
+  var labelTextColor: UIColor = Constants.textColor
+
   let timerLabel = UILabel()
   let timerTextLabel = UILabel()
 
@@ -211,22 +208,41 @@ class TimerLabel: UIView {
     fatalError("init(coder:) has not been implemented")
   }
 
+  func reset() {
+    self.animate(Constants.font, color: Constants.textColor)
+  }
   func soften() {
-    UIView.animate(withDuration: 1) {
-      self.labelFont = Constants.font.withSize(Constants.font.pointSize - 6)
-      self.labelTextColor = .gray
-      let text = self.currentText
-      self.currentText = text
-    }
+    self.animate(Constants.font.withSize(Constants.font.pointSize - 6), color: .gray)
   }
 
-  func reset() {
-    UIView.animate(withDuration: 1) {
-      self.labelFont = Constants.font
-      self.labelTextColor = Constants.textColor
-      let text = self.currentText
-      self.currentText = text
+  func animate(_ font: UIFont, color: UIColor) {
+    let duration: TimeInterval = 0.25
+    let oldFont = self.timerLabel.font
+    self.timerLabel.font = font
+    let labelScale = oldFont!.pointSize / font.pointSize
+    let oldTransform = self.timerLabel.transform
+    self.timerLabel.transform = self.timerLabel.transform.scaledBy(x: labelScale, y: labelScale)
+    self.timerLabel.setNeedsUpdateConstraints()
+
+    UIView.animate(withDuration: duration) {
+      self.timerLabel.transform = oldTransform
+      self.timerLabel.layoutIfNeeded()
     }
+
+    UIView.transition(with: self, duration: 0.25,
+                      options: .transitionCrossDissolve,
+                      animations: {
+                        self.labelTextColor = color
+                        self.labelFont = font
+                        let attributes: [NSAttributedStringKey: Any] = [
+                          NSAttributedStringKey.kern: 5,
+                          NSAttributedStringKey.foregroundColor: self.labelTextColor,
+                        ]
+                        let attributedText = NSAttributedString(string: self.currentText, attributes: attributes)
+                        self.timerLabel.attributedText = attributedText
+                        self.timerTextLabel.textColor = self.labelTextColor
+
+    })
   }
 }
 
