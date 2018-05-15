@@ -154,7 +154,14 @@ extension ViewController: TimerDelegate {
 class TimerLabel: UIView {
 
   class Constants {
-    static let font = UIFont(name: "HelveticaNeue-Medium", size: UIScreen.main.bounds.width * 0.2)!
+    static var font: UIFont {
+      let bounds = UIScreen.main.bounds
+      var fontSize = bounds.width * 0.2
+      if bounds.width > bounds.height {
+        fontSize = bounds.height * 0.2
+      }
+      return  UIFont(name: "HelveticaNeue-Medium", size: fontSize)!
+    }
     static let textColor: UIColor = .white
   }
   var labelFont: UIFont! = Constants.font
@@ -248,7 +255,12 @@ class TimerLabel: UIView {
 
 class Button: UIButton {
   static var height: CGFloat {
-    return min(55, UIScreen.main.bounds.height * 0.075)
+    let bounds = UIScreen.main.bounds
+    var base = bounds.height
+    if bounds.width > bounds.height {
+      base = bounds.width
+    }
+    return min(55, base * 0.075)
   }
 
   fileprivate var label = UILabel()
