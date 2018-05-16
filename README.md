@@ -25,7 +25,7 @@ The best part is, **you can continue to keep the time of your entire workout!**
 - [ ] Move rest minute setting into main VC
 - [ ] Add CountDown timer
 - [ ] Fix launch screen
-- [ ] Set max time for countUp timer
+- [x] Set max time for countUp timer
 - [x] Add intro tooltips
 
 ### Nice to haves

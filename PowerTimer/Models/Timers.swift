@@ -38,6 +38,8 @@ class CountUpTimer {
   private var timer: Timer?
   weak var delegate: TimerDelegate?
 
+  private let maxSecond: Int = 90 * 60
+
   var isActive: Bool {
     return self.timer != nil
   }
@@ -49,6 +51,9 @@ class CountUpTimer {
     self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
       self.currentSeconds += 1
       self.delegate?.onTimeChanged(seconds: self.currentSeconds)
+      if self.currentSeconds > self.maxSecond {
+        self.pause()
+      }
     })
     self.delegate?.onStart()
   }
