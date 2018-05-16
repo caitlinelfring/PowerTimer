@@ -86,6 +86,10 @@ class ViewController: UIViewController {
 
   @objc private func resetBtnTapped(sender: Button) {
     print(#function)
+    if !self.timer.isActive {
+      self.timer.reset()
+      return
+    }
     let alert = UIAlertController(title: "Are you sure you want to reset the timer?", message: nil, preferredStyle: .alert)
     alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: { _ in
       self.timer.reset()
