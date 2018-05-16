@@ -8,6 +8,20 @@
 
 import Foundation
 
+enum TimerType: Int {
+  case countUp
+  case countDown // TODO: Not implemented
+
+  var description: String {
+    switch self {
+    case .countUp:
+      return "Up"
+    case .countDown:
+      return "Down"
+    }
+  }
+}
+
 protocol TimerDelegate: class {
   func onTimeChanged(seconds: Int)
   func onPaused()

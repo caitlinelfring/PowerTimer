@@ -9,51 +9,11 @@
 import Foundation
 import UIKit
 
-enum TimerType: Int {
-  case countUp
-  case countDown
-
-  var description: String {
-    switch self {
-    case .countUp:
-      return "Up"
-    case .countDown:
-      return "Down"
-    }
-  }
-}
-class Settings {
-  static var SavedTimerType: TimerType {
-    set(value) {
-      UserDefaults.standard.set(value.rawValue, forKey: "timerType")
-    }
-    get {
-      return TimerType(rawValue: UserDefaults.standard.integer(forKey: "timerType")) ?? TimerType.countUp
-    }
-  }
-
-  static var RestTimerMinutes: Int {
-    set(value) {
-      UserDefaults.standard.set(value, forKey: "restTimerMinutes")
-    }
-    get {
-      return UserDefaults.standard.value(forKey: "restTimerMinutes") as? Int ?? 1
-    }
-  }
-}
-
 class SettingsViewController: UIViewController {
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .default
   }
-  var pickerSet: [String] = {
-    var set = [String]()
-    for i in 1...10 {
-      set.append(String(i))
-    }
-    return set
-  }()
 
   override func viewDidLoad() {
     super.viewDidLoad()
