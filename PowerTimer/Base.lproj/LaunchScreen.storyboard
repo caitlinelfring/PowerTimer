@@ -19,21 +19,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="PowerTimer" textAlignment="natural" lineBreakMode="tailTruncation" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="fjg-Jr-udt">
-                                <rect key="frame" x="54" y="328" width="305" height="78.333333333333314"/>
+                                <rect key="frame" x="53.666666666666657" y="327.66666666666669" width="306" height="79.333333333333314"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="55"/>
                                 <color key="textColor" red="1" green="0.40110265618660168" blue="0.92759935767689339" alpha="0.45067671650000002" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                                 <color key="shadowColor" red="0.34293374728687487" green="0.25001040038430855" blue="1" alpha="0.45067671650000002" colorSpace="custom" customColorSpace="sRGB"/>
-                                <size key="shadowOffset" width="3" height="3"/>
+                                <size key="shadowOffset" width="4" height="4"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JEddie, LLC" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="kik-2A-xeH">
                                 <rect key="frame" x="170.66666666666666" y="677.33333333333337" width="73" height="18.666666666666629"/>
                                 <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="0.4673678682883875" green="0.57115006661155632" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.55986261817516136" green="1" blue="0.77149071706690164" alpha="0.45067671654929575" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.78946011329844246" green="1" blue="0.83735316362771495" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="kik-2A-xeH" secondAttribute="bottom" constant="40" id="7hV-MU-RSs"/>
                             <constraint firstItem="fjg-Jr-udt" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="K7H-1H-EGz"/>
