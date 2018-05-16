@@ -27,6 +27,10 @@ class ViewController: UIViewController {
   let totalTimerView = TotalTimerView()
   let restTimerView = RestTimerView()
 
+  let playButton = PlayButton()
+  let pauseButton = PauseButton()
+  let refreshButton = RefreshButton()
+
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
   }
@@ -44,18 +48,18 @@ class ViewController: UIViewController {
     let topLayoutGuide = UILayoutGuide()
     self.view.addLayoutGuide(topLayoutGuide)
     topLayoutGuide.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
-    topLayoutGuide.bottomAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+    topLayoutGuide.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor).isActive = true
 
     let bottomLayoutGuide = UILayoutGuide()
     self.view.addLayoutGuide(bottomLayoutGuide)
-    bottomLayoutGuide.topAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
+    bottomLayoutGuide.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true
     bottomLayoutGuide.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
 
     self.view.addSubview(self.restTimerView)
     self.restTimerView.translatesAutoresizingMaskIntoConstraints = false
     self.restTimerView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
     self.restTimerView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-    self.restTimerView.centerYAnchor.constraint(equalTo: topLayoutGuide.centerYAnchor).isActive = true
+    self.restTimerView.centerYAnchor.constraint(equalTo: topLayoutGuide.centerYAnchor, constant: -UIScreen.main.bounds.height / 8).isActive = true
     self.restTimerView.onTimerStart = { [weak self] in
       self?.totalTimerView.timerView.soften()
     }
@@ -67,26 +71,44 @@ class ViewController: UIViewController {
     self.totalTimerView.translatesAutoresizingMaskIntoConstraints = false
     self.totalTimerView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
     self.totalTimerView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-    self.totalTimerView.topAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor).isActive = true
-
-    self.totalTimerView.resetTimerRequested = self.resetTimers
+    self.totalTimerView.centerYAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor).isActive = true
     self.totalTimerView.onTimerReset = { [weak self] in
       guard let strongSelf = self else { return }
       strongSelf.keepScreenFromLocking(false)
       strongSelf.restTimerView.isEnabled = false
       strongSelf.restTimerView.timer.reset()
+      strongSelf.updateButtonStates()
     }
     self.totalTimerView.onTimerStart = { [weak self] in
       guard let strongSelf = self else { return }
       strongSelf.keepScreenFromLocking(true)
       strongSelf.restTimerView.isEnabled = true
+      strongSelf.updateButtonStates()
     }
     self.totalTimerView.onTimerPaused = { [weak self] in
       guard let strongSelf = self else { return }
       strongSelf.keepScreenFromLocking(false)
       strongSelf.restTimerView.isEnabled = false
       strongSelf.restTimerView.timer.reset()
+      strongSelf.updateButtonStates()
     }
+
+    let buttonStack = UIStackView()
+    buttonStack.spacing = 10
+    self.view.addSubview(buttonStack)
+    buttonStack.translatesAutoresizingMaskIntoConstraints = false
+    buttonStack.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+    buttonStack.topAnchor.constraint(equalTo: self.totalTimerView.bottomAnchor, constant: 25).isActive = true
+    buttonStack.heightAnchor.constraint(equalToConstant: 50).isActive = true
+    buttonStack.addArrangedSubview(self.playButton)
+    buttonStack.addArrangedSubview(self.pauseButton)
+    buttonStack.addArrangedSubview(self.refreshButton)
+
+    self.playButton.addTarget(self, action: #selector(self.startBtnTapped), for: .touchUpInside)
+    self.pauseButton.addTarget(self, action: #selector(self.pauseBtnTapped), for: .touchUpInside)
+    self.refreshButton.addTarget(self, action: #selector(self.resetBtnTapped), for: .touchUpInside)
+
+    self.updateButtonStates()
 
     let settings = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(self.presentSettings))
     self.navigationItem.rightBarButtonItem = settings
@@ -94,6 +116,29 @@ class ViewController: UIViewController {
 
   override func viewWillAppear(_ animated: Bool) {
     self.navigationController?.navigationBar.tintColor = .white
+  }
+
+  func updateButtonStates() {
+    self.playButton.isHidden = self.totalTimerView.timer.isActive
+    self.pauseButton.isHidden = !self.playButton.isHidden
+  }
+
+  @objc private func startBtnTapped(sender: ImageButton) {
+    print(#function)
+    self.totalTimerView.timer.start()
+    self.updateButtonStates()
+  }
+
+  @objc private func pauseBtnTapped(sender: ImageButton) {
+    print(#function)
+    self.totalTimerView.timer.pause()
+    self.updateButtonStates()
+  }
+
+  @objc private func resetBtnTapped(sender: ImageButton) {
+    print(#function)
+    self.resetTimers()
+    self.updateButtonStates()
   }
 
   @objc private func presentSettings() {

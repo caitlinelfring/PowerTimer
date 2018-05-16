@@ -57,8 +57,8 @@ class TimerView: UIView {
     self.addSubview(self.label)
     self.label.translatesAutoresizingMaskIntoConstraints = false
     self.label.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
-    self.label.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
     self.label.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+    self.label.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     self.setTime(seconds: 0)
 
     self.textLabel.textColor = .white
@@ -88,16 +88,16 @@ class TimerView: UIView {
 
   func enlarge() {
     if label.font != Constants.Active.font {
-      self.animate(Constants.Active.font, color: Constants.Active.textColor)
+      self.animateTo(font: Constants.Active.font, color: Constants.Active.textColor)
     }
   }
   func soften() {
     if self.label.font != Constants.Inactive.font {
-      self.animate(Constants.Inactive.font, color: Constants.Inactive.textColor)
+      self.animateTo(font: Constants.Inactive.font, color: Constants.Inactive.textColor)
     }
   }
 
-  func animate(_ font: UIFont, color: UIColor) {
+  func animateTo(font: UIFont, color: UIColor) {
     let duration: TimeInterval = 0.5
     let oldFont = self.label.font
     self.label.font = font
@@ -109,7 +109,9 @@ class TimerView: UIView {
       self.label.transform = .identity
       self.label.textColor = color
       self.layoutIfNeeded()
+      // So all the views that are around this view animate too
+      self.superview?.layoutIfNeeded()
+      self.superview?.superview?.layoutIfNeeded()
     })
-
   }
 }
