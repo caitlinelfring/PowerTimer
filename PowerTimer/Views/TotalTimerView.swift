@@ -31,7 +31,7 @@ class TotalTimerView: TimerActions {
     self.addSubview(self.timerView)
     self.timerView.translatesAutoresizingMaskIntoConstraints = false
     self.timerView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
-    self.timerView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+    self.timerView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     self.timerView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
 
     self.timerView.enlarge()
@@ -43,7 +43,7 @@ class TotalTimerView: TimerActions {
     self.addSubview(buttonStack)
     buttonStack.translatesAutoresizingMaskIntoConstraints = false
     buttonStack.centerXAnchor.constraint(equalTo: self.timerView.centerXAnchor).isActive = true
-    buttonStack.topAnchor.constraint(equalTo: self.timerView.bottomAnchor, constant: 15).isActive = true
+    buttonStack.topAnchor.constraint(equalTo: self.timerView.bottomAnchor, constant: 25).isActive = true
     buttonStack.heightAnchor.constraint(equalToConstant: 50).isActive = true
     buttonStack.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
 //    buttonStack.widthAnchor.constraint(equalToConstant: 50*2+buttonStack.spacing).isActive = true

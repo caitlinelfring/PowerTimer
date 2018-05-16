@@ -12,21 +12,31 @@ import UIKit
 class TimerView: UIView {
 
   class Constants {
-    static var font: UIFont {
-      let bounds = UIScreen.main.bounds
-      var fontSize = bounds.width * 0.25
-      if bounds.width > bounds.height {
-        fontSize = bounds.height * 0.25
+    class Active {
+      static var font: UIFont {
+        let bounds = UIScreen.main.bounds
+        var fontSize = bounds.width * 0.25
+        if bounds.width > bounds.height {
+          fontSize = bounds.height * 0.25
+        }
+        return  UIFont(name: "HelveticaNeue-Medium", size: fontSize)!
       }
-      return  UIFont(name: "HelveticaNeue-Medium", size: fontSize)!
+      static let textColor: UIColor = .white
     }
-    static let textColor: UIColor = .white
+
+    class Inactive {
+      static var font: UIFont {
+        return Constants.Active.font.withSize(Constants.Active.font.pointSize - 20)
+      }
+
+      static let textColor: UIColor = .gray
+    }
   }
 
   let label = UILabel()
   let textLabel = UILabel()
 
-  var color: UIColor = Constants.textColor {
+  var color: UIColor = Constants.Active.textColor {
     didSet {
       self.label.textColor = self.color
       self.textLabel.textColor = self.color
@@ -62,8 +72,8 @@ class TimerView: UIView {
     self.textLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
     self.textLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
 
-    self.label.font = Constants.font
-    self.label.textColor = Constants.textColor
+    self.label.font = Constants.Active.font
+    self.label.textColor = Constants.Active.textColor
   }
 
   func setTime(seconds: Int) {
@@ -77,34 +87,30 @@ class TimerView: UIView {
   }
 
   func enlarge() {
-    if label.font != Constants.font {
-      self.animate(Constants.font, color: .white)
+    if label.font != Constants.Active.font {
+      self.animate(Constants.Active.font, color: Constants.Active.textColor)
     }
   }
   func soften() {
-    let newFont = Constants.font.withSize(Constants.font.pointSize - 20)
-    if self.label.font != newFont {
-      self.animate(newFont, color: .gray)
+    if self.label.font != Constants.Inactive.font {
+      self.animate(Constants.Inactive.font, color: Constants.Inactive.textColor)
     }
   }
 
   func animate(_ font: UIFont, color: UIColor) {
-    let duration: TimeInterval = 0.25
-
+    let duration: TimeInterval = 0.5
     let oldFont = self.label.font
     self.label.font = font
     let labelScale = oldFont!.pointSize / font.pointSize
-    let oldTransform = self.label.transform
-    self.label.transform = self.label.transform.scaledBy(x: labelScale, y: labelScale)
 
-    self.setNeedsUpdateConstraints()
-    self.superview?.setNeedsUpdateConstraints()
-    UIView.animate(withDuration: duration) {
+    self.label.transform = self.label.transform.scaledBy(x: labelScale, y: labelScale)
+    self.label.setNeedsUpdateConstraints()
+    UIView.animate(withDuration: duration, animations: {
+      self.label.transform = .identity
       self.label.textColor = color
-      self.label.transform = oldTransform
       self.layoutIfNeeded()
-      self.superview?.layoutIfNeeded()
-    }
+    })
+
   }
 }
 
