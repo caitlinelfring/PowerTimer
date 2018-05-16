@@ -29,11 +29,11 @@ class ViewController: UIViewController {
   let timer = CountUpTimer()
   let startStopBtn = Button(color: Colors.green)
   let restTimerView = RestTimerView()
-  private var restTimerViewTopConstraint: NSLayoutConstraint!
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
   }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     self.view.backgroundColor = .black
@@ -74,10 +74,6 @@ class ViewController: UIViewController {
     if Settings.ShowSettingsOnEachLaunch {
       self.presentSettings()
     }
-  }
-
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
   }
 
   @objc private func presentSettings() {
