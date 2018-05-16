@@ -69,15 +69,17 @@ class SettingsViewController: UIViewController {
 
     self.view.backgroundColor = .white
 
-    let close = UIButton(type: .custom)
-    close.setTitle("x", for: .normal) // TODO: Better close button
-    close.titleLabel?.textAlignment = .center
-    close.setTitleColor(.black, for: .normal)
-    close.addTarget(self, action: #selector(self.close), for: .touchUpInside)
-    self.view.addSubview(close)
-    close.translatesAutoresizingMaskIntoConstraints = false
-    close.topAnchor.constraint(equalTo: self.view.topAnchor, constant: UIApplication.shared.statusBarFrame.height).isActive = true
-    close.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10).isActive = true
+    if self.navigationController == nil {
+      let close = UIButton(type: .custom)
+      close.setTitle("x", for: .normal) // TODO: Better close button
+      close.titleLabel?.textAlignment = .center
+      close.setTitleColor(.black, for: .normal)
+      close.addTarget(self, action: #selector(self.close), for: .touchUpInside)
+      self.view.addSubview(close)
+      close.translatesAutoresizingMaskIntoConstraints = false
+      close.topAnchor.constraint(equalTo: self.view.topAnchor, constant: UIApplication.shared.statusBarFrame.height).isActive = true
+      close.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10).isActive = true
+    }
 
     let stackView = UIStackView()
     stackView.alignment = .center
@@ -193,12 +195,14 @@ class SettingsViewController: UIViewController {
   }
 
   @objc private func didChangeTimerType(sender: UISegmentedControl) {
-    let selected = TimerType(rawValue: sender.selectedSegmentIndex)!
-    print(selected)
-    Settings.SavedTimerType = selected
+    Settings.SavedTimerType = TimerType(rawValue: sender.selectedSegmentIndex)!
   }
 
   @objc private func close() {
-    self.dismiss(animated: true, completion: nil)
+    if let nav = self.navigationController {
+      nav.popViewController(animated: true)
+    } else {
+      self.dismiss(animated: true, completion: nil)
+    }
   }
 }
