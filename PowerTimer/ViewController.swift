@@ -8,6 +8,8 @@
 
 // TODO
 // Light/dark theme
+// Handle backgrounding
+// redo settings
 
 import UIKit
 
@@ -112,6 +114,12 @@ class ViewController: UIViewController {
 
     let settings = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(self.presentSettings))
     self.navigationItem.rightBarButtonItem = settings
+
+    let clock = ClockView()
+    self.view.addSubview(clock)
+    clock.translatesAutoresizingMaskIntoConstraints = false
+    clock.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -5).isActive = true
+    clock.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -5).isActive = true
   }
 
   override func viewWillAppear(_ animated: Bool) {

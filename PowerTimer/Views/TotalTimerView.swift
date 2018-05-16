@@ -39,7 +39,6 @@ class TotalTimerView: TimerActions {
   }
 }
 
-
 extension TotalTimerView: TimerDelegate {
   func onTimeChanged(seconds: Int) {
     print(#function, seconds)

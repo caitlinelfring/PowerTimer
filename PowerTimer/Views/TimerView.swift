@@ -108,6 +108,7 @@ class TimerView: UIView {
     UIView.animate(withDuration: duration, animations: {
       self.label.transform = .identity
       self.label.textColor = color
+      self.textLabel.textColor = color
       self.layoutIfNeeded()
       // So all the views that are around this view animate too
       self.superview?.layoutIfNeeded()
