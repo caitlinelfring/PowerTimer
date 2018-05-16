@@ -20,6 +20,10 @@ enum TimerType: Int {
       return "Down"
     }
   }
+
+  static var available: [TimerType] {
+    return [.countUp, .countDown]
+  }
 }
 
 protocol TimerDelegate: class {

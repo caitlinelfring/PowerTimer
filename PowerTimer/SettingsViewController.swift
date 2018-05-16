@@ -107,8 +107,7 @@ class SettingsViewController: UIViewController {
     label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     label.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
 
-    let items: [TimerType] = [.countUp, .countDown]
-    let segmentControl = UISegmentedControl(items: items.map { $0.description })
+    let segmentControl = UISegmentedControl(items: TimerType.available.map { $0.description })
     segmentControl.addTarget(self, action: #selector(self.didChangeTimerType), for: .valueChanged)
     segmentControl.selectedSegmentIndex = Settings.SavedTimerType.rawValue
     view.addSubview(segmentControl)
@@ -117,6 +116,9 @@ class SettingsViewController: UIViewController {
     segmentControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     segmentControl.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
     segmentControl.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+
+    // countDown not available yet
+    segmentControl.setEnabled(false, forSegmentAt: TimerType.available.index(where: { $0 == TimerType.countDown })!)
 
     return view
   }
