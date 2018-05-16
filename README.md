@@ -21,7 +21,7 @@ The best part is, **you can continue to keep the time of your entire workout!**
 
 ### TODO
 - [ ] Handle backgrounding (make sure timers are stopped, but are still counting)
-- [ ] Use TableView in settings
+- [x] Use TableView in settings
 - [ ] Move rest minute setting into main VC
 - [ ] Add CountDown timer
 - [x] Fix launch screen

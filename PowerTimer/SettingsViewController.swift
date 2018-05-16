@@ -9,70 +9,58 @@
 import Foundation
 import UIKit
 
-class SettingsViewController: UIViewController {
-
+class SettingTableViewController: UITableViewController {
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .default
   }
+  struct Item {
+    var title: String
+    var cell: UITableViewCell
+    var didPress: (() -> ())?
 
-  override func viewDidLoad() {
-    super.viewDidLoad()
-
-    self.view.backgroundColor = .white
-
-    if self.navigationController == nil {
-      let close = UIButton(type: .custom)
-      close.setTitle("x", for: .normal) // TODO: Better close button
-      close.titleLabel?.textAlignment = .center
-      close.setTitleColor(.black, for: .normal)
-      close.addTarget(self, action: #selector(self.close), for: .touchUpInside)
-      self.view.addSubview(close)
-      close.translatesAutoresizingMaskIntoConstraints = false
-      close.topAnchor.constraint(equalTo: self.view.topAnchor, constant: UIApplication.shared.statusBarFrame.height).isActive = true
-      close.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -10).isActive = true
+    init(title: String, cell: UITableViewCell = UITableViewCell(), didPress: (() -> ())? = nil) {
+      self.title = title
+      self.cell = cell
+      self.didPress = didPress
     }
+  }
 
-    let stackView = UIStackView()
-    stackView.alignment = .center
-    stackView.distribution = .fill
-    stackView.axis = .vertical
-    stackView.spacing = 50
-    stackView.isUserInteractionEnabled = true
+  convenience init() {
+    self.init(style: .plain)
+  }
 
-    stackView.addArrangedSubview(self.timerTypeView())
-    stackView.addArrangedSubview(self.restMinutesView())
+  private var items = [Item]()
+  private let restCell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
 
-    self.view.addSubview(stackView)
-    stackView.translatesAutoresizingMaskIntoConstraints = false
-    stackView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-    stackView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
-    stackView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.9).isActive = true
+  override init(style: UITableViewStyle) {
+    super.init(style: style)
+
+    self.restCell.accessoryView = restStepper()
+    self.restCell.textLabel?.text = "Rest Time"
+    self.updateRestCellSubtitle()
+    self.items.append(Item(title: "Rest Time", cell: self.restCell))
+
+    let timerTypeCell = UITableViewCell()
+    timerTypeCell.accessoryView = timerTypeControl()
+    self.items.append(Item(title: "Timer Type", cell: timerTypeCell))
+
+    self.tableView.delegate = self
+    self.tableView.dataSource = self
+    self.tableView.tableHeaderView = UIView()
+    self.tableView.tableFooterView = UIView()
+
+    self.navigationItem.title = "SETTINGS"
   }
 
   override func viewWillAppear(_ animated: Bool) {
     self.navigationController?.navigationBar.tintColor = .black
   }
 
-  private func restMinutesView() -> UIView {
-    let view = UIView()
-    let label = UILabel()
-    label.text = "Rest Timer"
-    label.textAlignment = .center
-    view.addSubview(label)
-    label.translatesAutoresizingMaskIntoConstraints = false
-    label.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-    label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    label.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 
-    self.restMinutesLabel.font = self.restMinutesLabel.font.withSize(self.restMinutesLabel.font.pointSize - 2)
-    self.restMinutesLabel.textAlignment = .center
-    self.restMinutesLabel.text = "\(Settings.RestTimerMinutes) minutes"
-    view.addSubview(self.restMinutesLabel)
-    self.restMinutesLabel.translatesAutoresizingMaskIntoConstraints = false
-    self.restMinutesLabel.topAnchor.constraint(equalTo: label.bottomAnchor).isActive = true
-    self.restMinutesLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    self.restMinutesLabel.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-
+  func restStepper() -> UIStepper {
     let stepper = UIStepper()
     stepper.minimumValue = 1
     stepper.maximumValue = 20
@@ -80,58 +68,52 @@ class SettingsViewController: UIViewController {
     stepper.wraps = false
     stepper.value = Double(Settings.RestTimerMinutes)
     stepper.addTarget(self, action: #selector(self.didChangeRestMinutes), for: .valueChanged)
-    view.addSubview(stepper)
-    stepper.translatesAutoresizingMaskIntoConstraints = false
-    stepper.topAnchor.constraint(equalTo: self.restMinutesLabel.bottomAnchor).isActive = true
-    stepper.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    stepper.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-
-    return view
+    return stepper
   }
 
-  let restMinutesLabel = UILabel()
-
-  @objc func didChangeRestMinutes(sender: UIStepper) {
-    Settings.RestTimerMinutes = Int(sender.value)
-    self.restMinutesLabel.text = "\(Settings.RestTimerMinutes) minutes"
-  }
-
-  private func timerTypeView() -> UIView {
-    let view = UIView()
-    let label = UILabel()
-    label.text = "Timer Type"
-    label.textAlignment = .center
-    view.addSubview(label)
-    label.translatesAutoresizingMaskIntoConstraints = false
-    label.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-    label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    label.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-
+  private func timerTypeControl() -> UISegmentedControl {
     let segmentControl = UISegmentedControl(items: TimerType.available.map { $0.description })
     segmentControl.addTarget(self, action: #selector(self.didChangeTimerType), for: .valueChanged)
     segmentControl.selectedSegmentIndex = Settings.SavedTimerType.rawValue
-    view.addSubview(segmentControl)
-    segmentControl.translatesAutoresizingMaskIntoConstraints = false
-    segmentControl.topAnchor.constraint(equalTo: label.bottomAnchor).isActive = true
-    segmentControl.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    segmentControl.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-    segmentControl.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
 
     // countDown not available yet
     segmentControl.setEnabled(false, forSegmentAt: TimerType.available.index(where: { $0 == TimerType.countDown })!)
 
-    return view
+    return segmentControl
+  }
+  func updateRestCellSubtitle() {
+    self.restCell.detailTextLabel?.text = "\(Settings.RestTimerMinutes) minutes"
+  }
+
+  @objc func didChangeRestMinutes(sender: UIStepper) {
+    Settings.RestTimerMinutes = Int(sender.value)
+    self.updateRestCellSubtitle()
   }
 
   @objc private func didChangeTimerType(sender: UISegmentedControl) {
     Settings.SavedTimerType = TimerType(rawValue: sender.selectedSegmentIndex)!
   }
 
-  @objc private func close() {
-    if let nav = self.navigationController {
-      nav.popViewController(animated: true)
-    } else {
-      self.dismiss(animated: true, completion: nil)
+  // MARK: Tableview functions
+
+  override func numberOfSections(in tableView: UITableView) -> Int {
+    return self.items.count
+  }
+
+  override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    if section == 0 {
+      return self.items.count
     }
+    return 0
+  }
+
+  override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    let item = self.items[indexPath.row]
+    item.cell.textLabel?.text = item.title
+    return item.cell
+  }
+
+  override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    self.tableView.deselectRow(at: indexPath, animated: true)
   }
 }

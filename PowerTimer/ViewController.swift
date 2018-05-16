@@ -173,7 +173,7 @@ class ViewController: UIViewController {
   }
 
   @objc private func presentSettings() {
-    let settingsVC = SettingsViewController()
+    let settingsVC = SettingTableViewController()
     if let nav = self.navigationController {
       nav.pushViewController(settingsVC, animated: true)
     } else {
