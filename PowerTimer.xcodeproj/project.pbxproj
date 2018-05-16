@@ -15,6 +15,7 @@
 		4870AFC420A9D52D00DAB1C1 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4870AFC320A9D52D00DAB1C1 /* Colors.swift */; };
 		4870AFC620A9E2A300DAB1C1 /* RestTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4870AFC520A9E2A300DAB1C1 /* RestTimerView.swift */; };
 		4870AFC820A9F54E00DAB1C1 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4870AFC720A9F54E00DAB1C1 /* SettingsViewController.swift */; };
+		964A9FB5A0C690FDB64CFC71 /* Pods_PowerTimer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB528AF57F0CB7EFC18CF2BB /* Pods_PowerTimer.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,9 @@
 		4870AFC320A9D52D00DAB1C1 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		4870AFC520A9E2A300DAB1C1 /* RestTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestTimerView.swift; sourceTree = "<group>"; };
 		4870AFC720A9F54E00DAB1C1 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		A5922A6C0B8AAFBDF94C35A1 /* Pods-PowerTimer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PowerTimer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PowerTimer/Pods-PowerTimer.debug.xcconfig"; sourceTree = "<group>"; };
+		AB528AF57F0CB7EFC18CF2BB /* Pods_PowerTimer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PowerTimer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7A35DBC4AD5C9DF3D295AF1 /* Pods-PowerTimer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PowerTimer.release.xcconfig"; path = "Pods/Target Support Files/Pods-PowerTimer/Pods-PowerTimer.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +39,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				964A9FB5A0C690FDB64CFC71 /* Pods_PowerTimer.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,6 +51,8 @@
 			children = (
 				4870AFAE20A9B0E800DAB1C1 /* PowerTimer */,
 				4870AFAD20A9B0E800DAB1C1 /* Products */,
+				B2AE688E786E7CAD6DC4C09D /* Pods */,
+				87BE01A2B0900BFDB8AF72E0 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -73,6 +80,23 @@
 			path = PowerTimer;
 			sourceTree = "<group>";
 		};
+		87BE01A2B0900BFDB8AF72E0 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				AB528AF57F0CB7EFC18CF2BB /* Pods_PowerTimer.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B2AE688E786E7CAD6DC4C09D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				A5922A6C0B8AAFBDF94C35A1 /* Pods-PowerTimer.debug.xcconfig */,
+				B7A35DBC4AD5C9DF3D295AF1 /* Pods-PowerTimer.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -80,9 +104,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4870AFBE20A9B0E900DAB1C1 /* Build configuration list for PBXNativeTarget "PowerTimer" */;
 			buildPhases = (
+				7A02CC6CC4FBCF135D435C92 /* [CP] Check Pods Manifest.lock */,
 				4870AFA820A9B0E800DAB1C1 /* Sources */,
 				4870AFA920A9B0E800DAB1C1 /* Frameworks */,
 				4870AFAA20A9B0E800DAB1C1 /* Resources */,
+				A32E5F80BCB64D6D97D23850 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -137,6 +163,45 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7A02CC6CC4FBCF135D435C92 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-PowerTimer-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A32E5F80BCB64D6D97D23850 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-PowerTimer/Pods-PowerTimer-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/EasyTipView/EasyTipView.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EasyTipView.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-PowerTimer/Pods-PowerTimer-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		4870AFA820A9B0E800DAB1C1 /* Sources */ = {
@@ -282,15 +347,13 @@
 		};
 		4870AFBF20A9B0E900DAB1C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A5922A6C0B8AAFBDF94C35A1 /* Pods-PowerTimer.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FLQ9EPP5P3;
 				INFOPLIST_FILE = PowerTimer/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = app.jeddie.PowerTimer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -300,15 +363,13 @@
 		};
 		4870AFC020A9B0E900DAB1C1 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = B7A35DBC4AD5C9DF3D295AF1 /* Pods-PowerTimer.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FLQ9EPP5P3;
 				INFOPLIST_FILE = PowerTimer/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = app.jeddie.PowerTimer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

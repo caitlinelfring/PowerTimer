@@ -1,0 +1,16 @@
+PODS:
+  - EasyTipView (1.0.2)
+
+DEPENDENCIES:
+  - EasyTipView (~> 1.0.2)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - EasyTipView
+
+SPEC CHECKSUMS:
+  EasyTipView: b93a19be981cc2221d6d7191d49872f547e0bebf
+
+PODFILE CHECKSUM: 99c40d29bae9ebbc9e64e3fcd4f1df39e1be4f6b
+
+COCOAPODS: 1.5.2
