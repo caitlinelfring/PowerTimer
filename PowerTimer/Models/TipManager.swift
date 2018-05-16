@@ -69,6 +69,7 @@ class TipManager {
   private var currentTipType: TipType?
 
   func show(inView view: UIView, forType type: TipType, withinSuperView superview: UIView? = nil) {
+    if self.currentTipView != nil { return }
     self.currentTipView = EasyTipView(text: type.tipDescription(), preferences: TipManager.preferences, delegate: self)
     self.currentTipType = type
     self.currentTipView!.show(animated: true, forView: view, withinSuperview: superview)
@@ -76,6 +77,7 @@ class TipManager {
   }
 
   func show(forItem item: UIBarItem, forType type: TipType, withinSuperView superview: UIView? = nil) {
+    if self.currentTipView != nil { return }
     self.currentTipView = EasyTipView(text: type.tipDescription(), preferences: TipManager.preferences, delegate: self)
     self.currentTipType = type
     self.currentTipView!.show(animated: true, forItem: item, withinSuperView: superview)
