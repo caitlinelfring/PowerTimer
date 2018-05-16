@@ -47,11 +47,13 @@ extension TotalTimerView: TimerDelegate {
 
   func onPaused() {
     print(#function)
+    self.timerView.color = .yellow
     self.onTimerPaused?()
   }
 
   func onStart() {
     print(#function)
+    self.timerView.color = .white
     self.onTimerStart?()
   }
 
