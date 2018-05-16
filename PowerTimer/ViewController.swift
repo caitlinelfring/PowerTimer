@@ -32,8 +32,11 @@ class ViewController: UIViewController {
     return .lightContent
   }
 
+  var tipsManager: TipManager?
+
   override func viewDidLoad() {
     super.viewDidLoad()
+    Settings.IntroTips.reset() // TEMP FOR TESTING
     self.view.backgroundColor = .black
 
     self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
@@ -59,9 +62,11 @@ class ViewController: UIViewController {
     self.restTimerView.centerYAnchor.constraint(equalTo: topLayoutGuide.centerYAnchor, constant: -UIScreen.main.bounds.height / 8).isActive = true
     self.restTimerView.onTimerStart = { [weak self] in
       self?.totalTimerView.timerView.soften()
+      self?.tipsManager?.dismiss(forType: .startRestTimer)
     }
     self.restTimerView.onTimerReset = { [weak self] in
       self?.totalTimerView.timerView.enlarge()
+      self?.tipsManager?.dismiss(forType: .stopRestTimer)
     }
 
     self.view.addSubview(self.totalTimerView)
@@ -115,6 +120,28 @@ class ViewController: UIViewController {
     clock.translatesAutoresizingMaskIntoConstraints = false
     clock.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -5).isActive = true
     clock.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -5).isActive = true
+
+    self.showNextTip()
+  }
+
+  func showNextTip() {
+    guard let next = TipManager.next() else {
+      self.tipsManager = nil
+      return
+    }
+    if self.tipsManager == nil {
+      self.tipsManager = TipManager()
+      self.tipsManager!.onNextTip = self.showNextTip
+    }
+    switch next {
+    case .startTimer:
+      self.tipsManager!.show(inView: self.playButton, forType: next, withinSuperView: self.view)
+    case .startRestTimer, .stopRestTimer:
+      self.tipsManager!.show(inView: self.restTimerView, forType: next, withinSuperView: self.view)
+    case .settings:
+      self.tipsManager!.show(forItem: self.navigationItem.rightBarButtonItem!, forType: next)
+    }
+
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -130,6 +157,7 @@ class ViewController: UIViewController {
     print(#function)
     self.totalTimerView.timer.start()
     self.updateButtonStates()
+    self.tipsManager?.dismiss(forType: .startTimer)
   }
 
   @objc private func pauseBtnTapped(sender: ImageButton) {
@@ -151,6 +179,7 @@ class ViewController: UIViewController {
     } else {
       self.present(settingsVC, animated: true, completion: nil)
     }
+    self.tipsManager?.dismiss(forType: .settings)
   }
 
   func keepScreenFromLocking(_ isIdleTimerDisabled: Bool) {

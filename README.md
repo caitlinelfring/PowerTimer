@@ -26,7 +26,7 @@ The best part is, **you can continue to keep the time of your entire workout!**
 - [ ] Add CountDown timer
 - [ ] Fix launch screen
 - [ ] Set max time for countUp timer
-- [ ] Add intro tooltips
+- [x] Add intro tooltips
 
 ### Nice to haves
 - [ ] Light/dark theme

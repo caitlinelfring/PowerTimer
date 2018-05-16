@@ -21,6 +21,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     self.window!.rootViewController = UINavigationController(rootViewController: ViewController())
     self.window!.makeKeyAndVisible()
     print(Date())
+
+    TipManager.setup()
     return true
   }
 
