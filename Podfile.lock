@@ -2,15 +2,21 @@ PODS:
   - EasyTipView (1.0.2)
 
 DEPENDENCIES:
-  - EasyTipView (~> 1.0.2)
+  - EasyTipView (from `https://github.com/jitendragaur/EasyTipView.git`, commit `4f8eb82`)
 
-SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
-    - EasyTipView
+EXTERNAL SOURCES:
+  EasyTipView:
+    :commit: 4f8eb82
+    :git: https://github.com/jitendragaur/EasyTipView.git
+
+CHECKOUT OPTIONS:
+  EasyTipView:
+    :commit: 4f8eb82
+    :git: https://github.com/jitendragaur/EasyTipView.git
 
 SPEC CHECKSUMS:
   EasyTipView: b93a19be981cc2221d6d7191d49872f547e0bebf
 
-PODFILE CHECKSUM: 99c40d29bae9ebbc9e64e3fcd4f1df39e1be4f6b
+PODFILE CHECKSUM: 2c3a010adc6c39ae7c4642cc44a505db186c2809
 
 COCOAPODS: 1.5.2
