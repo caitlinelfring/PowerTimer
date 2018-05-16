@@ -101,7 +101,7 @@ class TipManager {
     preferences.drawing.font = UIFont(name: "Futura-Medium", size: 13)!
     preferences.drawing.foregroundColor = .white
     preferences.drawing.backgroundColor = UIColor(hue: 0.46, saturation: 0.99, brightness: 0.6, alpha: 1)
-    // preferences.animating.dismissOnTap = true // This is disabled because there are actions in the view controller that manually dismiss the tip
+    preferences.animating.dismissOnTap = false // This is disabled because there are actions in the view controller that manually dismiss the tip
     return preferences
   }()
 }
