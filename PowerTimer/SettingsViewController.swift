@@ -44,6 +44,12 @@ class SettingTableViewController: UITableViewController {
     timerTypeCell.accessoryView = timerTypeControl()
     self.items.append(Item(title: "Timer Type", cell: timerTypeCell))
 
+    let resetTipsCell = UITableViewCell()
+    self.items.append(SettingTableViewController.Item(title: "Reset Intro Tips", cell: resetTipsCell, didPress: {
+      Settings.IntroTips.reset()
+      self.navigationController?.popViewController(animated: true)
+    }))
+
     self.tableView.delegate = self
     self.tableView.dataSource = self
     self.tableView.tableHeaderView = UIView()
@@ -115,5 +121,6 @@ class SettingTableViewController: UITableViewController {
 
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     self.tableView.deselectRow(at: indexPath, animated: true)
+    self.items[indexPath.row].didPress?()
   }
 }

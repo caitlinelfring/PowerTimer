@@ -66,10 +66,10 @@ class Settings {
     }
 
     static func reset() {
-      settings = false
-      stopRestTimer = false
-      startRestTimer = false
-      startTimer = false
+      Settings.IntroTips.settings = false
+      Settings.IntroTips.stopRestTimer = false
+      Settings.IntroTips.startRestTimer = false
+      Settings.IntroTips.startTimer = false
     }
   }
 

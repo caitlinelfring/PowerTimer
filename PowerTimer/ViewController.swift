@@ -36,7 +36,6 @@ class ViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    Settings.IntroTips.reset() // TEMP FOR TESTING
     self.view.backgroundColor = .black
 
     self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
@@ -120,7 +119,10 @@ class ViewController: UIViewController {
     clock.translatesAutoresizingMaskIntoConstraints = false
     clock.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -5).isActive = true
     clock.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -5).isActive = true
+  }
 
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
     self.showNextTip()
   }
 
@@ -135,7 +137,11 @@ class ViewController: UIViewController {
     }
     switch next {
     case .startTimer:
-      self.tipsManager!.show(inView: self.playButton, forType: next, withinSuperView: self.view)
+      var playOrPause: ImageButton = self.playButton
+      if self.playButton.isHidden {
+        playOrPause = self.pauseButton
+      }
+      self.tipsManager!.show(inView: playOrPause, forType: next, withinSuperView: self.view)
     case .startRestTimer, .stopRestTimer:
       self.tipsManager!.show(inView: self.restTimerView, forType: next, withinSuperView: self.view)
     case .settings:

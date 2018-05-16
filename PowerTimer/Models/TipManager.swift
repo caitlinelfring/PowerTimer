@@ -23,7 +23,7 @@ class TipManager {
     func tipDescription() -> String {
       switch self {
       case .startTimer:
-        return "Tap here to start the overall timer"
+        return "Tap here to start/pause the overall timer"
       case .startRestTimer:
         return "Now that you've started the overall timer, TAP HERE to start your REST timer"
       case .stopRestTimer:
