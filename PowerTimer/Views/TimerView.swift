@@ -113,23 +113,3 @@ class TimerView: UIView {
 
   }
 }
-
-extension UILabel {
-  func animate(toFont font: UIFont, color: UIColor, withDuration duration: TimeInterval) {
-    let oldFont = self.font
-    self.font = font
-    let labelScale = oldFont!.pointSize / font.pointSize
-    let oldTransform = self.transform
-    self.transform = self.transform.scaledBy(x: labelScale, y: labelScale)
-
-    setNeedsUpdateConstraints()
-    superview?.setNeedsUpdateConstraints()
-    UIView.animate(withDuration: duration) {
-      self.textColor = color
-      self.transform = oldTransform
-      self.layoutIfNeeded()
-      self.superview?.layoutIfNeeded()
-      self.superview?.superview?.layoutIfNeeded()
-    }
-  }
-}
