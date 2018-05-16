@@ -70,14 +70,30 @@
 				4870AFAF20A9B0E800DAB1C1 /* AppDelegate.swift */,
 				4870AFB120A9B0E800DAB1C1 /* ViewController.swift */,
 				4870AFC720A9F54E00DAB1C1 /* SettingsViewController.swift */,
-				4870AFC520A9E2A300DAB1C1 /* RestTimerView.swift */,
+				489033BA20AC5DB8009234E3 /* Views */,
+				489033BB20AC5DC3009234E3 /* Models */,
 				4870AFB620A9B0E900DAB1C1 /* Assets.xcassets */,
 				4870AFB820A9B0E900DAB1C1 /* LaunchScreen.storyboard */,
 				4870AFBB20A9B0E900DAB1C1 /* Info.plist */,
-				4870AFC120A9CBD200DAB1C1 /* Timers.swift */,
-				4870AFC320A9D52D00DAB1C1 /* Colors.swift */,
 			);
 			path = PowerTimer;
+			sourceTree = "<group>";
+		};
+		489033BA20AC5DB8009234E3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4870AFC520A9E2A300DAB1C1 /* RestTimerView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		489033BB20AC5DC3009234E3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				4870AFC320A9D52D00DAB1C1 /* Colors.swift */,
+				4870AFC120A9CBD200DAB1C1 /* Timers.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		87BE01A2B0900BFDB8AF72E0 /* Frameworks */ = {
@@ -353,7 +369,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FLQ9EPP5P3;
 				INFOPLIST_FILE = PowerTimer/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = app.jeddie.PowerTimer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -369,7 +388,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FLQ9EPP5P3;
 				INFOPLIST_FILE = PowerTimer/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = app.jeddie.PowerTimer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
