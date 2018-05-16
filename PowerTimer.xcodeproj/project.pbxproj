@@ -15,6 +15,9 @@
 		4870AFC420A9D52D00DAB1C1 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4870AFC320A9D52D00DAB1C1 /* Colors.swift */; };
 		4870AFC620A9E2A300DAB1C1 /* RestTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4870AFC520A9E2A300DAB1C1 /* RestTimerView.swift */; };
 		4870AFC820A9F54E00DAB1C1 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4870AFC720A9F54E00DAB1C1 /* SettingsViewController.swift */; };
+		489033BD20AC6260009234E3 /* TotalTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489033BC20AC6260009234E3 /* TotalTimerView.swift */; };
+		489033BF20AC6396009234E3 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489033BE20AC6396009234E3 /* TimerView.swift */; };
+		489033C120AC640E009234E3 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489033C020AC640E009234E3 /* Button.swift */; };
 		964A9FB5A0C690FDB64CFC71 /* Pods_PowerTimer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB528AF57F0CB7EFC18CF2BB /* Pods_PowerTimer.framework */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +32,9 @@
 		4870AFC320A9D52D00DAB1C1 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		4870AFC520A9E2A300DAB1C1 /* RestTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestTimerView.swift; sourceTree = "<group>"; };
 		4870AFC720A9F54E00DAB1C1 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		489033BC20AC6260009234E3 /* TotalTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalTimerView.swift; sourceTree = "<group>"; };
+		489033BE20AC6396009234E3 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
+		489033C020AC640E009234E3 /* Button.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Button.swift; sourceTree = "<group>"; };
 		A5922A6C0B8AAFBDF94C35A1 /* Pods-PowerTimer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PowerTimer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PowerTimer/Pods-PowerTimer.debug.xcconfig"; sourceTree = "<group>"; };
 		AB528AF57F0CB7EFC18CF2BB /* Pods_PowerTimer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_PowerTimer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7A35DBC4AD5C9DF3D295AF1 /* Pods-PowerTimer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PowerTimer.release.xcconfig"; path = "Pods/Target Support Files/Pods-PowerTimer/Pods-PowerTimer.release.xcconfig"; sourceTree = "<group>"; };
@@ -83,6 +89,9 @@
 			isa = PBXGroup;
 			children = (
 				4870AFC520A9E2A300DAB1C1 /* RestTimerView.swift */,
+				489033BC20AC6260009234E3 /* TotalTimerView.swift */,
+				489033BE20AC6396009234E3 /* TimerView.swift */,
+				489033C020AC640E009234E3 /* Button.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -226,9 +235,12 @@
 			files = (
 				4870AFB220A9B0E800DAB1C1 /* ViewController.swift in Sources */,
 				4870AFC620A9E2A300DAB1C1 /* RestTimerView.swift in Sources */,
+				489033BD20AC6260009234E3 /* TotalTimerView.swift in Sources */,
 				4870AFC420A9D52D00DAB1C1 /* Colors.swift in Sources */,
 				4870AFC220A9CBD200DAB1C1 /* Timers.swift in Sources */,
 				4870AFB020A9B0E800DAB1C1 /* AppDelegate.swift in Sources */,
+				489033BF20AC6396009234E3 /* TimerView.swift in Sources */,
+				489033C120AC640E009234E3 /* Button.swift in Sources */,
 				4870AFC820A9F54E00DAB1C1 /* SettingsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -89,6 +89,10 @@ class SettingsViewController: UIViewController {
     stackView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.9).isActive = true
   }
 
+  override func viewWillAppear(_ animated: Bool) {
+    self.navigationController?.navigationBar.tintColor = .black
+  }
+
   private func restMinutesView() -> UIView {
     let view = UIView()
     let label = UILabel()

@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     self.window!.backgroundColor = .white
     self.window!.rootViewController = UINavigationController(rootViewController: ViewController())
     self.window!.makeKeyAndVisible()
+    print(Date())
     return true
   }
 

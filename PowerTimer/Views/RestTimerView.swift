@@ -9,13 +9,13 @@
 import Foundation
 import UIKit
 
-class RestTimerView: UIView {
+class RestTimerView: TimerActions {
 
   var isEnabled: Bool = false
   let timer = CountUpTimer()
   var tapGestureRecognizer: UITapGestureRecognizer!
 
-  let timerLabel = TimerLabel()
+  let timerLabel = TimerView()
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -30,21 +30,20 @@ class RestTimerView: UIView {
 
     self.timerLabel.soften()
     self.timerLabel.setTime(seconds: 0)
-    self.timerLabel.timerTextLabel.text = "Rest Time"
+    self.timerLabel.textLabel.text = "Rest Time"
 
     self.tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.startTap))
     self.addGestureRecognizer(self.tapGestureRecognizer)
   }
 
   @objc private func startTap(sender: UITapGestureRecognizer) {
+    print(#function)
     if !self.isEnabled {
       return
     }
     if self.timer.isActive {
-      self.timerLabel.soften()
       self.timer.reset()
     } else {
-      self.timerLabel.reset()
       self.timer.start()
     }
   }
@@ -68,20 +67,25 @@ extension RestTimerView: TimerDelegate {
     if seconds >= restTimerSeconds {
       textColor = .red
     }
-    self.timerLabel.labelTextColor = textColor
+    self.timerLabel.color = textColor
   }
 
   func onPaused() {
     print(#function)
+    self.onTimerPaused?()
   }
 
   func onStart() {
     print(#function)
+    self.timerLabel.enlarge()
+    self.onTimerStart?()
   }
 
   func onReset() {
     print(#function)
+    self.timerLabel.soften()
     self.timerLabel.setTime(seconds: 0)
+    self.onTimerReset?()
   }
 }
 
