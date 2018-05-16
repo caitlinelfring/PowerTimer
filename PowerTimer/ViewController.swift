@@ -61,23 +61,25 @@ class ViewController: UIViewController {
     self.restTimerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
 
     let reset = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(self.resetBtnTapped))
-    self.navigationItem.rightBarButtonItem = reset
+    self.navigationItem.leftBarButtonItem = reset
 
     let settings = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(self.presentSettings))
-    self.navigationItem.leftBarButtonItem = settings
+    self.navigationItem.rightBarButtonItem = settings
 
     self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
     self.navigationController?.navigationBar.shadowImage = UIImage()
     self.navigationController?.navigationBar.isTranslucent = true
     self.navigationController?.view.backgroundColor = UIColor.clear
     self.navigationController?.navigationBar.tintColor = .white
-    if Settings.ShowSettingsOnEachLaunch {
-      self.presentSettings()
-    }
   }
 
   @objc private func presentSettings() {
-    UIApplication.shared.keyWindow?.rootViewController?.present(SettingsViewController(), animated: true, completion: nil)
+    let settingsVC = SettingsViewController()
+    if let nav = self.navigationController {
+      nav.pushViewController(settingsVC, animated: true)
+    } else {
+      self.present(settingsVC, animated: true, completion: nil)
+    }
   }
 
   func setIdleTimer(enabled: Bool) {

@@ -32,15 +32,6 @@ class Settings {
     }
   }
 
-  static var ShowSettingsOnEachLaunch: Bool {
-    set(value) {
-      UserDefaults.standard.set(value, forKey: "showSettingsOnEachLaunch")
-    }
-    get {
-      return UserDefaults.standard.bool(forKey: "showSettingsOnEachLaunch")
-    }
-  }
-
   static var RestTimerMinutes: Int {
     set(value) {
       UserDefaults.standard.set(value, forKey: "restTimerMinutes")
@@ -90,7 +81,6 @@ class SettingsViewController: UIViewController {
 
     stackView.addArrangedSubview(self.timerTypeView())
     stackView.addArrangedSubview(self.restMinutesView())
-    stackView.addArrangedSubview(self.alwaysShowSettings())
 
     self.view.addSubview(stackView)
     stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -140,33 +130,6 @@ class SettingsViewController: UIViewController {
   @objc func didChangeRestMinutes(sender: UIStepper) {
     Settings.RestTimerMinutes = Int(sender.value)
     self.restMinutesLabel.text = "\(Settings.RestTimerMinutes) minutes"
-  }
-
-  private func alwaysShowSettings() -> UIView {
-
-    let view = UIView()
-    let label = UILabel()
-    label.text = "Always Show Settings?"
-    label.textAlignment = .center
-    view.addSubview(label)
-    label.translatesAutoresizingMaskIntoConstraints = false
-    label.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-    label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    label.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-
-    let show = UISwitch()
-    show.setOn(Settings.ShowSettingsOnEachLaunch, animated: true)
-    show.addTarget(self, action: #selector(self.alwaysShowSettingsChanged), for: .valueChanged)
-    view.addSubview(show)
-    show.translatesAutoresizingMaskIntoConstraints = false
-    show.topAnchor.constraint(equalTo: label.bottomAnchor).isActive = true
-    show.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    show.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-    return view
-  }
-
-  @objc private func alwaysShowSettingsChanged(sender: UISwitch) {
-    Settings.ShowSettingsOnEachLaunch = sender.isOn
   }
 
   private func timerTypeView() -> UIView {
