@@ -6,11 +6,6 @@
 //  Copyright © 2018 JEddie, LLC. All rights reserved.
 //
 
-// TODO
-// Light/dark theme
-// Handle backgrounding
-// redo settings
-
 import UIKit
 
 // Since I'm not subclassing UINavigationController, this is the simplist way

@@ -17,3 +17,16 @@ The timer will turn RED when your rest is up. You can configure the rest time vi
 The best part is, **you can continue to keep the time of your entire workout!**
 
 ## Two Timers, One App. Pure GAINZ!
+
+
+### TODO
+- [ ] Handle backgrounding (make sure timers are stopped, but are still counting)
+- [ ] Use TableView in settings
+- [ ] Move rest minute setting into main VC
+- [ ] Add CountDown timer
+- [ ] Fix launch screen
+- [ ] Set max time for countUp timer
+- [ ] Add intro tooltips
+
+### Nice to haves
+- [ ] Light/dark theme
