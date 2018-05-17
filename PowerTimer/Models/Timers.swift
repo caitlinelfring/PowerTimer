@@ -45,7 +45,7 @@ class CountUpTimer {
   }
 
   var isPaused: Bool {
-    return self.isActive && self.currentSeconds > 0
+    return self.currentSeconds > 0 && !self.isActive
   }
 
   func start() {
@@ -62,15 +62,18 @@ class CountUpTimer {
     self.delegate?.onStart()
   }
   func pause() {
-    self.timer?.invalidate()
-    self.timer = nil
+    self.invalidate()
     self.delegate?.onPaused()
   }
   func reset() {
-    self.timer?.invalidate()
-    self.timer = nil
+    self.invalidate()
     self.currentSeconds = 0
     self.delegate?.onReset()
+  }
+
+  private func invalidate() {
+    self.timer?.invalidate()
+    self.timer = nil
   }
 }
 
