@@ -122,3 +122,29 @@ class TimerView: UIView {
     }
   }
 }
+
+
+extension UIView {
+  enum ShakeDirection {
+    case horizontal
+    case vertical
+    case rotate
+  }
+  func shake(withDirection direction: ShakeDirection = .horizontal) {
+    var shakeAnimation: CAKeyframeAnimation
+    switch direction {
+    case .horizontal:
+      // https://gist.github.com/mourad-brahim/cf0bfe9bec5f33a6ea66
+      shakeAnimation = CAKeyframeAnimation(keyPath: "transform.translation.x")
+      shakeAnimation.values = [-5.0, 5.0, -5.0, 5.0, -2.5, 2.5, -1.25, 1.25, 0.0 ]
+    case .vertical:
+      shakeAnimation = CAKeyframeAnimation(keyPath: "transform.translation.y")
+      shakeAnimation.duration = 0.6
+    case .rotate:
+      shakeAnimation = CAKeyframeAnimation(keyPath: "transform.rotation.z")
+      shakeAnimation.values = [0.5, -0.5, 0.5, -0.5, 0.25, -0.25, 0.125, -0.125, 0.0 ]
+    }
+    shakeAnimation.duration = 0.6
+    self.layer.add(shakeAnimation, forKey: "shake")
+  }
+}

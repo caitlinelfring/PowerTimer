@@ -68,6 +68,10 @@ class ViewController: UIViewController {
       self?.tipsManager?.dismiss(forType: .stopRestTimer)
     }
 
+    self.restTimerView.onTimerStartAttemptedWhileDisabled = { [weak self] in
+      self?.playButton.shake(withDirection: .rotate)
+    }
+
     self.view.addSubview(self.totalTimerView)
     self.totalTimerView.translatesAutoresizingMaskIntoConstraints = false
     self.totalTimerView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true

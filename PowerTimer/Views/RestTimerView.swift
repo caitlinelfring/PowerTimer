@@ -29,6 +29,8 @@ class RestTimerView: TimerActions {
     return stepper
   }()
 
+  var onTimerStartAttemptedWhileDisabled: (() -> ())?
+
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.timer.delegate = self
@@ -41,7 +43,6 @@ class RestTimerView: TimerActions {
     self.timerLabel.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
     self.timerLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
     self.timerLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-
 
     self.updateStepper()
     self.stepper.addTarget(self, action: #selector(self.stepperValueDidChange), for: .valueChanged)
@@ -74,6 +75,7 @@ class RestTimerView: TimerActions {
   @objc private func startTap(sender: UITapGestureRecognizer) {
     print(#function)
     if !self.isEnabled {
+      self.onTimerStartAttemptedWhileDisabled?()
       return
     }
     // Ignore taps on the stepper
