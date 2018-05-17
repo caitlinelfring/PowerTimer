@@ -58,7 +58,7 @@ class ViewController: UIViewController {
     self.restTimerView.translatesAutoresizingMaskIntoConstraints = false
     self.restTimerView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
     self.restTimerView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-    self.restTimerView.centerYAnchor.constraint(equalTo: topLayoutGuide.centerYAnchor, constant: -UIScreen.main.bounds.height / 8).isActive = true
+    self.restTimerView.centerYAnchor.constraint(equalTo: topLayoutGuide.centerYAnchor, constant: -UIScreen.main.bounds.height / 10).isActive = true
     self.restTimerView.onTimerStart = { [weak self] in
       self?.totalTimerView.timerView.soften()
       self?.tipsManager?.dismiss(forType: .startRestTimer)
@@ -121,6 +121,12 @@ class ViewController: UIViewController {
     clock.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -5).isActive = true
   }
 
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    self.navigationController?.navigationBar.tintColor = .white
+    self.restTimerView.updateStepper()
+  }
+
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     self.showNextTip()
@@ -148,10 +154,6 @@ class ViewController: UIViewController {
       self.tipsManager!.show(forItem: self.navigationItem.rightBarButtonItem!, forType: next)
     }
 
-  }
-
-  override func viewWillAppear(_ animated: Bool) {
-    self.navigationController?.navigationBar.tintColor = .white
   }
 
   func updateButtonStates() {

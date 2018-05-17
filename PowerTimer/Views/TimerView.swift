@@ -56,9 +56,9 @@ class TimerView: UIView {
     self.label.textAlignment = .center
     self.addSubview(self.label)
     self.label.translatesAutoresizingMaskIntoConstraints = false
+    self.label.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
     self.label.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
     self.label.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-    self.label.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
     self.setTime(seconds: 0)
 
     self.textLabel.textColor = .white
@@ -86,18 +86,18 @@ class TimerView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func enlarge() {
+  func enlarge(animate: Bool = true) {
     if label.font != Constants.Active.font {
-      self.animateTo(font: Constants.Active.font, color: Constants.Active.textColor)
+      self.animateTo(font: Constants.Active.font, color: Constants.Active.textColor, animate: animate)
     }
   }
-  func soften() {
+  func soften(animate: Bool = true) {
     if self.label.font != Constants.Inactive.font {
-      self.animateTo(font: Constants.Inactive.font, color: Constants.Inactive.textColor)
+      self.animateTo(font: Constants.Inactive.font, color: Constants.Inactive.textColor, animate: animate)
     }
   }
 
-  func animateTo(font: UIFont, color: UIColor) {
+  func animateTo(font: UIFont, color: UIColor, animate: Bool = true) {
     let duration: TimeInterval = 0.5
     let oldFont = self.label.font
     self.label.font = font
@@ -105,7 +105,7 @@ class TimerView: UIView {
 
     self.label.transform = self.label.transform.scaledBy(x: labelScale, y: labelScale)
     self.label.setNeedsUpdateConstraints()
-    UIView.animate(withDuration: duration, animations: {
+    let animations = {
       self.label.transform = .identity
       self.label.textColor = color
       self.textLabel.textColor = color
@@ -113,6 +113,12 @@ class TimerView: UIView {
       // So all the views that are around this view animate too
       self.superview?.layoutIfNeeded()
       self.superview?.superview?.layoutIfNeeded()
-    })
+    }
+
+    if animate {
+      UIView.animate(withDuration: duration, animations: animations)
+    } else {
+      animations()
+    }
   }
 }
