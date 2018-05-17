@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import ValueStepper
+import SnapKit
 
 class RestTimerView: TimerActions {
 
@@ -39,18 +40,17 @@ class RestTimerView: TimerActions {
     self.timerLabel.setTime(seconds: 0)
     self.timerLabel.textLabel.text = "Rest Time"
     self.addSubview(self.timerLabel)
-    self.timerLabel.translatesAutoresizingMaskIntoConstraints = false
-    self.timerLabel.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
-    self.timerLabel.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-    self.timerLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+    self.timerLabel.snp.makeConstraints { (make) in
+      make.top.left.right.equalToSuperview()
+    }
 
     self.updateStepper()
     self.stepper.addTarget(self, action: #selector(self.stepperValueDidChange), for: .valueChanged)
     self.addSubview(self.stepper)
-    self.stepper.translatesAutoresizingMaskIntoConstraints = false
-    self.stepper.topAnchor.constraint(equalTo: self.timerLabel.bottomAnchor, constant: 10).isActive = true
-    self.stepper.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-    self.stepper.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+    self.stepper.snp.makeConstraints { (make) in
+      make.top.equalTo(self.timerLabel.snp.bottom).offset(10)
+      make.centerX.equalToSuperview()
+    }
 
     self.tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.startTap))
     self.tapGestureRecognizer.cancelsTouchesInView = false

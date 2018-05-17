@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SnapKit
 
 // Since I'm not subclassing UINavigationController, this is the simplist way
 // to get the status bar styles working correctly in a navigation stack
@@ -43,21 +44,59 @@ class ViewController: UIViewController {
     self.navigationController?.view.backgroundColor = UIColor.clear
     self.navigationController?.navigationBar.tintColor = .white
 
-    let topLayoutGuide = UILayoutGuide()
-    self.view.addLayoutGuide(topLayoutGuide)
-    topLayoutGuide.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor).isActive = true
-    topLayoutGuide.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor).isActive = true
+    let topLayoutGuide = UIView()
+    self.view.addSubview(topLayoutGuide)
+    topLayoutGuide.snp.makeConstraints { (make) in
+      make.left.right.equalToSuperview()
+      make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+      make.bottom.equalTo(self.view.snp.centerY)
+    }
 
-    let bottomLayoutGuide = UILayoutGuide()
-    self.view.addLayoutGuide(bottomLayoutGuide)
-    bottomLayoutGuide.topAnchor.constraint(equalTo: topLayoutGuide.bottomAnchor).isActive = true
-    bottomLayoutGuide.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
+    let bottomLayoutGuide = UIView()
+    self.view.addSubview(bottomLayoutGuide)
+    bottomLayoutGuide.snp.makeConstraints { (make) in
+      make.left.right.equalToSuperview()
+      make.top.equalTo(topLayoutGuide.snp.bottom)
+      make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
+    }
 
     self.view.addSubview(self.restTimerView)
-    self.restTimerView.translatesAutoresizingMaskIntoConstraints = false
-    self.restTimerView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
-    self.restTimerView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-    self.restTimerView.centerYAnchor.constraint(equalTo: topLayoutGuide.centerYAnchor, constant: -UIScreen.main.bounds.height / 10).isActive = true
+    self.restTimerView.snp.makeConstraints { (make) in
+      make.top.left.right.equalTo(topLayoutGuide)
+      make.bottom.equalTo(topLayoutGuide)
+    }
+
+    self.view.addSubview(self.totalTimerView)
+    self.totalTimerView.snp.makeConstraints { (make) in
+      make.left.right.equalToSuperview()
+      make.top.equalTo(bottomLayoutGuide.snp.top)
+    }
+
+    let buttonStack = UIStackView()
+    buttonStack.spacing = 10
+    self.view.addSubview(buttonStack)
+    buttonStack.snp.makeConstraints { (make) in
+      make.top.equalTo(self.totalTimerView.snp.bottom).offset(25)
+      make.centerX.equalToSuperview()
+      make.height.equalTo(50)
+    }
+
+    buttonStack.addArrangedSubview(self.playPauseButton)
+    buttonStack.addArrangedSubview(self.refreshButton)
+
+    self.playPauseButton.addTarget(self, action: #selector(self.startBtnTapped), for: .touchUpInside)
+    self.refreshButton.addTarget(self, action: #selector(self.resetBtnTapped), for: .touchUpInside)
+
+    let settings = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(self.presentSettings))
+    self.navigationItem.rightBarButtonItem = settings
+
+    let clock = ClockView()
+    self.view.addSubview(clock)
+    clock.snp.makeConstraints { (make) in
+      make.right.equalTo(self.view.safeAreaLayoutGuide.snp.right).inset(5)
+      make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(5)
+    }
+
     self.restTimerView.onTimerStart = { [weak self] in
       self?.totalTimerView.timerView.soften()
       self?.tipsManager?.dismiss(forType: .startRestTimer)
@@ -66,7 +105,6 @@ class ViewController: UIViewController {
       self?.totalTimerView.timerView.enlarge()
       self?.tipsManager?.dismiss(forType: .stopRestTimer)
     }
-
     self.restTimerView.onTimerStartAttemptedWhileDisabled = { [weak self] in
       guard let strongSelf = self else { return }
       if strongSelf.totalTimerView.timer.isPaused {
@@ -77,11 +115,6 @@ class ViewController: UIViewController {
       }
     }
 
-    self.view.addSubview(self.totalTimerView)
-    self.totalTimerView.translatesAutoresizingMaskIntoConstraints = false
-    self.totalTimerView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
-    self.totalTimerView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-    self.totalTimerView.centerYAnchor.constraint(equalTo: bottomLayoutGuide.topAnchor).isActive = true
     self.totalTimerView.onTimerReset = { [weak self] in
       guard let strongSelf = self else { return }
       strongSelf.keepScreenFromLocking(false)
@@ -102,28 +135,6 @@ class ViewController: UIViewController {
       strongSelf.restTimerView.timer.reset()
       strongSelf.playPauseButton.currentButtonImage = .play
     }
-
-    let buttonStack = UIStackView()
-    buttonStack.spacing = 10
-    self.view.addSubview(buttonStack)
-    buttonStack.translatesAutoresizingMaskIntoConstraints = false
-    buttonStack.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-    buttonStack.topAnchor.constraint(equalTo: self.totalTimerView.bottomAnchor, constant: 25).isActive = true
-    buttonStack.heightAnchor.constraint(equalToConstant: 50).isActive = true
-    buttonStack.addArrangedSubview(self.playPauseButton)
-    buttonStack.addArrangedSubview(self.refreshButton)
-
-    self.playPauseButton.addTarget(self, action: #selector(self.startBtnTapped), for: .touchUpInside)
-    self.refreshButton.addTarget(self, action: #selector(self.resetBtnTapped), for: .touchUpInside)
-
-    let settings = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(self.presentSettings))
-    self.navigationItem.rightBarButtonItem = settings
-
-    let clock = ClockView()
-    self.view.addSubview(clock)
-    clock.translatesAutoresizingMaskIntoConstraints = false
-    clock.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -5).isActive = true
-    clock.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -5).isActive = true
   }
 
   override func viewWillAppear(_ animated: Bool) {

@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
 class TimerActions: UIView {
   var onTimerStart: (() -> ())?
@@ -23,12 +24,9 @@ class TotalTimerView: TimerActions {
     super.init(frame: frame)
     self.timer.delegate = self
     self.addSubview(self.timerView)
-    self.timerView.translatesAutoresizingMaskIntoConstraints = false
-    self.timerView.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
-    self.timerView.heightAnchor.constraint(equalTo: self.heightAnchor).isActive = true
-    self.timerView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-    self.timerView.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-
+    self.timerView.snp.makeConstraints { (make) in
+      make.edges.equalToSuperview()
+    }
     self.timerView.enlarge()
     self.timerView.setTime(seconds: 0)
     self.timerView.textLabel.text = "Total Time"
