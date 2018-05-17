@@ -74,12 +74,14 @@ class RestTimerView: TimerActions {
 
   @objc private func startTap(sender: UITapGestureRecognizer) {
     print(#function)
-    if !self.isEnabled {
-      self.onTimerStartAttemptedWhileDisabled?()
-      return
-    }
     // Ignore taps on the stepper
     if self.stepper.frame.contains(sender.location(in: self)) {
+      print("tapped stepper")
+      return
+    }
+
+    if !self.isEnabled {
+      self.onTimerStartAttemptedWhileDisabled?()
       return
     }
 
@@ -94,7 +96,7 @@ class RestTimerView: TimerActions {
   }
 
   func timerLabelColorChanged(to: UIColor) -> Bool {
-    if to == TimerView.Constants.Active.textColor {
+    if to == TimerView.Constants.Inactive.textColor {
       return false
     }
     return to != self.timerLabel.color
@@ -116,9 +118,14 @@ extension RestTimerView: TimerDelegate {
     if seconds >= restTimerSeconds {
       textColor = .red
     }
+
+    if seconds == 0 {
+      textColor = TimerView.Constants.Inactive.textColor
+    }
     if self.timerLabelColorChanged(to: textColor) {
       self.timerLabel.shake()
     }
+
     self.timerLabel.color = textColor
   }
 
