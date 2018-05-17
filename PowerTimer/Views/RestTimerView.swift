@@ -92,6 +92,13 @@ class RestTimerView: TimerActions {
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+
+  func timerLabelColorChanged(to: UIColor) -> Bool {
+    if to == TimerView.Constants.Active.textColor {
+      return false
+    }
+    return to != self.timerLabel.color
+  }
 }
 
 extension RestTimerView: TimerDelegate {
@@ -99,15 +106,18 @@ extension RestTimerView: TimerDelegate {
     print(#function, seconds)
     self.timerLabel.setTime(seconds: seconds)
     let restTimerSeconds = Settings.RestTimerMinutes * 60
-    var textColor: UIColor = .white
+    var textColor: UIColor = TimerView.Constants.Active.textColor
 
     // Only use the warning label a minute before the restTimer is over
     // if the restTimeOver is more than a minute
-    if restTimerSeconds >= 60 && seconds >= restTimerSeconds - 60 {
+    if restTimerSeconds >=/*remove =*/ 60 && seconds >= restTimerSeconds - 60 {
       textColor = .orange
     }
     if seconds >= restTimerSeconds {
       textColor = .red
+    }
+    if self.timerLabelColorChanged(to: textColor) {
+      self.timerLabel.shake()
     }
     self.timerLabel.color = textColor
   }

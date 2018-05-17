@@ -34,7 +34,11 @@ protocol TimerDelegate: class {
 }
 
 class CountUpTimer {
-  private var currentSeconds: Int = 0
+  private var currentSeconds: Int = 0 {
+    didSet {
+      self.delegate?.onTimeChanged(seconds: self.currentSeconds)
+    }
+  }
   private var timer: Timer?
   weak var delegate: TimerDelegate?
 
@@ -54,7 +58,6 @@ class CountUpTimer {
     }
     self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
       self.currentSeconds += 1
-      self.delegate?.onTimeChanged(seconds: self.currentSeconds)
       if self.currentSeconds > self.maxSecond {
         self.pause()
       }
@@ -78,7 +81,11 @@ class CountUpTimer {
 }
 
 class CountDownTimer {
-  private var currentSeconds: Int = 0
+  private var currentSeconds: Int = 0 {
+    didSet {
+      self.delegate?.onTimeChanged(seconds: self.currentSeconds)
+    }
+  }
   private var timer: Timer?
   private var startSeconds: Int
 
@@ -90,7 +97,6 @@ class CountDownTimer {
   func start() {
     self.timer = Timer(timeInterval: 1, repeats: true, block: { _ in
       self.currentSeconds -= 1
-      self.delegate?.onTimeChanged(seconds: self.currentSeconds)
     })
   }
   func pause() {

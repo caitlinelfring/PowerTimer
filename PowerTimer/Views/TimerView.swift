@@ -73,7 +73,8 @@ class TimerView: UIView {
     self.textLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
 
     self.label.font = Constants.Active.font
-    self.label.textColor = Constants.Active.textColor
+    self.label.textColor = self.color
+    self.textLabel.textColor = self.color
   }
 
   func setTime(seconds: Int) {
@@ -107,8 +108,7 @@ class TimerView: UIView {
     self.label.setNeedsUpdateConstraints()
     let animations = {
       self.label.transform = .identity
-      self.label.textColor = color
-      self.textLabel.textColor = color
+      self.color = color
       self.layoutIfNeeded()
       // So all the views that are around this view animate too
       self.superview?.layoutIfNeeded()
