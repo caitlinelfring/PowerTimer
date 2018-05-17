@@ -103,7 +103,7 @@ class RestTimerView: TimerActions {
 
 extension RestTimerView: TimerDelegate {
   func onTimeChanged(seconds: Int) {
-    print(#function, seconds)
+    print(#function, String(describing: type(of: self)), seconds)
     self.timerLabel.setTime(seconds: seconds)
     let restTimerSeconds = Settings.RestTimerMinutes * 60
     var textColor: UIColor = TimerView.Constants.Active.textColor

@@ -159,7 +159,6 @@ class ViewController: UIViewController {
 
   @objc private func startBtnTapped(sender: PlayPauseButton) {
     print(#function)
-    print(sender.isPlay)
     if sender.isPlay {
       self.totalTimerView.timer.start()
       self.tipsManager?.dismiss(forType: .startTimer)
