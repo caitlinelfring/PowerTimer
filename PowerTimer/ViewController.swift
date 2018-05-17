@@ -24,8 +24,7 @@ class ViewController: UIViewController {
   let totalTimerView = TotalTimerView()
   let restTimerView = RestTimerView()
 
-  let playButton = PlayButton()
-  let pauseButton = PauseButton()
+  let playPauseButton = PlayPauseButton()
   let refreshButton = RefreshButton()
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -71,11 +70,10 @@ class ViewController: UIViewController {
     self.restTimerView.onTimerStartAttemptedWhileDisabled = { [weak self] in
       guard let strongSelf = self else { return }
       if strongSelf.totalTimerView.timer.isPaused {
-        strongSelf.playButton.shake(withDirection: .rotate)
+        strongSelf.playPauseButton.shake(withDirection: .rotate)
       } else {
         strongSelf.totalTimerView.timer.start()
         strongSelf.restTimerView.timer.start()
-        // FIXME: This causes the visibility of the pause button to animate strangely
       }
     }
 
@@ -89,20 +87,20 @@ class ViewController: UIViewController {
       strongSelf.keepScreenFromLocking(false)
       strongSelf.restTimerView.isEnabled = false
       strongSelf.restTimerView.timer.reset()
-      strongSelf.updateButtonStates()
+      strongSelf.playPauseButton.currentButtonImage = .play
     }
     self.totalTimerView.onTimerStart = { [weak self] in
       guard let strongSelf = self else { return }
       strongSelf.keepScreenFromLocking(true)
       strongSelf.restTimerView.isEnabled = true
-      strongSelf.updateButtonStates()
+      strongSelf.playPauseButton.currentButtonImage = .pause
     }
     self.totalTimerView.onTimerPaused = { [weak self] in
       guard let strongSelf = self else { return }
       strongSelf.keepScreenFromLocking(false)
       strongSelf.restTimerView.isEnabled = false
       strongSelf.restTimerView.timer.reset()
-      strongSelf.updateButtonStates()
+      strongSelf.playPauseButton.currentButtonImage = .play
     }
 
     let buttonStack = UIStackView()
@@ -112,15 +110,11 @@ class ViewController: UIViewController {
     buttonStack.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
     buttonStack.topAnchor.constraint(equalTo: self.totalTimerView.bottomAnchor, constant: 25).isActive = true
     buttonStack.heightAnchor.constraint(equalToConstant: 50).isActive = true
-    buttonStack.addArrangedSubview(self.playButton)
-    buttonStack.addArrangedSubview(self.pauseButton)
+    buttonStack.addArrangedSubview(self.playPauseButton)
     buttonStack.addArrangedSubview(self.refreshButton)
 
-    self.playButton.addTarget(self, action: #selector(self.startBtnTapped), for: .touchUpInside)
-    self.pauseButton.addTarget(self, action: #selector(self.pauseBtnTapped), for: .touchUpInside)
+    self.playPauseButton.addTarget(self, action: #selector(self.startBtnTapped), for: .touchUpInside)
     self.refreshButton.addTarget(self, action: #selector(self.resetBtnTapped), for: .touchUpInside)
-
-    self.updateButtonStates()
 
     let settings = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(self.presentSettings))
     self.navigationItem.rightBarButtonItem = settings
@@ -154,11 +148,7 @@ class ViewController: UIViewController {
     }
     switch next {
     case .startTimer:
-      var playOrPause: ImageButton = self.playButton
-      if self.playButton.isHidden {
-        playOrPause = self.pauseButton
-      }
-      self.tipsManager!.show(inView: playOrPause, forType: next, withinSuperView: self.view)
+      self.tipsManager!.show(inView: self.playPauseButton, forType: next, withinSuperView: self.view)
     case .startRestTimer, .stopRestTimer:
       self.tipsManager!.show(inView: self.restTimerView, forType: next, withinSuperView: self.view)
     case .settings:
@@ -167,28 +157,20 @@ class ViewController: UIViewController {
 
   }
 
-  func updateButtonStates() {
-    self.playButton.isHidden = self.totalTimerView.timer.isActive
-    self.pauseButton.isHidden = !self.playButton.isHidden
-  }
-
-  @objc private func startBtnTapped(sender: ImageButton) {
+  @objc private func startBtnTapped(sender: PlayPauseButton) {
     print(#function)
-    self.totalTimerView.timer.start()
-    self.updateButtonStates()
-    self.tipsManager?.dismiss(forType: .startTimer)
-  }
-
-  @objc private func pauseBtnTapped(sender: ImageButton) {
-    print(#function)
-    self.totalTimerView.timer.pause()
-    self.updateButtonStates()
+    print(sender.isPlay)
+    if sender.isPlay {
+      self.totalTimerView.timer.start()
+      self.tipsManager?.dismiss(forType: .startTimer)
+    } else {
+      self.totalTimerView.timer.pause()
+    }
   }
 
   @objc private func resetBtnTapped(sender: ImageButton) {
     print(#function)
     self.resetTimers()
-    self.updateButtonStates()
   }
 
   @objc private func presentSettings() {
