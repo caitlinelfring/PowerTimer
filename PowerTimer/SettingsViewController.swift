@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import ValueStepper
 
 class SettingTableViewController: UITableViewController {
   override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -30,15 +31,13 @@ class SettingTableViewController: UITableViewController {
   }
 
   private var items = [Item]()
-  private let restCell = UITableViewCell(style: .subtitle, reuseIdentifier: nil)
 
   override init(style: UITableViewStyle) {
     super.init(style: style)
 
-    self.restCell.accessoryView = restStepper()
-    self.restCell.textLabel?.text = "Rest Time"
-    self.updateRestCellSubtitle()
-    self.items.append(Item(title: "Rest Time", cell: self.restCell))
+    let restCell = UITableViewCell()
+    restCell.accessoryView = restStepper()
+    self.items.append(Item(title: "Rest Time", cell: restCell))
 
     let timerTypeCell = UITableViewCell()
     timerTypeCell.accessoryView = timerTypeControl()
@@ -66,12 +65,18 @@ class SettingTableViewController: UITableViewController {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func restStepper() -> UIStepper {
-    let stepper = UIStepper()
+  func restStepper() -> ValueStepper {
+    let stepper = ValueStepper()
     stepper.minimumValue = 1
     stepper.maximumValue = 20
     stepper.stepValue = 1
-    stepper.wraps = false
+    stepper.autorepeat = false
+    stepper.tintColor = self.view.tintColor
+    stepper.labelTextColor = self.view.tintColor
+    stepper.backgroundLabelColor = .clear
+    stepper.backgroundColor = .clear
+    stepper.backgroundButtonColor = .clear
+    stepper.highlightedBackgroundColor = .gray
     stepper.value = Double(Settings.RestTimerMinutes)
     stepper.addTarget(self, action: #selector(self.didChangeRestMinutes), for: .valueChanged)
     return stepper
@@ -87,13 +92,9 @@ class SettingTableViewController: UITableViewController {
 
     return segmentControl
   }
-  func updateRestCellSubtitle() {
-    self.restCell.detailTextLabel?.text = "\(Settings.RestTimerMinutes) minutes"
-  }
 
   @objc func didChangeRestMinutes(sender: UIStepper) {
     Settings.RestTimerMinutes = Int(sender.value)
-    self.updateRestCellSubtitle()
   }
 
   @objc private func didChangeTimerType(sender: UISegmentedControl) {
