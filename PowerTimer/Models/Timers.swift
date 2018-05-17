@@ -44,6 +44,10 @@ class CountUpTimer {
     return self.timer != nil
   }
 
+  var isPaused: Bool {
+    return self.isActive && self.currentSeconds > 0
+  }
+
   func start() {
     if self.timer != nil {
       return

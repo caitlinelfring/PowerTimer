@@ -69,7 +69,14 @@ class ViewController: UIViewController {
     }
 
     self.restTimerView.onTimerStartAttemptedWhileDisabled = { [weak self] in
-      self?.playButton.shake(withDirection: .rotate)
+      guard let strongSelf = self else { return }
+      if strongSelf.totalTimerView.timer.isPaused {
+        strongSelf.playButton.shake(withDirection: .rotate)
+      } else {
+        strongSelf.totalTimerView.timer.start()
+        strongSelf.restTimerView.timer.start()
+        // FIXME: This causes the visibility of the pause button to animate strangely
+      }
     }
 
     self.view.addSubview(self.totalTimerView)
