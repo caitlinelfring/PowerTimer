@@ -66,6 +66,8 @@ class SettingTableViewController: UITableViewController {
   }
 
   func restStepper() -> ValueStepper {
+    // TODO: Fork this repo and make it so I can subclass ValueStepper
+    // in order to store these defaults so they aren't repeated in the view controller and settings
     let stepper = ValueStepper()
     stepper.minimumValue = 1
     stepper.maximumValue = 20
