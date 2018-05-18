@@ -28,7 +28,7 @@ CHECKOUT OPTIONS:
     :commit: 4f8eb82
     :git: https://github.com/jitendragaur/EasyTipView.git
   ValueStepper:
-    :commit: f34859fac4680a0b3ea7532b2536b81ae42d5b29
+    :commit: cfb8be7356c0c464db4f8a56fd7b6fd9e8ae7f33
     :git: https://github.com/caitlin615/ValueStepper.git
 
 SPEC CHECKSUMS:

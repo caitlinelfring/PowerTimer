@@ -18,18 +18,7 @@ class RestTimerView: TimerActions {
   var tapGestureRecognizer: UITapGestureRecognizer!
 
   let timerView = TimerView()
-  let stepper: ValueStepper = {
-    let stepper = ValueStepper()
-    stepper.tintColor = .white
-    stepper.minimumValue = 1
-    stepper.maximumValue = 20
-    stepper.stepValue = 1
-    stepper.autorepeat = false
-    stepper.tintColor = TimerView.Constants.Inactive.textColor
-    stepper.labelTextColor = TimerView.Constants.Inactive.textColor
-    return stepper
-  }()
-
+  let stepper = RestTimerStepper()
   var onTimerStartAttemptedWhileDisabled: (() -> ())?
 
   override init(frame: CGRect) {

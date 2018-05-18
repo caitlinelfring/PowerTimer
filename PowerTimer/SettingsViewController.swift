@@ -68,39 +68,16 @@ class SettingTableViewController: UITableViewController {
   }
 
   func restStepper() -> ValueStepper {
-    // TODO: Fork this repo and make it so I can subclass ValueStepper
-    // in order to store these defaults so they aren't repeated in the view controller and settings
-    let stepper = ValueStepper()
-    stepper.minimumValue = 1
-    stepper.maximumValue = 20
-    stepper.stepValue = 1
-    stepper.autorepeat = false
-    stepper.tintColor = self.view.tintColor
+    let stepper = SettingsRestTimerStepper()
     stepper.labelTextColor = self.view.tintColor
-    stepper.backgroundLabelColor = .clear
-    stepper.backgroundColor = .clear
-    stepper.backgroundButtonColor = .clear
-    stepper.highlightedBackgroundColor = .gray
     stepper.value = Double(Settings.RestTimerMinutes)
     stepper.addTarget(self, action: #selector(self.didChangeRestMinutes), for: .valueChanged)
     return stepper
   }
 
   func countDownTimerStepper() -> ValueStepper {
-    // TODO: Fork this repo and make it so I can subclass ValueStepper
-    // in order to store these defaults so they aren't repeated in the view controller and settings
-    let stepper = ValueStepper()
-    stepper.minimumValue = 1
-    stepper.maximumValue = 90
-    stepper.stepValue = 1
-    stepper.autorepeat = false
-    stepper.tintColor = self.view.tintColor
+    let stepper = SettingsCountDownTimerStepper()
     stepper.labelTextColor = self.view.tintColor
-    stepper.backgroundLabelColor = .clear
-    stepper.backgroundColor = .clear
-    stepper.backgroundButtonColor = .clear
-    stepper.highlightedBackgroundColor = .gray
-    stepper.enableManualEditing = true
     stepper.value = Double(Settings.CountDownTimerMinutes)
     stepper.addTarget(self, action: #selector(self.didChangeCountDownTimerMinutes), for: .valueChanged)
     return stepper
