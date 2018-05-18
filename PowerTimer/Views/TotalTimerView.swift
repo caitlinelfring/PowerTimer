@@ -24,7 +24,6 @@ class TotalTimerView: TimerActions {
     super.init(frame: frame)
     self.updateCountTimer()
 
-    self.timer.delegate = self
     self.addSubview(self.timerView)
     self.timerView.snp.makeConstraints { (make) in
       make.edges.equalToSuperview()
@@ -42,6 +41,7 @@ class TotalTimerView: TimerActions {
     } else {
       self.timer = CountUpTimer()
     }
+    self.timer.delegate = self
     self.timerView.setTime(seconds: self.timer.currentSeconds)
   }
 }
