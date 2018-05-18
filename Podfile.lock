@@ -1,15 +1,18 @@
 PODS:
   - EasyTipView (1.0.2)
+  - SideMenu (3.1.5)
   - SnapKit (4.0.0)
   - ValueStepper (1.5)
 
 DEPENDENCIES:
   - EasyTipView (from `https://github.com/jitendragaur/EasyTipView.git`, commit `4f8eb82`)
+  - SideMenu
   - SnapKit (~> 4.0)
   - ValueStepper
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - SideMenu
     - SnapKit
     - ValueStepper
 
@@ -25,9 +28,10 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   EasyTipView: b93a19be981cc2221d6d7191d49872f547e0bebf
+  SideMenu: 47dbf9e4d878062d8994aed43f6e4bf6c1fea30b
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
   ValueStepper: e84d21a2ce62a7975df8b222c7273d6810f7e78c
 
-PODFILE CHECKSUM: 74ee4b891f24fbfabaed7e5500741aa81d8cef70
+PODFILE CHECKSUM: 5545ffe8ab90688867d292ea79105887dd07a8ad
 
 COCOAPODS: 1.5.2

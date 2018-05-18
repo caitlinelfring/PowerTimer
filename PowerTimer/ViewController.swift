@@ -8,6 +8,7 @@
 
 import UIKit
 import SnapKit
+import SideMenu
 
 // Since I'm not subclassing UINavigationController, this is the simplist way
 // to get the status bar styles working correctly in a navigation stack
@@ -40,6 +41,7 @@ class ViewController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
+
     self.view.backgroundColor = .black
 
     self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
@@ -72,6 +74,9 @@ class ViewController: UIViewController {
     let menu = UIImage(named: "menu")!.withAlignmentRectInsets(UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0))
     let settings = UIBarButtonItem(image: menu, style: .plain, target: self, action: #selector(self.presentSettings))
     self.navigationItem.leftBarButtonItem = settings
+
+    SideMenuManager.default.menuLeftNavigationController = UISideMenuNavigationController(rootViewController: SettingTableViewController())
+    SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view, forMenu: .left)
 
     // MARK: TimerView functions
     self.restTimerView.onTimerStart = { [weak self] in
@@ -165,11 +170,10 @@ class ViewController: UIViewController {
   }
 
   @objc private func presentSettings() {
-    let settingsVC = SettingTableViewController()
-    if let nav = self.navigationController {
-      nav.pushViewController(settingsVC, animated: true)
+    if self.presentedViewController != nil {
+      self.dismiss(animated: true, completion: nil)
     } else {
-      self.present(settingsVC, animated: true, completion: nil)
+      self.present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
     }
     self.tipsManager?.dismiss(forType: .settings)
   }

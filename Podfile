@@ -5,4 +5,5 @@ target 'PowerTimer' do
   pod 'EasyTipView', :git => 'https://github.com/jitendragaur/EasyTipView.git', :commit => '4f8eb82'
   pod 'ValueStepper'
   pod 'SnapKit', '~> 4.0'
+  pod 'SideMenu'
 end
