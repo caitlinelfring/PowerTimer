@@ -69,6 +69,8 @@ class CountTimer {
     self.delegate?.onPaused()
   }
   func reset() {
+    self.startTime = nil
+    self.elapsedTime = 0
     self.invalidate()
     self.delegate?.onReset()
   }
@@ -79,7 +81,7 @@ class CountTimer {
 }
 
 class CountUpTimer: CountTimer {
-  private let maxSecond: Int = 90 * 60
+  private let maxSecond: Int = 90 * 60 // 90 minutes
 
   override func timerBlock(_ timer: Timer) {
     super.timerBlock(timer)
