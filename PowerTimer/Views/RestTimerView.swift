@@ -50,15 +50,12 @@ class RestTimerView: TimerActions {
     self.stepper.snp.makeConstraints { (make) in
       make.top.equalTo(self.timerLabel.snp.bottom).offset(10)
       make.centerX.equalToSuperview()
+      make.bottom.equalToSuperview()
     }
 
     self.tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.startTap))
     self.tapGestureRecognizer.cancelsTouchesInView = false
     self.addGestureRecognizer(self.tapGestureRecognizer)
-  }
-
-  override func layoutSubviews() {
-    super.layoutSubviews()
   }
 
   func updateStepper() {

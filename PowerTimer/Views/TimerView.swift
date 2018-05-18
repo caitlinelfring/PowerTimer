@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
 class TimerView: UIView {
 
@@ -55,10 +56,9 @@ class TimerView: UIView {
     self.label.adjustsFontSizeToFitWidth = true
     self.label.textAlignment = .center
     self.addSubview(self.label)
-    self.label.translatesAutoresizingMaskIntoConstraints = false
-    self.label.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-    self.label.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
-    self.label.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+    self.label.snp.makeConstraints { (make) in
+      make.top.width.centerX.equalToSuperview()
+    }
     self.setTime(seconds: 0)
 
     self.textLabel.textColor = .white
@@ -66,11 +66,10 @@ class TimerView: UIView {
     self.textLabel.font = UIFont.systemFont(ofSize: 20)
     self.textLabel.adjustsFontSizeToFitWidth = true
     self.addSubview(self.textLabel)
-    self.textLabel.translatesAutoresizingMaskIntoConstraints = false
-    self.textLabel.widthAnchor.constraint(equalTo: self.widthAnchor).isActive = true
-    self.textLabel.topAnchor.constraint(equalTo: self.label.bottomAnchor).isActive = true
-    self.textLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-    self.textLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+    self.textLabel.snp.makeConstraints { (make) in
+      make.width.centerX.bottom.equalToSuperview()
+      make.top.equalTo(self.label.snp.bottom)
+    }
 
     self.label.font = Constants.Active.font
     self.label.textColor = self.color

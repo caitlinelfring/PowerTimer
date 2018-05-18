@@ -29,7 +29,7 @@ class ClockView: UIView {
     self.clockUpdateTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { _ in
       self.update()
     })
-    self.clockUpdateTimer.tolerance = 5.0
+    self.clockUpdateTimer.tolerance = 30
 
     let font = UIFont(name: "Helvetica Light", size: 55)
     self.clock.font = font
