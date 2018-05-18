@@ -28,7 +28,7 @@ The best part is, **you can continue to keep the time of your entire workout!**
 - [x] Set max time for countUp timer
 - [x] Add intro tooltips
 - [x] Use SnapKit and handle portrait/landscape modes
-- [ ] Slide-out menu for settings
+- [x] Slide-out menu for settings
 
 ### Nice to haves
 - [ ] Light/dark theme
