@@ -8,30 +8,35 @@ DEPENDENCIES:
   - EasyTipView (from `https://github.com/jitendragaur/EasyTipView.git`, commit `4f8eb82`)
   - SideMenu
   - SnapKit (~> 4.0)
-  - ValueStepper
+  - ValueStepper (from `https://github.com/caitlin615/ValueStepper.git`, branch `master`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - SideMenu
     - SnapKit
-    - ValueStepper
 
 EXTERNAL SOURCES:
   EasyTipView:
     :commit: 4f8eb82
     :git: https://github.com/jitendragaur/EasyTipView.git
+  ValueStepper:
+    :branch: master
+    :git: https://github.com/caitlin615/ValueStepper.git
 
 CHECKOUT OPTIONS:
   EasyTipView:
     :commit: 4f8eb82
     :git: https://github.com/jitendragaur/EasyTipView.git
+  ValueStepper:
+    :commit: f34859fac4680a0b3ea7532b2536b81ae42d5b29
+    :git: https://github.com/caitlin615/ValueStepper.git
 
 SPEC CHECKSUMS:
   EasyTipView: b93a19be981cc2221d6d7191d49872f547e0bebf
   SideMenu: 47dbf9e4d878062d8994aed43f6e4bf6c1fea30b
   SnapKit: a42d492c16e80209130a3379f73596c3454b7694
-  ValueStepper: e84d21a2ce62a7975df8b222c7273d6810f7e78c
+  ValueStepper: 577857afaa07313c82a7ac686ae2f06994b913c4
 
-PODFILE CHECKSUM: 5545ffe8ab90688867d292ea79105887dd07a8ad
+PODFILE CHECKSUM: afd925defb2470e1f67530cae7afae2950e2c3ef
 
 COCOAPODS: 1.5.2
