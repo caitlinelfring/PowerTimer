@@ -20,10 +20,10 @@ The best part is, **you can continue to keep the time of your entire workout!**
 
 
 ### TODO
-- [ ] Handle backgrounding (make sure timers are stopped, but are still counting)
+- [x] Handle backgrounding (make sure timers are stopped, but are still counting)
 - [x] Use TableView in settings
 - [x] Move rest minute setting into main VC
-- [ ] Add CountDown timer
+- [x] Add CountDown timer
 - [x] Fix launch screen
 - [x] Set max time for countUp timer
 - [x] Add intro tooltips
