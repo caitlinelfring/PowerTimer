@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import ValueStepper
 import SnapKit
+import EasyTipView
 
 class SettingTableViewController: UITableViewController {
   struct Item {
@@ -32,7 +33,10 @@ class SettingTableViewController: UITableViewController {
     self.init(style: .plain)
   }
 
+  private var canChangeTimerType: Bool = true
+
   private var items = [Item]()
+  private var currentTip: EasyTipView?
 
   override init(style: UITableViewStyle) {
     super.init(style: style)
@@ -41,7 +45,21 @@ class SettingTableViewController: UITableViewController {
     self.items.append(Item(title: "Rest Time", height: 80, cell: restCell))
 
     let timerTypeCell = SettingsCell(accessory: timerTypeControl())
-    self.items.append(Item(title: "Timer Type", height: 80, cell: timerTypeCell))
+    var ttcItem = Item(title: "Timer Type", height: 80, cell: timerTypeCell)
+    ttcItem.shouldEnable = { return self.canChangeTimerType }
+    ttcItem.didPress = {
+      if !self.canChangeTimerType {
+        var prefs = EasyTipView.Preferences()
+        prefs.animating.dismissOnTap = true
+        self.currentTip?.dismiss()
+        self.currentTip = EasyTipView(text: "Pause the current timer before changing the timer type.", preferences: prefs, delegate: nil)
+        self.currentTip!.show(animated: true, forView: timerTypeCell.accessory, withinSuperview: self.view)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5, execute: {
+          self.currentTip?.dismiss()
+        })
+      }
+    }
+    self.items.append(ttcItem)
 
     let countDownTimerMinutesCell = SettingsCell(accessory: countDownTimerStepper())
     var cdt = Item(title: "CountDown Minutes", height: 80, cell: countDownTimerMinutesCell)
@@ -65,6 +83,18 @@ class SettingTableViewController: UITableViewController {
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    self.currentTip?.dismiss()
+  }
+
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    if let vc = (UIApplication.shared.keyWindow?.rootViewController as? UINavigationController)?.childViewControllers.first as? ViewController {
+      self.canChangeTimerType = !vc.totalTimerView.timer.isActive
+    }
   }
 
   func restStepper() -> ValueStepper {
@@ -138,7 +168,7 @@ class SettingTableViewController: UITableViewController {
 }
 
 class SettingsCell: UITableViewCell {
-  private var accessory = UIView()
+  private(set) var accessory = UIView()
 
   var isEnabled: Bool = true {
     didSet {
