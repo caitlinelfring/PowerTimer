@@ -144,7 +144,7 @@ class ViewController: UIViewController {
     }
     if self.tipsManager == nil {
       self.tipsManager = TipManager()
-      self.tipsManager!.onNextTip = self.showNextTip
+      self.tipsManager!.onNextTip = { [weak self] in self?.showNextTip() }
     }
     switch next {
     case .startTimer:
