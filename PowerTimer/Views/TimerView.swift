@@ -98,7 +98,7 @@ class TimerView: UIView {
   }
 
   func animateTo(font: UIFont, color: UIColor, animate: Bool = true) {
-    let duration: TimeInterval = 0.5
+    let duration: TimeInterval = 0.25
     let oldFont = self.label.font
     self.label.font = font
     let labelScale = oldFont!.pointSize / font.pointSize
