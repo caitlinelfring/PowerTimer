@@ -270,6 +270,7 @@ extension ViewController: UISideMenuNavigationControllerDelegate {
   func sideMenuWillDisappear(menu: UISideMenuNavigationController, animated: Bool) {
     print("SideMenu Disappearing! (animated: \(animated))")
     self.restTimerView.updateStepper()
+    self.totalTimerView.updateCountTimer()
   }
 
   func sideMenuDidDisappear(menu: UISideMenuNavigationController, animated: Bool) {

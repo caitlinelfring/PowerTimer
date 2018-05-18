@@ -17,16 +17,12 @@ class TimerActions: UIView {
 }
 
 class TotalTimerView: TimerActions {
-  let timer: CountTimer
+  var timer: CountTimer!
   let timerView = TimerView()
 
   override init(frame: CGRect) {
-    if Settings.SavedTimerType == .countDown {
-      self.timer = CountDownTimer(seconds: 60)
-    } else {
-      self.timer = CountUpTimer()
-    }
     super.init(frame: frame)
+    self.updateCountTimer()
 
     self.timer.delegate = self
     self.addSubview(self.timerView)
@@ -34,12 +30,19 @@ class TotalTimerView: TimerActions {
       make.edges.equalToSuperview()
     }
     self.timerView.enlarge()
-    self.timerView.setTime(seconds: self.timer.currentSeconds)
     self.timerView.textLabel.text = "Total Time"
   }
 
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+  func updateCountTimer() {
+    if Settings.SavedTimerType == .countDown {
+      self.timer = CountDownTimer(seconds: Settings.CountDownTimerMinutes * 60)
+    } else {
+      self.timer = CountUpTimer()
+    }
+    self.timerView.setTime(seconds: self.timer.currentSeconds)
   }
 }
 

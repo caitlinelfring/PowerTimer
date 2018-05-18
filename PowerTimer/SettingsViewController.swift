@@ -14,15 +14,17 @@ import SnapKit
 class SettingTableViewController: UITableViewController {
   struct Item {
     var title: String
-    var cell: UITableViewCell
+    var cell: SettingsCell
     var didPress: (() -> ())?
     var height: CGFloat
+    var shouldEnable: (() -> Bool)
 
-    init(title: String, height: CGFloat = UITableViewAutomaticDimension, cell: UITableViewCell = UITableViewCell(), didPress: (() -> ())? = nil) {
+    init(title: String, height: CGFloat = 44, cell: SettingsCell = SettingsCell(), didPress: (() -> ())? = nil) {
       self.title = title
       self.height = height
       self.cell = cell
       self.didPress = didPress
+      self.shouldEnable = { return true }
     }
   }
 
@@ -35,14 +37,18 @@ class SettingTableViewController: UITableViewController {
   override init(style: UITableViewStyle) {
     super.init(style: style)
 
-    let restCell = SettingsAccessoryViewCell(accessory: restStepper())
-    self.items.append(Item(title: "Rest Time", height: 83, cell: restCell))
+    let restCell = SettingsCell(accessory: restStepper())
+    self.items.append(Item(title: "Rest Time", height: 80, cell: restCell))
 
-    let timerTypeCell = SettingsAccessoryViewCell(accessory: timerTypeControl())
-    self.items.append(Item(title: "Timer Type", height: 83, cell: timerTypeCell))
+    let timerTypeCell = SettingsCell(accessory: timerTypeControl())
+    self.items.append(Item(title: "Timer Type", height: 80, cell: timerTypeCell))
 
-    let resetTipsCell = UITableViewCell()
-    self.items.append(Item(title: "Reset Intro Tips", cell: resetTipsCell, didPress: {
+    let countDownTimerMinutesCell = SettingsCell(accessory: countDownTimerStepper())
+    var cdt = Item(title: "CountDown Minutes", height: 80, cell: countDownTimerMinutesCell)
+    cdt.shouldEnable = { return Settings.SavedTimerType == .countDown }
+    self.items.append(cdt)
+
+    self.items.append(Item(title: "Reset Intro Tips", didPress: {
       Settings.IntroTips.reset()
       self.navigationController?.popViewController(animated: true)
     }))
@@ -52,7 +58,7 @@ class SettingTableViewController: UITableViewController {
     self.tableView.tableHeaderView = UIView()
     self.tableView.tableFooterView = UIView()
     self.tableView.estimatedRowHeight = 44
-    self.tableView.rowHeight = UITableViewAutomaticDimension
+    self.tableView.rowHeight = 44
 
     self.navigationItem.title = "SETTINGS"
   }
@@ -80,6 +86,26 @@ class SettingTableViewController: UITableViewController {
     return stepper
   }
 
+  func countDownTimerStepper() -> ValueStepper {
+    // TODO: Fork this repo and make it so I can subclass ValueStepper
+    // in order to store these defaults so they aren't repeated in the view controller and settings
+    let stepper = ValueStepper()
+    stepper.minimumValue = 1
+    stepper.maximumValue = 90
+    stepper.stepValue = 1
+    stepper.autorepeat = false
+    stepper.tintColor = self.view.tintColor
+    stepper.labelTextColor = self.view.tintColor
+    stepper.backgroundLabelColor = .clear
+    stepper.backgroundColor = .clear
+    stepper.backgroundButtonColor = .clear
+    stepper.highlightedBackgroundColor = .gray
+    stepper.enableManualEditing = true
+    stepper.value = Double(Settings.CountDownTimerMinutes)
+    stepper.addTarget(self, action: #selector(self.didChangeCountDownTimerMinutes), for: .valueChanged)
+    return stepper
+  }
+
   private func timerTypeControl() -> UISegmentedControl {
     let segmentControl = UISegmentedControl(items: TimerType.available.map { $0.description })
     segmentControl.addTarget(self, action: #selector(self.didChangeTimerType), for: .valueChanged)
@@ -91,8 +117,13 @@ class SettingTableViewController: UITableViewController {
     Settings.RestTimerMinutes = Int(sender.value)
   }
 
+  @objc func didChangeCountDownTimerMinutes(sender: UIStepper) {
+    Settings.CountDownTimerMinutes = Int(sender.value)
+  }
+
   @objc private func didChangeTimerType(sender: UISegmentedControl) {
     Settings.SavedTimerType = TimerType(rawValue: sender.selectedSegmentIndex)!
+    self.tableView.reloadData()
   }
 
   // MARK: Tableview functions
@@ -113,7 +144,8 @@ class SettingTableViewController: UITableViewController {
     if item.didPress == nil {
       item.cell.selectionStyle = .none
     }
-    item.cell.textLabel?.text = item.title
+    item.cell.title = item.title
+    item.cell.isEnabled = item.shouldEnable()
     return item.cell
   }
 
@@ -123,27 +155,65 @@ class SettingTableViewController: UITableViewController {
   }
 
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    return self.items[indexPath.row].height
+    let item = self.items[indexPath.row]
+    return item.height
   }
 }
 
-class SettingsAccessoryViewCell: UITableViewCell {
+class SettingsCell: UITableViewCell {
   private var accessory = UIView()
+
+  var isEnabled: Bool = true {
+    didSet {
+      self.accessory.isUserInteractionEnabled = isEnabled
+      self.accessory.tintColor = isEnabled ? self.tintColor : .gray
+      self.label.textColor = isEnabled ? .black : .gray
+    }
+  }
+  private let label = UILabel()
+  private let container = UIView()
+
+  var title: String? {
+    set(value) {
+      self.label.text = value
+    }
+    get {
+      return self.label.text
+    }
+  }
+
+  convenience init() {
+    self.init(style: .default, reuseIdentifier: nil)
+  }
+
+  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    super.init(style: style, reuseIdentifier: reuseIdentifier)
+    self.contentView.addSubview(self.container)
+    self.container.snp.makeConstraints { (make) in
+      make.edges.equalToSuperview().inset(UIEdgeInsets(top: 5, left: 16, bottom: 10, right: 0))
+    }
+    self.container.addSubview(self.label)
+    self.label.snp.makeConstraints({ (make) in
+      make.edges.equalToSuperview()
+    })
+  }
 
   convenience init(accessory: UIView) {
     self.init(style: .default, reuseIdentifier: nil)
 
-    self.textLabel!.snp.makeConstraints({ (make) in
-      make.top.equalToSuperview().offset(10)
-      make.left.equalToSuperview().offset(16)
-    })
-
     self.accessory = accessory
-    self.contentView.addSubview(self.accessory)
+    self.container.addSubview(self.accessory)
     self.accessory.snp.makeConstraints { (make) in
-      make.left.equalToSuperview().inset(16)
-      make.top.equalTo(self.textLabel!.snp.bottom).offset(10)
-      make.bottom.equalToSuperview().inset(10)
+      make.left.bottom.equalToSuperview()
+      make.top.equalTo(self.container.snp.centerY)
     }
+    self.label.snp.remakeConstraints({ (make) in
+      make.right.top.left.equalToSuperview()
+      make.bottom.equalTo(self.container.snp.centerY)
+    })
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
   }
 }

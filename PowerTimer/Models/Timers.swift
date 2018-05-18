@@ -57,6 +57,9 @@ class CountTimer {
     self.elapsedTime = currentTime - self.startTime
   }
   func start() {
+    if self.timer != nil {
+      return
+    }
     self.startTime = Date.timeIntervalSinceReferenceDate - TimeInterval(self.elapsedTime)
     self.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: self.timerBlock)
     self.delegate?.onStart()
@@ -85,12 +88,6 @@ class CountUpTimer: CountTimer {
       self.pause()
     }
   }
-  override func start() {
-    if self.timer != nil {
-      return
-    }
-    super.start()
-  }
 
   override func reset() {
     self.currentSeconds = 0
@@ -113,12 +110,6 @@ class CountDownTimer: CountTimer {
     if self.currentSeconds == 0 {
       self.pause()
     }
-  }
-  override func start() {
-    if self.timer != nil {
-      return
-    }
-    super.start()
   }
   override func reset() {
     self.currentSeconds = self.startSeconds

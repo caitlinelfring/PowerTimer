@@ -28,6 +28,15 @@ class Settings {
       return defaults.value(forKey: "restTimerMinutes") as? Int ?? 1
     }
   }
+
+  static var CountDownTimerMinutes: Int {
+    set(value) {
+      defaults.set(value, forKey: "CountDownTimerMinutes")
+    }
+    get {
+      return defaults.value(forKey: "CountDownTimerMinutes") as? Int ?? 1
+    }
+  }
   class IntroTips {
     private class func key(_ suffix: String) -> String {
       return "hasSeenIntroTip_\(suffix)"
