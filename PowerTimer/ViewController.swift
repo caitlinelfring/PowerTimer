@@ -22,14 +22,15 @@ extension UINavigationController {
 }
 
 class ViewController: UIViewController {
+  let topView = UIView()
+  let bottomView = UIView()
   let totalTimerView = TotalTimerView()
   let restTimerView = RestTimerView()
+  let clock = ClockView()
 
+  let buttonStack = UIStackView()
   let playPauseButton = PlayPauseButton()
   let refreshButton = RefreshButton()
-
-  var portraitConstraints = [Constraint]()
-  var landscapeConstraints = [Constraint]()
 
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return .lightContent
@@ -47,70 +48,23 @@ class ViewController: UIViewController {
     self.navigationController?.view.backgroundColor = UIColor.clear
     self.navigationController?.navigationBar.tintColor = .white
 
-    let clock = ClockView()
     self.view.addSubview(clock)
     clock.snp.makeConstraints { (make) in
       make.right.equalTo(self.view.safeAreaLayoutGuide.snp.right).inset(5)
       make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(5)
     }
 
-    let topLayoutGuide = UIView()
-    self.view.addSubview(topLayoutGuide)
-    topLayoutGuide.snp.makeConstraints { (make) in
-      make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
-      make.left.equalTo(self.view.safeAreaLayoutGuide)
-
-      self.portraitConstraints.append(make.right.equalTo(self.view.safeAreaLayoutGuide).constraint)
-      self.portraitConstraints.append(make.bottom.equalTo(self.view.snp.centerY).constraint)
-
-      self.landscapeConstraints.append(make.bottom.equalTo(clock.snp.top).constraint)
-      self.landscapeConstraints.append(make.right.equalTo(self.view.safeAreaLayoutGuide.snp.centerX).constraint)
-    }
-
-    let bottomLayoutGuide = UIView()
-    self.view.addSubview(bottomLayoutGuide)
-    bottomLayoutGuide.snp.makeConstraints { (make) in
-      make.bottom.equalTo(clock.snp.top)
-      make.right.equalTo(self.view.safeAreaLayoutGuide)
-
-      self.portraitConstraints.append(make.left.equalTo(self.view.safeAreaLayoutGuide).constraint)
-      self.portraitConstraints.append(make.top.equalTo(topLayoutGuide.snp.bottom).constraint)
-
-      self.landscapeConstraints.append(make.left.equalTo(self.view.safeAreaLayoutGuide.snp.centerX).constraint)
-      self.landscapeConstraints.append(make.top.equalTo(self.view.safeAreaLayoutGuide).constraint)
-    }
-
+    self.view.addSubview(self.topView)
+    self.view.addSubview(self.bottomView)
     self.view.addSubview(self.totalTimerView)
-    self.totalTimerView.snp.makeConstraints { (make) in
-      make.width.equalTo(bottomLayoutGuide)
-      make.centerX.equalTo(bottomLayoutGuide)
-      self.portraitConstraints.append(make.top.equalTo(bottomLayoutGuide).constraint)
-      self.landscapeConstraints.append(make.centerY.equalTo(bottomLayoutGuide).constraint)
-    }
-
     self.view.addSubview(self.restTimerView)
-    self.restTimerView.snp.makeConstraints { (make) in
-      make.width.equalTo(topLayoutGuide)
-      make.centerX.equalTo(topLayoutGuide)
-      self.portraitConstraints.append(make.centerY.equalTo(topLayoutGuide).constraint)
-    }
-    // This is so the two timers are aligned based on their TimerView's centerY in landscape
-    self.restTimerView.timerView.snp.makeConstraints { (make) in
-      self.landscapeConstraints.append(make.centerY.equalTo(self.totalTimerView.timerView.snp.centerY).constraint)
-    }
 
-    let buttonStack = UIStackView()
-    buttonStack.spacing = 10
-    self.view.addSubview(buttonStack)
-    buttonStack.snp.makeConstraints { (make) in
-      self.portraitConstraints.append(make.top.equalTo(self.totalTimerView.snp.bottom).offset(25).constraint)
-      self.landscapeConstraints.append(make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(5).constraint)
-      make.centerX.equalToSuperview()
-      make.height.equalTo(50)
-    }
+    self.buttonStack.spacing = 10
+    self.view.addSubview(self.buttonStack)
+    self.buttonStack.addArrangedSubview(self.playPauseButton)
+    self.buttonStack.addArrangedSubview(self.refreshButton)
 
-    buttonStack.addArrangedSubview(self.playPauseButton)
-    buttonStack.addArrangedSubview(self.refreshButton)
+    self.remakeConstraintsBasedOnOrientation()
 
     self.playPauseButton.addTarget(self, action: #selector(self.startBtnTapped), for: .touchUpInside)
     self.refreshButton.addTarget(self, action: #selector(self.resetBtnTapped), for: .touchUpInside)
@@ -156,8 +110,6 @@ class ViewController: UIViewController {
       strongSelf.restTimerView.timer.reset()
       strongSelf.playPauseButton.currentButtonImage = .play
     }
-
-    self.updateViewsBasedOnOrientation(animated: false)
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -173,24 +125,7 @@ class ViewController: UIViewController {
 
   override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
     super.viewWillTransition(to: size, with: coordinator)
-    self.updateViewsBasedOnOrientation()
-  }
-
-  func updateViewsBasedOnOrientation(animated: Bool = true) {
-    if UIDevice.current.orientation.isPortrait {
-      self.landscapeConstraints.forEach({ $0.deactivate() })
-      self.portraitConstraints.forEach({ $0.activate() })
-    } else {
-      self.portraitConstraints.forEach({ $0.deactivate() })
-      self.landscapeConstraints.forEach({ $0.activate() })
-    }
-    if animated {
-      UIView.animate(withDuration: 0.25) {
-        self.view.layoutIfNeeded()
-      }
-    } else {
-      self.view.layoutIfNeeded()
-    }
+    self.remakeConstraintsBasedOnOrientation()
   }
 
   func showNextTip() {
@@ -260,4 +195,65 @@ class ViewController: UIViewController {
     alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
     self.present(alert, animated: true, completion: nil)
   }
+
+  private func remakeConstraintsBasedOnOrientation(animated: Bool = true) {
+    let isPortrait = UIDevice.current.orientation.isPortrait
+
+    self.topView.snp.remakeConstraints { (make) in
+      make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+      make.left.equalTo(self.view.safeAreaLayoutGuide)
+      if isPortrait {
+        make.right.equalTo(self.view.safeAreaLayoutGuide)
+        make.bottom.equalTo(self.view.snp.centerY)
+      } else {
+        make.bottom.equalTo(self.clock.snp.top)
+        make.right.equalTo(self.view.safeAreaLayoutGuide.snp.centerX)
+      }
+    }
+
+    self.bottomView.snp.remakeConstraints { (make) in
+      make.bottom.equalTo(self.clock.snp.top)
+      make.right.equalTo(self.view.safeAreaLayoutGuide)
+      if isPortrait {
+        make.left.equalTo(self.view.safeAreaLayoutGuide)
+        make.top.equalTo(self.topView.snp.bottom)
+      } else {
+        make.left.equalTo(self.view.safeAreaLayoutGuide.snp.centerX)
+        make.top.equalTo(self.view.safeAreaLayoutGuide)
+      }
+    }
+
+    self.totalTimerView.snp.remakeConstraints { (make) in
+      make.width.equalTo(self.bottomView)
+      make.centerX.equalTo(self.bottomView)
+      if isPortrait {
+        make.top.equalTo(self.bottomView)
+      } else {
+        make.centerY.equalTo(self.bottomView)
+      }
+    }
+
+    self.restTimerView.snp.remakeConstraints { (make) in
+      make.width.equalTo(self.topView)
+      make.centerX.equalTo(self.topView)
+      if isPortrait {
+        make.centerY.equalTo(self.topView)
+      } else {
+        // FIXME: ideally, restTimerView.timerView.centerY = totalTimerView.timerView.centerY
+        make.centerY.equalTo(self.totalTimerView.timerView).offset(25)
+      }
+    }
+
+    self.buttonStack.snp.remakeConstraints { (make) in
+      make.centerX.equalToSuperview()
+      make.height.equalTo(50)
+      if isPortrait {
+        make.top.equalTo(self.totalTimerView.snp.bottom).offset(25)
+      } else {
+        make.bottom.equalTo(self.view.safeAreaLayoutGuide).inset(5)
+      }
+    }
+  }
 }
+
+
