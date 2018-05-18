@@ -76,6 +76,7 @@ class ViewController: UIViewController {
     self.navigationItem.leftBarButtonItem = settings
 
     SideMenuManager.default.menuLeftNavigationController = UISideMenuNavigationController(rootViewController: SettingTableViewController())
+    SideMenuManager.default.menuLeftNavigationController!.sideMenuDelegate = self
     SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view, forMenu: .left)
 
     // MARK: TimerView functions
@@ -117,15 +118,7 @@ class ViewController: UIViewController {
       strongSelf.restTimerView.timer.reset()
       strongSelf.playPauseButton.currentButtonImage = .play
     }
-  }
 
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    self.restTimerView.updateStepper()
-  }
-
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
     self.showNextTip()
   }
 
@@ -173,7 +166,9 @@ class ViewController: UIViewController {
     if self.presentedViewController != nil {
       self.dismiss(animated: true, completion: nil)
     } else {
-      self.present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
+      self.resetTimers {
+        self.present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
+      }
     }
     self.tipsManager?.dismiss(forType: .settings)
   }
@@ -182,12 +177,13 @@ class ViewController: UIViewController {
     UIApplication.shared.isIdleTimerDisabled = isIdleTimerDisabled
   }
 
-  private func resetTimers() {
+  private func resetTimers(_ completion: (() -> ())? = nil) {
     print(#function)
     func reset() {
       self.totalTimerView.timer.reset()
       self.restTimerView.timer.reset()
       self.keepScreenFromLocking(false)
+      completion?()
     }
     if !self.totalTimerView.timer.isActive {
       reset()
@@ -259,4 +255,26 @@ class ViewController: UIViewController {
       }
     }
   }
+}
+
+extension ViewController: UISideMenuNavigationControllerDelegate {
+
+  func sideMenuWillAppear(menu: UISideMenuNavigationController, animated: Bool) {
+    print("SideMenu Appearing! (animated: \(animated))")
+  }
+
+  func sideMenuDidAppear(menu: UISideMenuNavigationController, animated: Bool) {
+    print("SideMenu Appeared! (animated: \(animated))")
+  }
+
+  func sideMenuWillDisappear(menu: UISideMenuNavigationController, animated: Bool) {
+    print("SideMenu Disappearing! (animated: \(animated))")
+    self.restTimerView.updateStepper()
+  }
+
+  func sideMenuDidDisappear(menu: UISideMenuNavigationController, animated: Bool) {
+    print("SideMenu Disappeared! (animated: \(animated))")
+    self.showNextTip()
+  }
+
 }
