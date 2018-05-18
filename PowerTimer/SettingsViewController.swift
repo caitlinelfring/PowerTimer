@@ -84,10 +84,6 @@ class SettingTableViewController: UITableViewController {
     let segmentControl = UISegmentedControl(items: TimerType.available.map { $0.description })
     segmentControl.addTarget(self, action: #selector(self.didChangeTimerType), for: .valueChanged)
     segmentControl.selectedSegmentIndex = Settings.SavedTimerType.rawValue
-
-    // countDown not available yet
-    segmentControl.setEnabled(false, forSegmentAt: TimerType.available.index(where: { $0 == TimerType.countDown })!)
-
     return segmentControl
   }
 
@@ -114,6 +110,9 @@ class SettingTableViewController: UITableViewController {
 
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let item = self.items[indexPath.row]
+    if item.didPress == nil {
+      item.cell.selectionStyle = .none
+    }
     item.cell.textLabel?.text = item.title
     return item.cell
   }

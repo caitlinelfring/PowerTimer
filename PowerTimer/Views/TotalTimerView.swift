@@ -17,18 +17,24 @@ class TimerActions: UIView {
 }
 
 class TotalTimerView: TimerActions {
-  let timer = CountUpTimer()
+  let timer: CountTimer
   let timerView = TimerView()
 
   override init(frame: CGRect) {
+    if Settings.SavedTimerType == .countDown {
+      self.timer = CountDownTimer(seconds: 60)
+    } else {
+      self.timer = CountUpTimer()
+    }
     super.init(frame: frame)
+
     self.timer.delegate = self
     self.addSubview(self.timerView)
     self.timerView.snp.makeConstraints { (make) in
       make.edges.equalToSuperview()
     }
     self.timerView.enlarge()
-    self.timerView.setTime(seconds: 0)
+    self.timerView.setTime(seconds: self.timer.currentSeconds)
     self.timerView.textLabel.text = "Total Time"
   }
 
@@ -58,7 +64,7 @@ extension TotalTimerView: TimerDelegate {
   func onReset() {
     print(#function)
     self.timerView.color = .white
-    self.timerView.setTime(seconds: 0)
+    self.timerView.setTime(seconds: self.timer.currentSeconds)
     self.timerView.enlarge()
     self.onTimerReset?()
   }
