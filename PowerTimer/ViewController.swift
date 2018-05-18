@@ -206,7 +206,7 @@ class ViewController: UIViewController {
     case .startTimer:
       self.tipsManager!.show(inView: self.playPauseButton, forType: next, withinSuperView: self.view)
     case .startRestTimer, .stopRestTimer:
-      self.tipsManager!.show(inView: self.restTimerView, forType: next, withinSuperView: self.view)
+      self.tipsManager!.show(inView: self.restTimerView.timerLabel, forType: next, withinSuperView: self.restTimerView)
     case .settings:
       self.tipsManager!.show(forItem: self.navigationItem.rightBarButtonItem!, forType: next)
     }
