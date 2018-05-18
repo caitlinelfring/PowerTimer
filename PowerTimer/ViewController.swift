@@ -48,8 +48,8 @@ class ViewController: UIViewController {
     self.navigationController?.view.backgroundColor = UIColor.clear
     self.navigationController?.navigationBar.tintColor = .white
 
-    self.view.addSubview(clock)
-    clock.snp.makeConstraints { (make) in
+    self.view.addSubview(self.clock)
+    self.clock.snp.makeConstraints { (make) in
       make.right.equalTo(self.view.safeAreaLayoutGuide.snp.right).inset(5)
       make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(5)
     }
@@ -69,9 +69,11 @@ class ViewController: UIViewController {
     self.playPauseButton.addTarget(self, action: #selector(self.startBtnTapped), for: .touchUpInside)
     self.refreshButton.addTarget(self, action: #selector(self.resetBtnTapped), for: .touchUpInside)
 
-    let settings = UIBarButtonItem(title: "Settings", style: .plain, target: self, action: #selector(self.presentSettings))
-    self.navigationItem.rightBarButtonItem = settings
+    let menu = UIImage(named: "menu")!.withAlignmentRectInsets(UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0))
+    let settings = UIBarButtonItem(image: menu, style: .plain, target: self, action: #selector(self.presentSettings))
+    self.navigationItem.leftBarButtonItem = settings
 
+    // MARK: TimerView functions
     self.restTimerView.onTimerStart = { [weak self] in
       self?.totalTimerView.timerView.soften()
       self?.tipsManager?.dismiss(forType: .startRestTimer)
@@ -114,7 +116,6 @@ class ViewController: UIViewController {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    self.navigationController?.navigationBar.tintColor = .white
     self.restTimerView.updateStepper()
   }
 
@@ -143,7 +144,7 @@ class ViewController: UIViewController {
     case .startRestTimer, .stopRestTimer:
       self.tipsManager!.show(inView: self.restTimerView.timerView, forType: next, withinSuperView: self.restTimerView)
     case .settings:
-      self.tipsManager!.show(forItem: self.navigationItem.rightBarButtonItem!, forType: next)
+      self.tipsManager!.show(forItem: self.navigationItem.leftBarButtonItem!, forType: next)
     }
 
   }
@@ -255,5 +256,3 @@ class ViewController: UIViewController {
     }
   }
 }
-
-

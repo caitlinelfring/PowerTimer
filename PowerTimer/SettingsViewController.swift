@@ -9,18 +9,18 @@
 import Foundation
 import UIKit
 import ValueStepper
+import SnapKit
 
 class SettingTableViewController: UITableViewController {
-  override var preferredStatusBarStyle: UIStatusBarStyle {
-    return .default
-  }
   struct Item {
     var title: String
     var cell: UITableViewCell
     var didPress: (() -> ())?
+    var height: CGFloat
 
-    init(title: String, cell: UITableViewCell = UITableViewCell(), didPress: (() -> ())? = nil) {
+    init(title: String, height: CGFloat = UITableViewAutomaticDimension, cell: UITableViewCell = UITableViewCell(), didPress: (() -> ())? = nil) {
       self.title = title
+      self.height = height
       self.cell = cell
       self.didPress = didPress
     }
@@ -35,16 +35,14 @@ class SettingTableViewController: UITableViewController {
   override init(style: UITableViewStyle) {
     super.init(style: style)
 
-    let restCell = UITableViewCell()
-    restCell.accessoryView = restStepper()
-    self.items.append(Item(title: "Rest Time", cell: restCell))
+    let restCell = SettingsAccessoryViewCell(accessory: restStepper())
+    self.items.append(Item(title: "Rest Time", height: 83, cell: restCell))
 
-    let timerTypeCell = UITableViewCell()
-    timerTypeCell.accessoryView = timerTypeControl()
-    self.items.append(Item(title: "Timer Type", cell: timerTypeCell))
+    let timerTypeCell = SettingsAccessoryViewCell(accessory: timerTypeControl())
+    self.items.append(Item(title: "Timer Type", height: 83, cell: timerTypeCell))
 
     let resetTipsCell = UITableViewCell()
-    self.items.append(SettingTableViewController.Item(title: "Reset Intro Tips", cell: resetTipsCell, didPress: {
+    self.items.append(Item(title: "Reset Intro Tips", cell: resetTipsCell, didPress: {
       Settings.IntroTips.reset()
       self.navigationController?.popViewController(animated: true)
     }))
@@ -53,12 +51,10 @@ class SettingTableViewController: UITableViewController {
     self.tableView.dataSource = self
     self.tableView.tableHeaderView = UIView()
     self.tableView.tableFooterView = UIView()
+    self.tableView.estimatedRowHeight = 44
+    self.tableView.rowHeight = UITableViewAutomaticDimension
 
     self.navigationItem.title = "SETTINGS"
-  }
-
-  override func viewWillAppear(_ animated: Bool) {
-    self.navigationController?.navigationBar.tintColor = .black
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -125,5 +121,30 @@ class SettingTableViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     self.tableView.deselectRow(at: indexPath, animated: true)
     self.items[indexPath.row].didPress?()
+  }
+
+  override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    return self.items[indexPath.row].height
+  }
+}
+
+class SettingsAccessoryViewCell: UITableViewCell {
+  private var accessory = UIView()
+
+  convenience init(accessory: UIView) {
+    self.init(style: .default, reuseIdentifier: nil)
+
+    self.textLabel!.snp.makeConstraints({ (make) in
+      make.top.equalToSuperview().offset(10)
+      make.left.equalToSuperview().offset(16)
+    })
+
+    self.accessory = accessory
+    self.contentView.addSubview(self.accessory)
+    self.accessory.snp.makeConstraints { (make) in
+      make.left.equalToSuperview().inset(16)
+      make.top.equalTo(self.textLabel!.snp.bottom).offset(10)
+      make.bottom.equalToSuperview().inset(10)
+    }
   }
 }

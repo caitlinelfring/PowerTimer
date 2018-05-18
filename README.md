@@ -32,3 +32,7 @@ The best part is, **you can continue to keep the time of your entire workout!**
 
 ### Nice to haves
 - [ ] Light/dark theme
+
+
+# Icons
+Using this icon set: https://www.iconfinder.com/iconsets/ionicons
