@@ -95,7 +95,7 @@ class ViewController: UIViewController {
       self.portraitConstraints.append(make.centerY.equalTo(topLayoutGuide).constraint)
     }
     // This is so the two timers are aligned based on their TimerView's centerY in landscape
-    self.restTimerView.timerLabel.snp.makeConstraints { (make) in
+    self.restTimerView.timerView.snp.makeConstraints { (make) in
       self.landscapeConstraints.append(make.centerY.equalTo(self.totalTimerView.timerView.snp.centerY).constraint)
     }
 
@@ -206,7 +206,7 @@ class ViewController: UIViewController {
     case .startTimer:
       self.tipsManager!.show(inView: self.playPauseButton, forType: next, withinSuperView: self.view)
     case .startRestTimer, .stopRestTimer:
-      self.tipsManager!.show(inView: self.restTimerView.timerLabel, forType: next, withinSuperView: self.restTimerView)
+      self.tipsManager!.show(inView: self.restTimerView.timerView, forType: next, withinSuperView: self.restTimerView)
     case .settings:
       self.tipsManager!.show(forItem: self.navigationItem.rightBarButtonItem!, forType: next)
     }

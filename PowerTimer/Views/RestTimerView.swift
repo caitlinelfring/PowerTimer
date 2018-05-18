@@ -17,7 +17,7 @@ class RestTimerView: TimerActions {
   let timer = CountUpTimer()
   var tapGestureRecognizer: UITapGestureRecognizer!
 
-  let timerLabel = TimerView()
+  let timerView = TimerView()
   let stepper: ValueStepper = {
     let stepper = ValueStepper()
     stepper.tintColor = .white
@@ -36,11 +36,11 @@ class RestTimerView: TimerActions {
     super.init(frame: frame)
     self.timer.delegate = self
 
-    self.timerLabel.soften(animate: false)
-    self.timerLabel.setTime(seconds: 0)
-    self.timerLabel.textLabel.text = "Rest Time"
-    self.addSubview(self.timerLabel)
-    self.timerLabel.snp.makeConstraints { (make) in
+    self.timerView.soften(animate: false)
+    self.timerView.setTime(seconds: 0)
+    self.timerView.textLabel.text = "Rest Time"
+    self.addSubview(self.timerView)
+    self.timerView.snp.makeConstraints { (make) in
       make.top.left.right.equalToSuperview()
     }
 
@@ -48,7 +48,7 @@ class RestTimerView: TimerActions {
     self.stepper.addTarget(self, action: #selector(self.stepperValueDidChange), for: .valueChanged)
     self.addSubview(self.stepper)
     self.stepper.snp.makeConstraints { (make) in
-      make.top.equalTo(self.timerLabel.snp.bottom).offset(10)
+      make.top.equalTo(self.timerView.snp.bottom).offset(10)
       make.centerX.equalToSuperview()
       make.bottom.equalToSuperview()
     }
@@ -96,14 +96,14 @@ class RestTimerView: TimerActions {
     if to == TimerView.Constants.Inactive.textColor {
       return false
     }
-    return to != self.timerLabel.color
+    return to != self.timerView.color
   }
 }
 
 extension RestTimerView: TimerDelegate {
   func onTimeChanged(seconds: Int) {
     print(#function, String(describing: type(of: self)), seconds)
-    self.timerLabel.setTime(seconds: seconds)
+    self.timerView.setTime(seconds: seconds)
     let restTimerSeconds = Settings.RestTimerMinutes * 60
     var textColor: UIColor = TimerView.Constants.Active.textColor
 
@@ -120,10 +120,10 @@ extension RestTimerView: TimerDelegate {
       textColor = TimerView.Constants.Inactive.textColor
     }
     if self.timerLabelColorChanged(to: textColor) {
-      self.timerLabel.shake()
+      self.timerView.shake()
     }
 
-    self.timerLabel.color = textColor
+    self.timerView.color = textColor
   }
 
   func onPaused() {
@@ -133,15 +133,15 @@ extension RestTimerView: TimerDelegate {
 
   func onStart() {
     print(#function)
-    self.timerLabel.enlarge()
+    self.timerView.enlarge()
     self.stepper.isHidden = true
     self.onTimerStart?()
   }
 
   func onReset() {
     print(#function)
-    self.timerLabel.soften()
-    self.timerLabel.setTime(seconds: 0)
+    self.timerView.soften()
+    self.timerView.setTime(seconds: 0)
     self.stepper.isHidden = false
     self.onTimerReset?()
   }
