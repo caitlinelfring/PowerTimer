@@ -109,7 +109,7 @@ extension RestTimerView: TimerDelegate {
 
     // Only use the warning label a minute before the restTimer is over
     // if the restTimeOver is more than a minute
-    if restTimerSeconds >=/*remove =*/ 60 && seconds >= restTimerSeconds - 60 {
+    if restTimerSeconds > 60 && seconds >= restTimerSeconds - 60 {
       textColor = .orange
     }
     if seconds >= restTimerSeconds {

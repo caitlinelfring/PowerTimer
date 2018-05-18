@@ -33,35 +33,32 @@ protocol TimerDelegate: class {
   func onReset()
 }
 
-class CountUpTimer {
-  private var currentSeconds: Int = 0 {
+class CountTimer {
+  fileprivate(set) var currentSeconds: Int = 0 {
     didSet {
-      self.delegate?.onTimeChanged(seconds: self.currentSeconds)
+      if oldValue != self.currentSeconds {
+        self.delegate?.onTimeChanged(seconds: self.currentSeconds)
+      }
     }
   }
-  private var timer: Timer?
+  fileprivate var timer: Timer?
+  var startTime: TimeInterval!
   weak var delegate: TimerDelegate?
-
-  private let maxSecond: Int = 90 * 60
-
+  var elapsedTime = TimeInterval()
   var isActive: Bool {
     return self.timer != nil
   }
-
   var isPaused: Bool {
     return self.currentSeconds > 0 && !self.isActive
   }
 
+  func timerBlock(_ timer: Timer) {
+    let currentTime = Date.timeIntervalSinceReferenceDate
+    self.elapsedTime = currentTime - self.startTime
+  }
   func start() {
-    if self.timer != nil {
-      return
-    }
-    self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { _ in
-      self.currentSeconds += 1
-      if self.currentSeconds > self.maxSecond {
-        self.pause()
-      }
-    })
+    self.startTime = Date.timeIntervalSinceReferenceDate - TimeInterval(self.elapsedTime)
+    self.timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: self.timerBlock)
     self.delegate?.onStart()
   }
   func pause() {
@@ -70,42 +67,61 @@ class CountUpTimer {
   }
   func reset() {
     self.invalidate()
-    self.currentSeconds = 0
     self.delegate?.onReset()
   }
-
   private func invalidate() {
     self.timer?.invalidate()
     self.timer = nil
   }
 }
 
-class CountDownTimer {
-  private var currentSeconds: Int = 0 {
-    didSet {
-      self.delegate?.onTimeChanged(seconds: self.currentSeconds)
+class CountUpTimer: CountTimer {
+  private let maxSecond: Int = 90 * 60
+
+  override func timerBlock(_ timer: Timer) {
+    super.timerBlock(timer)
+    self.currentSeconds = Int(self.elapsedTime)
+    if self.currentSeconds > self.maxSecond {
+      self.pause()
     }
   }
-  private var timer: Timer?
-  private var startSeconds: Int
+  override func start() {
+    if self.timer != nil {
+      return
+    }
+    super.start()
+  }
 
-  weak var delegate: TimerDelegate?
+  override func reset() {
+    self.currentSeconds = 0
+    super.reset()
+  }
+}
+
+class CountDownTimer: CountTimer {
+  private var startSeconds: Int
 
   init(seconds: Int) {
     self.startSeconds = seconds
+    super.init()
+    self.currentSeconds = seconds
   }
-  func start() {
-    self.timer = Timer(timeInterval: 1, repeats: true, block: { _ in
-      self.currentSeconds -= 1
-    })
+
+  override func timerBlock(_ timer: Timer) {
+    super.timerBlock(timer)
+    self.currentSeconds =  self.startSeconds - Int(self.elapsedTime)
+    if self.currentSeconds == 0 {
+      self.pause()
+    }
   }
-  func pause() {
-    self.timer?.invalidate()
-    self.delegate?.onPaused()
+  override func start() {
+    if self.timer != nil {
+      return
+    }
+    super.start()
   }
-  func reset() {
-    self.timer?.invalidate()
+  override func reset() {
     self.currentSeconds = self.startSeconds
-    self.delegate?.onReset()
+    super.reset()
   }
 }
