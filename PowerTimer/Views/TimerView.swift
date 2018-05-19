@@ -16,11 +16,11 @@ class TimerView: UIView {
     class Active {
       static var font: UIFont {
         let bounds = UIScreen.main.bounds
-        var fontSize = bounds.width * 0.25
+        var smallerBounds = bounds.width
         if bounds.width > bounds.height {
-          fontSize = bounds.height * 0.25
+          smallerBounds = bounds.height
         }
-        return  UIFont(name: "HelveticaNeue-Medium", size: fontSize)!
+        return  UIFont(name: "HelveticaNeue-Medium", size: smallerBounds * 0.25)!
       }
       static let textColor: UIColor = .white
     }
@@ -29,7 +29,6 @@ class TimerView: UIView {
       static var font: UIFont {
         return Constants.Active.font.withSize(Constants.Active.font.pointSize - 20)
       }
-
       static let textColor: UIColor = .gray
     }
   }

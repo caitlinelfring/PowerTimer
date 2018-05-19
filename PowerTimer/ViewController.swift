@@ -80,43 +80,45 @@ class ViewController: UIViewController {
     SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view, forMenu: .left)
 
     // MARK: TimerView functions
-    self.restTimerView.onTimerStart = { [weak self] in
-      self?.totalTimerView.timerView.soften()
-      self?.tipsManager?.dismiss(forType: .startRestTimer)
-    }
-    self.restTimerView.onTimerReset = { [weak self] in
-      self?.totalTimerView.timerView.enlarge()
-      self?.tipsManager?.dismiss(forType: .stopRestTimer)
-    }
-    self.restTimerView.onTimerStartAttemptedWhileDisabled = { [weak self] in
+    _ = self.restTimerView.addObserver { [weak self] (event, userInfo) in
       guard let strongSelf = self else { return }
-      if strongSelf.totalTimerView.timer.isPaused {
-        strongSelf.playPauseButton.shake(withDirection: .rotate)
-      } else {
-        strongSelf.totalTimerView.timer.start()
-        strongSelf.restTimerView.timer.start()
+      switch event {
+      case .timerDidReset:
+        strongSelf.totalTimerView.timerView.enlarge()
+        strongSelf.tipsManager?.dismiss(forType: .stopRestTimer)
+      case .timerDidStart:
+        strongSelf.totalTimerView.timerView.soften()
+        strongSelf.tipsManager?.dismiss(forType: .startRestTimer)
+      case .timerDidFailToStart:
+        if strongSelf.totalTimerView.timer.isPaused {
+          strongSelf.playPauseButton.shake(withDirection: .rotate)
+        } else {
+          strongSelf.totalTimerView.timer.start()
+          strongSelf.restTimerView.timer.start()
+        }
+      default: return
       }
     }
 
-    self.totalTimerView.onTimerReset = { [weak self] in
+    _ = self.totalTimerView.addObserver { [weak self] (event, _) in
       guard let strongSelf = self else { return }
-      strongSelf.keepScreenFromLocking(false)
-      strongSelf.restTimerView.isEnabled = false
-      strongSelf.restTimerView.timer.reset()
-      strongSelf.playPauseButton.currentButtonImage = .play
-    }
-    self.totalTimerView.onTimerStart = { [weak self] in
-      guard let strongSelf = self else { return }
-      strongSelf.keepScreenFromLocking(true)
-      strongSelf.restTimerView.isEnabled = true
-      strongSelf.playPauseButton.currentButtonImage = .pause
-    }
-    self.totalTimerView.onTimerPaused = { [weak self] in
-      guard let strongSelf = self else { return }
-      strongSelf.keepScreenFromLocking(false)
-      strongSelf.restTimerView.isEnabled = false
-      strongSelf.restTimerView.timer.reset()
-      strongSelf.playPauseButton.currentButtonImage = .play
+      switch event {
+      case .timerDidReset:
+        strongSelf.keepScreenFromLocking(false)
+        strongSelf.restTimerView.isEnabled = false
+        strongSelf.restTimerView.timer.reset()
+        strongSelf.playPauseButton.currentButtonImage = .play
+      case .timerDidStart:
+        strongSelf.keepScreenFromLocking(true)
+        strongSelf.restTimerView.isEnabled = true
+        strongSelf.playPauseButton.currentButtonImage = .pause
+      case .timerDidPause:
+        strongSelf.keepScreenFromLocking(false)
+        strongSelf.restTimerView.isEnabled = false
+        strongSelf.restTimerView.timer.reset()
+        strongSelf.playPauseButton.currentButtonImage = .play
+      default: return
+      }
     }
 
     self.showNextTip()

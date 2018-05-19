@@ -19,7 +19,6 @@ class RestTimerView: TimerActions {
 
   let timerView = TimerView()
   let stepper = RestTimerStepper()
-  var onTimerStartAttemptedWhileDisabled: (() -> ())?
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -67,7 +66,7 @@ class RestTimerView: TimerActions {
     }
 
     if !self.isEnabled {
-      self.onTimerStartAttemptedWhileDisabled?()
+      self.postToObservers(.timerDidFailToStart)
       return
     }
 
@@ -117,14 +116,14 @@ extension RestTimerView: TimerDelegate {
 
   func onPaused() {
     print(#function)
-    self.onTimerPaused?()
+    self.postToObservers(.timerDidPause)
   }
 
   func onStart() {
     print(#function)
     self.timerView.enlarge()
     self.stepper.isHidden = true
-    self.onTimerStart?()
+    self.postToObservers(.timerDidStart)
   }
 
   func onReset() {
@@ -132,7 +131,7 @@ extension RestTimerView: TimerDelegate {
     self.timerView.soften()
     self.timerView.setTime(seconds: 0)
     self.stepper.isHidden = false
-    self.onTimerReset?()
+    self.postToObservers(.timerDidReset)
   }
 }
 

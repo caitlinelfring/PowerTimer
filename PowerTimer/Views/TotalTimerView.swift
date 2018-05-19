@@ -11,9 +11,35 @@ import UIKit
 import SnapKit
 
 class TimerActions: UIView {
-  var onTimerStart: (() -> ())?
-  var onTimerPaused: (() -> ())?
-  var onTimerReset: (() -> ())?
+  enum Event: String {
+    case timerDidStart
+    case timerDidPause
+    case timerDidReset
+    case timerDidFailToStart
+
+    func name() -> Notification.Name {
+      return Notification.Name(self.rawValue)
+    }
+  }
+
+  // The purpose of IAPManager and these observers is to contain all StoreKit logic here and
+  // let the observers listen to events and update their UIs accordingly
+  func addObserver(_ callback: @escaping ((Event, [AnyHashable: Any]?) -> Void)) -> NSObjectProtocol {
+    return NotificationCenter.default.addObserver(forName: nil, object: self, queue: OperationQueue.current, using: { notification in
+      let event = Event(rawValue: notification.name.rawValue)!
+      callback(event, notification.userInfo)
+    })
+  }
+
+  func removeObserver(_ observer: NSObjectProtocol) {
+    NotificationCenter.default.removeObserver(observer)
+  }
+
+  func postToObservers(_ event: Event) {
+    DispatchQueue.main.async {
+      NotificationCenter.default.post(name: event.name(), object: self, userInfo: nil)
+    }
+  }
 }
 
 class TotalTimerView: TimerActions {
@@ -55,13 +81,13 @@ extension TotalTimerView: TimerDelegate {
   func onPaused() {
     print(#function)
     self.timerView.color = .yellow
-    self.onTimerPaused?()
+    self.postToObservers(.timerDidPause)
   }
 
   func onStart() {
     print(#function)
     self.timerView.color = .white
-    self.onTimerStart?()
+    self.postToObservers(.timerDidStart)
   }
 
   func onReset() {
@@ -69,7 +95,7 @@ extension TotalTimerView: TimerDelegate {
     self.timerView.color = .white
     self.timerView.setTime(seconds: self.timer.currentSeconds)
     self.timerView.enlarge()
-    self.onTimerReset?()
+    self.postToObservers(.timerDidReset)
   }
 }
 
