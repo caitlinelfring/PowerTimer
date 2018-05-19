@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 fileprivate var defaults = UserDefaults.standard
 
@@ -82,4 +83,21 @@ class Settings {
     }
   }
 
+  static var minScreenDimension: CGFloat {
+    let bounds = UIScreen.main.bounds
+    var smallerBounds = bounds.width
+    if bounds.width > bounds.height {
+      smallerBounds = bounds.height
+    }
+    return smallerBounds
+  }
+
+  static var maxScreenDimension: CGFloat {
+    let bounds = UIScreen.main.bounds
+    var largerBounds = bounds.width
+    if bounds.height > bounds.width {
+      largerBounds = bounds.height
+    }
+    return largerBounds
+  }
 }

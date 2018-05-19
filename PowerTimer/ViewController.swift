@@ -46,9 +46,15 @@ class ViewController: UIViewController {
 
     self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
     self.navigationController?.navigationBar.shadowImage = UIImage()
+    self.navigationController?.navigationBar.titleTextAttributes = [
+      NSAttributedStringKey.foregroundColor: UIColor.orange,
+      NSAttributedStringKey.kern: 2,
+      NSAttributedStringKey.font: UIFont(name: "AvenirNext-DemiBold", size: Settings.minScreenDimension * 0.06)!,
+    ]
     self.navigationController?.navigationBar.isTranslucent = true
     self.navigationController?.view.backgroundColor = UIColor.clear
     self.navigationController?.navigationBar.tintColor = .gray
+    self.navigationItem.title = "PowerTimer"
 
     self.view.addSubview(self.clock)
     self.clock.snp.makeConstraints { (make) in
