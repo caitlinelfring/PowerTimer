@@ -24,7 +24,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     #endif
 
     self.window!.backgroundColor = .white
-    UIView.transition(with: self.window!, duration: 1.5, options: .transitionCrossDissolve, animations: {
+    let splash = UIViewController()
+    splash.view.backgroundColor = UIColor(red: 0.789, green: 1, blue: 0.837, alpha: 1) // matches background color of launch screen
+    self.window!.rootViewController = splash
+
+    UIView.transition(with: self.window!, duration: 0.5, options: .transitionCrossDissolve, animations: {
       self.window!.rootViewController = UINavigationController(rootViewController: ViewController())
     })
     self.window!.makeKeyAndVisible()
