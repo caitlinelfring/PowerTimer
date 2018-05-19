@@ -15,7 +15,6 @@ class RestTimerView: TimerActions {
 
   var isEnabled: Bool = false
   let timer = CountUpTimer()
-  var tapGestureRecognizer: UITapGestureRecognizer!
 
   let timerView = TimerView()
   let stepper = RestTimerStepper()
@@ -41,9 +40,13 @@ class RestTimerView: TimerActions {
       make.bottom.equalToSuperview()
     }
 
-    self.tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.startTap))
-    self.tapGestureRecognizer.cancelsTouchesInView = false
-    self.addGestureRecognizer(self.tapGestureRecognizer)
+    self.addTapGestureRecognizer(to: self)
+  }
+
+  func addTapGestureRecognizer(to view: UIView) {
+    let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.startTap))
+    tapGestureRecognizer.cancelsTouchesInView = false
+    view.addGestureRecognizer(tapGestureRecognizer)
   }
 
   func updateStepper() {
