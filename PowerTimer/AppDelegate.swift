@@ -12,12 +12,9 @@ import Fingertips
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-  var window: UIWindow?
-
+  var window: UIWindow? = UIWindow(frame: UIScreen.main.bounds)
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-    // Override point for customization after application launch.
-    self.window = UIWindow(frame: UIScreen.main.bounds)
     #if DEBUG
 //      print("Using Fingertips window")
 //      let fingertips = MBFingerTipWindow(frame: UIScreen.main.bounds)
@@ -27,7 +24,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     #endif
 
     self.window!.backgroundColor = .white
-    self.window!.rootViewController = UINavigationController(rootViewController: ViewController())
+    UIView.transition(with: self.window!, duration: 1.5, options: .transitionCrossDissolve, animations: {
+      self.window!.rootViewController = UINavigationController(rootViewController: ViewController())
+    })
     self.window!.makeKeyAndVisible()
     print(Date())
 
