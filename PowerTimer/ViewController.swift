@@ -46,15 +46,23 @@ class ViewController: UIViewController {
 
     self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
     self.navigationController?.navigationBar.shadowImage = UIImage()
-    self.navigationController?.navigationBar.titleTextAttributes = [
-      NSAttributedStringKey.foregroundColor: UIColor.orange,
-      NSAttributedStringKey.kern: 2,
-      NSAttributedStringKey.font: UIFont(name: "AvenirNext-DemiBold", size: Settings.minScreenDimension * 0.06)!,
-    ]
     self.navigationController?.navigationBar.isTranslucent = true
     self.navigationController?.view.backgroundColor = UIColor.clear
     self.navigationController?.navigationBar.tintColor = .gray
-    self.navigationItem.title = "PowerTimer"
+    let titleLabel: UILabel = {
+      let label = UILabel()
+      let attributes: [NSAttributedStringKey: Any] = [
+        NSAttributedStringKey.foregroundColor: UIColor(red: 1, green: 0.4, blue: 0.4, alpha: 1),
+        NSAttributedStringKey.kern: 2,
+        NSAttributedStringKey.font: UIFont(name: "AvenirNext-DemiBold", size: Settings.minScreenDimension * 0.06)!,
+        ]
+      label.shadowColor = UIColor(red: 0.35, green: 0.25, blue: 1, alpha: 1)
+      label.shadowOffset = CGSize(width: 3, height: 3)
+      label.attributedText = NSAttributedString(string: "PowerTimer", attributes: attributes)
+      label.sizeToFit()
+      return label
+    }()
+    self.navigationItem.titleView = titleLabel
 
     self.view.addSubview(self.clock)
     self.clock.snp.makeConstraints { (make) in
