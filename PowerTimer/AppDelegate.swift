@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Fingertips
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,6 +18,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
     self.window = UIWindow(frame: UIScreen.main.bounds)
+    #if DEBUG
+//      print("Using Fingertips window")
+//      let fingertips = MBFingerTipWindow(frame: UIScreen.main.bounds)
+//      fingertips.alwaysShowTouches = true
+//      fingertips.fadeDuration = 0.7
+//      self.window = fingertips
+    #endif
+
     self.window!.backgroundColor = .white
     self.window!.rootViewController = UINavigationController(rootViewController: ViewController())
     self.window!.makeKeyAndVisible()

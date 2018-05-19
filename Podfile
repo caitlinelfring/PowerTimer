@@ -6,4 +6,5 @@ target 'PowerTimer' do
   pod 'ValueStepper', :git => 'https://github.com/caitlin615/ValueStepper.git', :branch => 'master'
   pod 'SnapKit', '~> 4.0'
   pod 'SideMenu'
+  pod 'Fingertips'
 end
