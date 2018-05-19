@@ -92,7 +92,7 @@ class SettingTableViewController: UITableViewController {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    if let vc = (UIApplication.shared.keyWindow?.rootViewController as? UINavigationController)?.childViewControllers.first as? ViewController {
+    if let vc = (UIApplication.shared.keyWindow?.rootViewController as? UINavigationController)?.childViewControllers.first as? TimerViewController {
       self.canChangeTimerType = !vc.totalTimerView.timer.isActive
     }
   }

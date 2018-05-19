@@ -22,7 +22,7 @@ extension UINavigationController {
   }
 }
 
-class ViewController: UIViewController {
+class TimerViewController: UIViewController {
   let topView = UIView()
   let bottomView = UIView()
   let totalTimerView = TotalTimerView()
@@ -218,7 +218,8 @@ class ViewController: UIViewController {
   }
 
   private func remakeConstraintsBasedOnOrientation() {
-    let isPortrait = UIDevice.current.orientation.isPortrait
+    // FIXME: Why is UIDevice.current.orientation.isPortrait sometimes incorrect on launch?
+    let isPortrait = UIScreen.main.bounds.width < UIScreen.main.bounds.height
 
     self.topView.snp.remakeConstraints { (make) in
       make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
@@ -277,7 +278,7 @@ class ViewController: UIViewController {
   }
 }
 
-extension ViewController: UISideMenuNavigationControllerDelegate {
+extension TimerViewController: UISideMenuNavigationControllerDelegate {
 
   func sideMenuWillAppear(menu: UISideMenuNavigationController, animated: Bool) {
     print("SideMenu Appearing! (animated: \(animated))")
