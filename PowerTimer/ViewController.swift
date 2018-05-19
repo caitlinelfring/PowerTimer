@@ -48,7 +48,7 @@ class ViewController: UIViewController {
     self.navigationController?.navigationBar.shadowImage = UIImage()
     self.navigationController?.navigationBar.isTranslucent = true
     self.navigationController?.view.backgroundColor = UIColor.clear
-    self.navigationController?.navigationBar.tintColor = .white
+    self.navigationController?.navigationBar.tintColor = .gray
 
     self.view.addSubview(self.clock)
     self.clock.snp.makeConstraints { (make) in
@@ -78,6 +78,7 @@ class ViewController: UIViewController {
     SideMenuManager.default.menuLeftNavigationController = UISideMenuNavigationController(rootViewController: SettingTableViewController())
     SideMenuManager.default.menuLeftNavigationController!.sideMenuDelegate = self
     SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view, forMenu: .left)
+    SideMenuManager.default.menuPresentMode = .viewSlideInOut
 
     // MARK: TimerView functions
     _ = self.restTimerView.addObserver { [weak self] (event, userInfo) in
@@ -199,7 +200,7 @@ class ViewController: UIViewController {
     self.present(alert, animated: true, completion: nil)
   }
 
-  private func remakeConstraintsBasedOnOrientation(animated: Bool = true) {
+  private func remakeConstraintsBasedOnOrientation() {
     let isPortrait = UIDevice.current.orientation.isPortrait
 
     self.topView.snp.remakeConstraints { (make) in
