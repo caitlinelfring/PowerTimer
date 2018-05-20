@@ -33,7 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let mask: CALayer = {
       let mask = CALayer()
       mask.contents = UIImage(named: "clock_icon.png")!.cgImage
-      mask.bounds = CGRect(x: 0, y: 0, width: 60, height: 60)
+      mask.bounds = CGRect(x: 0, y: 0, width: root.view.frame.width / 4, height: root.view.frame.width / 4)
       mask.anchorPoint = CGPoint(x: 0.5, y: 0.5)
       mask.position = CGPoint(x: root.view.frame.width / 2, y: root.view.frame.height / 2)
       return mask
@@ -42,7 +42,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // logo mask background view
     let maskBgView = UIView(frame: root.view.frame)
-    maskBgView.backgroundColor = UIColor.black
+    maskBgView.backgroundColor = UIColor.clear
     root.view.addSubview(maskBgView)
     root.view.bringSubview(toFront: maskBgView)
 
