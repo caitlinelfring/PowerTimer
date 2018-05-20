@@ -218,8 +218,7 @@ class TimerViewController: UIViewController {
   }
 
   private func remakeConstraintsBasedOnOrientation() {
-    // FIXME: Why is UIDevice.current.orientation.isPortrait sometimes incorrect on launch?
-    let isPortrait = UIScreen.main.bounds.width < UIScreen.main.bounds.height
+    let isPortrait = UIDevice.current.orientation.isPortrait
 
     self.topView.snp.remakeConstraints { (make) in
       make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
