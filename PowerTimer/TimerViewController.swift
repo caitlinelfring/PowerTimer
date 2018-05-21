@@ -33,8 +33,9 @@ class TimerViewController: UIViewController {
   let playPauseButton = PlayPauseButton()
   let refreshButton = RefreshButton()
 
+  var useLightStatusBar: Bool = true
   override var preferredStatusBarStyle: UIStatusBarStyle {
-    return .lightContent
+    return self.useLightStatusBar ? .lightContent : .default
   }
 
   var tipsManager: TipManager?

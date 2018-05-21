@@ -8,6 +8,7 @@
 
 import UIKit
 import Fingertips
+import SnapKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -25,49 +26,51 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     self.window!.backgroundColor = UIColor(red: 0.789, green: 1, blue: 0.837, alpha: 1) // trying to match lauch screen
     self.window!.makeKeyAndVisible()
-    let root = UINavigationController(rootViewController: TimerViewController())
+    let timerVC = TimerViewController()
+    let root = UINavigationController(rootViewController: timerVC)
     self.window!.rootViewController = root
+    timerVC.useLightStatusBar = false
 
-    // Animation based on https://github.com/okmr-d/App-Launching-like-Twitter
-    // logo mask
-    let mask: CALayer = {
-      let mask = CALayer()
-      mask.contents = UIImage(named: "clock_icon.png")!.cgImage
-      mask.bounds = CGRect(x: 0, y: 0, width: root.view.frame.width / 4, height: root.view.frame.width / 4)
-      mask.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-      mask.position = CGPoint(x: root.view.frame.width / 2, y: root.view.frame.height / 2)
-      return mask
-    }()
-    root.view.layer.mask = mask
-
-    // logo mask background view
     let maskBgView = UIView(frame: root.view.frame)
-    maskBgView.backgroundColor = UIColor.clear
+    maskBgView.backgroundColor = UIColor(red: 0.789, green: 1, blue: 0.837, alpha: 1)
+
+    // Label should match the launch screen label
+    let label = UILabel()
+    let attributes: [NSAttributedStringKey: Any] = [
+      NSAttributedStringKey.foregroundColor: UIColor(red: 1, green: 0.4, blue: 0.93, alpha: 0.45),
+      NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: 55)!,
+      ]
+    label.allowsDefaultTighteningForTruncation = true
+    label.shadowColor = UIColor(red: 0.35, green: 0.25, blue: 1, alpha: 0.45)
+    label.shadowOffset = CGSize(width: 4, height: 4)
+    label.attributedText = NSAttributedString(string: "PowerTimer", attributes: attributes)
+    label.sizeToFit()
+
+    maskBgView.addSubview(label)
+    label.snp.makeConstraints { (make) in
+      make.center.equalToSuperview()
+      make.width.equalTo(306)
+    }
     root.view.addSubview(maskBgView)
     root.view.bringSubview(toFront: maskBgView)
-
-    // logo mask animation
-    let transformAnimation = CAKeyframeAnimation(keyPath: "bounds")
-    transformAnimation.delegate = self
-    transformAnimation.duration = 1
-    transformAnimation.beginTime = CACurrentMediaTime() + 1 // add delay of 1 second
-    let initalBounds = NSValue(cgRect: mask.bounds)
-    let secondBounds = NSValue(cgRect: CGRect(x: 0, y: 0, width: mask.bounds.width - 10, height: mask.bounds.height - 10))
-    let finalBounds = NSValue(cgRect: CGRect(x: 0, y: 0, width: mask.bounds.width * 300, height: mask.bounds.height * 300))
-    transformAnimation.values = [initalBounds, secondBounds, finalBounds]
-    transformAnimation.keyTimes = [0, 0.3, 1]
-    transformAnimation.timingFunctions = [
-      CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut),
-      CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut),
-    ]
-    transformAnimation.isRemovedOnCompletion = false
-    transformAnimation.fillMode = kCAFillModeForwards
-    mask.add(transformAnimation, forKey: "maskAnimation")
-
-    // logo mask background view animation
-    UIView.animate(withDuration: 0.1, delay: 1.35, options: UIViewAnimationOptions.curveEaseIn, animations: {
-      maskBgView.alpha = 0.0
-    }, completion: { finished in maskBgView.removeFromSuperview() })
+    maskBgView.snp.makeConstraints { (make) in
+      make.center.equalToSuperview()
+      make.edges.equalToSuperview()
+    }
+    UIView.animate(withDuration: 0.25, delay: 1, options: UIViewAnimationOptions.curveEaseInOut, animations: {
+      label.transform = label.transform.scaledBy(x: 0.9, y: 0.9)
+      label.layoutIfNeeded()
+    }, completion: { finished in
+      UIView.animate(withDuration: 0.25, delay: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {
+        maskBgView.alpha = 0.0
+        label.transform = label.transform.scaledBy(x: 100, y: 100)
+        label.layoutIfNeeded()
+      }, completion: { finished in
+        timerVC.useLightStatusBar = true
+        maskBgView.removeFromSuperview()
+        timerVC.setNeedsStatusBarAppearanceUpdate()
+      })
+    })
 
     print(Date())
 
@@ -98,11 +101,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 
 }
-
-extension AppDelegate: CAAnimationDelegate {
-  func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
-    // FIXME: on my iPhone 6, the mask is shown again for a split second after the animation completes
-    self.window!.rootViewController!.view.layer.mask = nil
-  }
-}
-
