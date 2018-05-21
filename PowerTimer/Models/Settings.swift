@@ -29,13 +29,13 @@ class Settings {
       return defaults.value(forKey: "restTimerMinutes") as? Int ?? 1
     }
   }
-
+  private static let defaultCountdownMinutes: Int = 15
   static var CountDownTimerMinutes: Int {
     set(value) {
       defaults.set(value, forKey: "CountDownTimerMinutes")
     }
     get {
-      return defaults.value(forKey: "CountDownTimerMinutes") as? Int ?? 1
+      return defaults.value(forKey: "CountDownTimerMinutes") as? Int ?? defaultCountdownMinutes
     }
   }
   class IntroTips {
