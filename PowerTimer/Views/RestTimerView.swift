@@ -112,6 +112,7 @@ extension RestTimerView: TimerDelegate {
     }
     if self.timerLabelColorChanged(to: textColor) {
       self.timerView.shake()
+      Sounds.playIfConfigured()
     }
 
     self.timerView.color = textColor

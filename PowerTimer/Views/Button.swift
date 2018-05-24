@@ -15,11 +15,18 @@ class ImageButton: UIButton {
     self.setImage(image.withRenderingMode(.alwaysTemplate), for: .normal)
   }
 
+  var color: UIColor = .white {
+    didSet {
+      self.imageView!.tintColor = self.color
+      self.layer.borderColor = self.color.cgColor
+    }
+  }
+
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.isUserInteractionEnabled = true
-    self.imageView!.tintColor = .white
-    self.layer.borderColor = UIColor.white.cgColor
+    self.imageView!.tintColor = self.color
+    self.layer.borderColor = self.color.cgColor
     self.layer.borderWidth = 2
 
     self.translatesAutoresizingMaskIntoConstraints = false

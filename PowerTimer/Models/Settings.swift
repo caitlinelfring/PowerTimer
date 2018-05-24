@@ -83,6 +83,26 @@ class Settings {
     }
   }
 
+  class Sound {
+    static var playSoundAlert: Bool {
+      set(value) {
+        defaults.set(value, forKey: "playSoundAlert")
+      }
+      get {
+        return defaults.bool(forKey: "playSoundAlert")
+      }
+    }
+
+    static var soundAlertID: Sounds.ID? {
+      set(value) {
+        defaults.set(value?.rawValue, forKey: "soundAlertID")
+      }
+      get {
+        return Sounds.ID(rawValue: defaults.integer(forKey: "soundAlertID"))
+      }
+    }
+  }
+
   static var minScreenDimension: CGFloat {
     let bounds = UIScreen.main.bounds
     var smallerBounds = bounds.width

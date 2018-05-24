@@ -111,6 +111,7 @@ class CountDownTimer: CountTimer {
     self.currentSeconds =  self.startSeconds - Int(self.elapsedTime)
     if self.currentSeconds == 0 {
       self.pause()
+      Sounds.playIfConfigured()
     }
   }
   override func reset() {

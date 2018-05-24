@@ -15,12 +15,12 @@ import EasyTipView
 class SettingTableViewController: UITableViewController {
   struct Item {
     var title: String
-    var cell: SettingsCell
+    var cell: UITableViewCell
     var didPress: (() -> ())?
     var height: CGFloat
     var shouldEnable: (() -> Bool)
 
-    init(title: String, height: CGFloat = 44, cell: SettingsCell = SettingsCell(), didPress: (() -> ())? = nil) {
+    init(title: String, height: CGFloat = 44, cell: UITableViewCell = UITableViewCell(), didPress: (() -> ())? = nil) {
       self.title = title
       self.height = height
       self.cell = cell
@@ -71,6 +71,10 @@ class SettingTableViewController: UITableViewController {
       self.navigationController?.popViewController(animated: true)
     }))
 
+    let soundCell = UITableViewCell(style: .default, reuseIdentifier: nil)
+    soundCell.accessoryView = soundOnOffSwitch()
+    self.items.append(Item(title: "Alerts", cell: soundCell))
+
     self.tableView.delegate = self
     self.tableView.dataSource = self
     self.tableView.tableHeaderView = UIView()
@@ -120,6 +124,20 @@ class SettingTableViewController: UITableViewController {
     return segmentControl
   }
 
+  private func soundOnOffSwitch() -> UISwitch {
+    let soundSwitch = UISwitch()
+    soundSwitch.setOn(Settings.Sound.playSoundAlert, animated: false)
+    soundSwitch.addTarget(self, action: #selector(self.soundSwitchDidChange), for: .valueChanged)
+    return soundSwitch
+  }
+
+  @objc func soundSwitchDidChange(sender: UISwitch) {
+    Settings.Sound.playSoundAlert = sender.isOn
+    if sender.isOn {
+      self.present(UINavigationController(rootViewController: SoundsTableViewController()), animated: true, completion: nil)
+    }
+  }
+
   @objc func didChangeRestMinutes(sender: UIStepper) {
     Settings.RestTimerMinutes = Int(sender.value)
   }
@@ -151,8 +169,13 @@ class SettingTableViewController: UITableViewController {
     if item.didPress == nil {
       item.cell.selectionStyle = .none
     }
-    item.cell.title = item.title
-    item.cell.isEnabled = item.shouldEnable()
+    if let cell = item.cell as? SettingsCell {
+      cell.title = item.title
+      cell.isEnabled = item.shouldEnable()
+    } else {
+      item.cell.textLabel?.text = item.title
+    }
+
     return item.cell
   }
 
