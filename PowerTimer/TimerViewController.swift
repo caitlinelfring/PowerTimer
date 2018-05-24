@@ -33,6 +33,8 @@ class TimerViewController: UIViewController {
   let playPauseButton = PlayPauseButton()
   let refreshButton = RefreshButton()
 
+  // This is so the launch animation can use a dark status bar (matches the launchscreen storyboard config)
+  // and the view controller can use the light status bar
   var useLightStatusBar: Bool = true
   override var preferredStatusBarStyle: UIStatusBarStyle {
     return self.useLightStatusBar ? .lightContent : .default
@@ -45,10 +47,12 @@ class TimerViewController: UIViewController {
 
     self.view.backgroundColor = .black
 
+    // Make the nav bar transparent
     self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
     self.navigationController?.navigationBar.shadowImage = UIImage()
     self.navigationController?.navigationBar.isTranslucent = true
     self.navigationController?.view.backgroundColor = UIColor.clear
+
     self.navigationController?.navigationBar.tintColor = .gray
     let titleLabel: UILabel = {
       let label = UILabel()
