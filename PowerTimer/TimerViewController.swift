@@ -184,16 +184,25 @@ class TimerViewController: UIViewController {
 
   @objc private func resetBtnTapped(sender: ImageButton) {
     print(#function)
-    self.resetTimers()
+    if self.totalTimerView.timer.isActive {
+      self.present(self.resetAlert(okAction: self.resetTimers), animated: true, completion: nil)
+    } else {
+      self.resetTimers()
+    }
   }
 
   @objc private func presentSettings() {
-    if self.presentedViewController != nil {
-      self.dismiss(animated: true, completion: nil)
+    func settings() {
+      self.present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
+    }
+    if self.totalTimerView.timer.isActive || self.totalTimerView.timer.isPaused {
+      let alert = self.resetAlert(okAction: {
+        self.resetTimers()
+        settings()
+      })
+      self.present(alert, animated: true, completion: nil)
     } else {
-      self.resetTimers {
-        self.present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
-      }
+      settings()
     }
     self.tipsManager?.dismiss(forType: .settings)
   }
@@ -202,24 +211,19 @@ class TimerViewController: UIViewController {
     UIApplication.shared.isIdleTimerDisabled = isIdleTimerDisabled
   }
 
-  private func resetTimers(_ completion: (() -> ())? = nil) {
-    print(#function)
-    func reset() {
-      self.totalTimerView.timer.reset()
-      self.restTimerView.timer.reset()
-      self.keepScreenFromLocking(false)
-      completion?()
-    }
-    if !self.totalTimerView.timer.isActive {
-      reset()
-      return
-    }
+  private func resetAlert(okAction: @escaping (() -> ())) -> UIAlertController {
     let alert = UIAlertController(title: "Are you sure you want to reset the timer?", message: nil, preferredStyle: .alert)
     alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: { _ in
-      reset()
+      okAction()
     }))
     alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-    self.present(alert, animated: true, completion: nil)
+    return alert
+  }
+
+  private func resetTimers() {
+    self.totalTimerView.timer.reset()
+    self.restTimerView.timer.reset()
+    self.keepScreenFromLocking(false)
   }
 
   private func remakeConstraintsBasedOnOrientation() {
