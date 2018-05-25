@@ -35,25 +35,46 @@ class TimerViewController: UIViewController {
 
   // This is so the launch animation can use a dark status bar (matches the launchscreen storyboard config)
   // and the view controller can use the light status bar
-  var useLightStatusBar: Bool = true
+  var overrideStatusBar: UIStatusBarStyle?
   override var preferredStatusBarStyle: UIStatusBarStyle {
-    return self.useLightStatusBar ? .lightContent : .default
+    if let override = self.overrideStatusBar {
+      return override
+    }
+    return Settings.currentTheme == .dark ? .lightContent : .default
+    // default: intended for use on light backgrounds
+    // lightContent: intended for use on dark backgrounds
   }
 
   var tipsManager: TipManager?
 
+  func setColors(animated: Bool = true) {
+    print(#function)
+    let animations = {
+      self.view.backgroundColor = Colors.backgroundColor
+      self.totalTimerView.updateTimerColor()
+      self.restTimerView.updateTimerColor()
+      self.navigationController?.view.backgroundColor = Colors.backgroundColor
+      self.navigationController?.navigationBar.tintColor = Colors.navigationBarTintColor
+      self.setNeedsStatusBarAppearanceUpdate()
+      self.view.layoutSubviews()
+    }
+
+    if animated {
+      UIView.animate(withDuration: 0.5, animations: animations)
+    } else {
+      animations()
+    }
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.view.backgroundColor = .black
-
+    self.setColors(animated: false)
     // Make the nav bar transparent
     self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
     self.navigationController?.navigationBar.shadowImage = UIImage()
     self.navigationController?.navigationBar.isTranslucent = true
-    self.navigationController?.view.backgroundColor = UIColor.clear
 
-    self.navigationController?.navigationBar.tintColor = .gray
     let titleLabel: UILabel = {
       let label = UILabel()
       let attributes: [NSAttributedStringKey: Any] = [
@@ -290,16 +311,29 @@ extension TimerViewController: UISideMenuNavigationControllerDelegate {
 
   func sideMenuWillAppear(menu: UISideMenuNavigationController, animated: Bool) {
     print("SideMenu Appearing! (animated: \(animated))")
+    if Settings.currentTheme == .light {
+      self.overrideStatusBar = .lightContent
+      self.setNeedsStatusBarAppearanceUpdate()
+      UIView.animate(withDuration: 0.25) {
+        self.view.layoutSubviews()
+      }
+    }
   }
 
   func sideMenuDidAppear(menu: UISideMenuNavigationController, animated: Bool) {
     print("SideMenu Appeared! (animated: \(animated))")
+
   }
 
   func sideMenuWillDisappear(menu: UISideMenuNavigationController, animated: Bool) {
     print("SideMenu Disappearing! (animated: \(animated))")
     self.restTimerView.updateStepper()
     self.totalTimerView.updateCountTimer()
+    self.overrideStatusBar = nil
+    UIView.animate(withDuration: 0.25) {
+      self.setNeedsStatusBarAppearanceUpdate()
+      self.view.layoutSubviews()
+    }
   }
 
   func sideMenuDidDisappear(menu: UISideMenuNavigationController, animated: Bool) {

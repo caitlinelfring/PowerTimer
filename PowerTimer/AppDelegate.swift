@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let timerVC = TimerViewController()
     let root = UINavigationController(rootViewController: timerVC)
     self.window!.rootViewController = root
-    timerVC.useLightStatusBar = false
+    timerVC.overrideStatusBar = .default
 
     let maskBgView = UIView(frame: root.view.frame)
     maskBgView.backgroundColor = UIColor(red: 0.789, green: 1, blue: 0.837, alpha: 1)
@@ -66,7 +66,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         label.transform = label.transform.scaledBy(x: 100, y: 100)
         label.layoutIfNeeded()
       }, completion: { finished in
-        timerVC.useLightStatusBar = true
+        timerVC.overrideStatusBar = nil
         maskBgView.removeFromSuperview()
         timerVC.setNeedsStatusBarAppearanceUpdate()
       })

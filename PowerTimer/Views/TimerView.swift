@@ -17,14 +17,14 @@ class TimerView: UIView {
       static var font: UIFont {
         return  UIFont(name: "HelveticaNeue-Medium", size: Settings.minScreenDimension * 0.25)!
       }
-      static let textColor: UIColor = .white
+      static var textColor: UIColor { return Colors.timerActive }
     }
 
     class Inactive {
       static var font: UIFont {
         return Constants.Active.font.withSize(Constants.Active.font.pointSize - 20)
       }
-      static let textColor: UIColor = .gray
+      static var textColor: UIColor { return Colors.timerInactive }
     }
   }
 
@@ -55,7 +55,6 @@ class TimerView: UIView {
     }
     self.setTime(seconds: 0)
 
-    self.textLabel.textColor = .white
     self.textLabel.textAlignment = .center
     self.textLabel.font = UIFont.systemFont(ofSize: 20)
     self.textLabel.adjustsFontSizeToFitWidth = true
@@ -80,8 +79,12 @@ class TimerView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
 
+  func updateColor(_ active: Bool) {
+    self.color = active ? Constants.Active.textColor : Constants.Inactive.textColor
+  }
+
   func enlarge(animate: Bool = true) {
-    if label.font != Constants.Active.font {
+    if self.label.font != Constants.Active.font {
       self.animateTo(font: Constants.Active.font, color: Constants.Active.textColor, animate: animate)
     }
   }
