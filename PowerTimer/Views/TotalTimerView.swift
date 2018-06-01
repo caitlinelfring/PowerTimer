@@ -11,6 +11,10 @@ import UIKit
 import SnapKit
 
 class TimerActions: UIView {
+
+  var timer: CountTimer!
+  let timerView = TimerView()
+
   enum Event: String {
     case timerDidStart
     case timerDidPause
@@ -40,22 +44,24 @@ class TimerActions: UIView {
       NotificationCenter.default.post(name: event.name(), object: self, userInfo: nil)
     }
   }
+
+  func updateTimerColor() {
+    self.timerView.color = TimerView.Constants.Active.textColor
+  }
 }
 
 class TotalTimerView: TimerActions {
-  var timer: CountTimer!
-  let timerView = TimerView()
-
   override init(frame: CGRect) {
     super.init(frame: frame)
-    self.updateCountTimer()
+    self.updateTimerColor()
+    self.timerView.enlarge()
+    self.timerView.textLabel.text = "Total Time"
 
     self.addSubview(self.timerView)
     self.timerView.snp.makeConstraints { (make) in
       make.edges.equalToSuperview()
     }
-    self.timerView.enlarge()
-    self.timerView.textLabel.text = "Total Time"
+    self.updateCountTimer()
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -74,27 +80,23 @@ class TotalTimerView: TimerActions {
 
 extension TotalTimerView: TimerDelegate {
   func onTimeChanged(seconds: Int) {
-    print(#function, String(describing: type(of: self)), seconds)
     self.timerView.setTime(seconds: seconds)
   }
 
   func onPaused() {
-    print(#function)
     self.timerView.color = .yellow
     self.postToObservers(.timerDidPause)
   }
 
   func onStart() {
-    print(#function)
-    self.timerView.color = .white
+    self.timerView.enlarge()
     self.postToObservers(.timerDidStart)
   }
 
   func onReset() {
-    print(#function)
-    self.timerView.color = .white
-    self.timerView.setTime(seconds: self.timer.currentSeconds)
+    self.timerView.updateColor(true)
     self.timerView.enlarge()
+    self.timerView.setTime(seconds: self.timer.currentSeconds)
     self.postToObservers(.timerDidReset)
   }
 }

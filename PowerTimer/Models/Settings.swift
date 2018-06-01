@@ -120,4 +120,28 @@ class Settings {
     }
     return largerBounds
   }
+
+  enum Theme: Int {
+    case dark
+    case light
+
+    static var available: [Theme] = [.dark, .light]
+
+    var description: String {
+      switch self {
+      case .dark: return "Dark"
+      case .light: return "Light"
+      }
+    }
+  }
+
+  static var currentTheme: Theme {
+    set(value) {
+      defaults.set(value.rawValue, forKey: "theme")
+    }
+    get {
+      return Theme(rawValue: defaults.integer(forKey: "theme")) ?? Theme.dark
+    }
+  }
 }
+

@@ -14,13 +14,11 @@ import SnapKit
 class RestTimerView: TimerActions {
 
   var isEnabled: Bool = false
-  let timer = CountUpTimer()
-
-  let timerView = TimerView()
   let stepper = RestTimerStepper()
 
   override init(frame: CGRect) {
     super.init(frame: frame)
+    self.timer = CountUpTimer()
     self.timer.delegate = self
 
     self.timerView.soften(animate: false)
@@ -41,6 +39,11 @@ class RestTimerView: TimerActions {
     }
 
     self.addTapGestureRecognizer(to: self)
+  }
+
+  override func updateTimerColor() {
+    self.timerView.color = TimerView.Constants.Inactive.textColor
+    self.stepper.updateColors()
   }
 
   func addTapGestureRecognizer(to view: UIView) {
@@ -93,7 +96,6 @@ class RestTimerView: TimerActions {
 
 extension RestTimerView: TimerDelegate {
   func onTimeChanged(seconds: Int) {
-    print(#function, String(describing: type(of: self)), seconds)
     self.timerView.setTime(seconds: seconds)
     let restTimerSeconds = Settings.RestTimerMinutes * 60
     var textColor: UIColor = TimerView.Constants.Active.textColor

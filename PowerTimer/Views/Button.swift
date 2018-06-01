@@ -15,7 +15,7 @@ class ImageButton: UIButton {
     self.setImage(image.withRenderingMode(.alwaysTemplate), for: .normal)
   }
 
-  var color: UIColor = .white {
+  var color: UIColor = Colors.timerActive {
     didSet {
       self.imageView!.tintColor = self.color
       self.layer.borderColor = self.color.cgColor

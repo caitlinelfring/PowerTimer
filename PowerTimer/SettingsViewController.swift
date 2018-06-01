@@ -68,12 +68,15 @@ class SettingTableViewController: UITableViewController {
 
     self.items.append(Item(title: "Reset Intro Tips", didPress: {
       Settings.IntroTips.reset()
-      self.navigationController?.popViewController(animated: true)
+      self.dismiss(animated: true, completion: nil)
     }))
 
     let soundCell = UITableViewCell(style: .default, reuseIdentifier: nil)
     soundCell.accessoryView = soundOnOffSwitch()
     self.items.append(Item(title: "Alerts", cell: soundCell))
+
+    let themeCell = SettingsCell(accessory: themeControl())
+    self.items.append(Item(title: "Theme", height: 80, cell: themeCell))
 
     self.tableView.delegate = self
     self.tableView.dataSource = self
@@ -102,7 +105,7 @@ class SettingTableViewController: UITableViewController {
   }
 
   func restStepper() -> ValueStepper {
-    let stepper = SettingsRestTimerStepper()
+    let stepper = RestTimerStepper()
     stepper.labelTextColor = self.view.tintColor
     stepper.value = Double(Settings.RestTimerMinutes)
     stepper.addTarget(self, action: #selector(self.didChangeRestMinutes), for: .valueChanged)
@@ -122,6 +125,24 @@ class SettingTableViewController: UITableViewController {
     segmentControl.addTarget(self, action: #selector(self.didChangeTimerType), for: .valueChanged)
     segmentControl.selectedSegmentIndex = Settings.SavedTimerType.rawValue
     return segmentControl
+  }
+
+  private func themeControl() -> UISegmentedControl {
+    let segmentControl = UISegmentedControl(items: Settings.Theme.available.map { $0.description })
+    segmentControl.addTarget(self, action: #selector(self.didChangeTheme), for: .valueChanged)
+    segmentControl.selectedSegmentIndex = Settings.currentTheme.rawValue
+    return segmentControl
+  }
+
+  @objc private func didChangeTheme(sender: UISegmentedControl) {
+    Settings.currentTheme = Settings.Theme(rawValue: sender.selectedSegmentIndex)!
+
+    let nav = self.presentingViewController as! UINavigationController
+    let parent = nav.childViewControllers.first! as! TimerViewController
+    parent.setColors()
+    parent.overrideStatusBar = Settings.currentTheme == .light ? .lightContent : nil
+    parent.setNeedsStatusBarAppearanceUpdate()
+    parent.view.layoutSubviews()
   }
 
   private func soundOnOffSwitch() -> UISwitch {
