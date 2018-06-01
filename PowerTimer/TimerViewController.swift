@@ -55,6 +55,8 @@ class TimerViewController: UIViewController {
       self.restTimerView.updateTimerColor()
       self.navigationController?.view.backgroundColor = Colors.backgroundColor
       self.navigationController?.navigationBar.tintColor = Colors.navigationBarTintColor
+      self.playPauseButton.color = Colors.buttonColor
+      self.refreshButton.color = Colors.buttonColor
       self.setNeedsStatusBarAppearanceUpdate()
       self.view.layoutSubviews()
     }

@@ -94,6 +94,7 @@ extension TotalTimerView: TimerDelegate {
   }
 
   func onReset() {
+    self.timerView.updateColor(true)
     self.timerView.enlarge()
     self.timerView.setTime(seconds: self.timer.currentSeconds)
     self.postToObservers(.timerDidReset)
