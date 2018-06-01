@@ -49,7 +49,7 @@ class CountTimer {
     return self.timer != nil
   }
   var isPaused: Bool {
-    return self.currentSeconds > 0 && !self.isActive
+    return self.elapsedTime > 0 && !self.isActive
   }
 
   func timerBlock(_ timer: Timer) {
