@@ -21,10 +21,7 @@ class Colors {
   static var buttonColor: UIColor { return forCurrentTheme(dark: .white, light: .black) }
 
   class func forCurrentTheme(dark: UIColor, light: UIColor) -> UIColor {
-    if Settings.currentTheme == .dark {
-      return dark
-    }
-    return light
+    return Settings.currentTheme == .dark ? dark : light
   }
 
   class func hexToRGB(hex: Int) -> UIColor {

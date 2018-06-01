@@ -79,7 +79,7 @@ class TimerView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func updateColor(_ active: Bool) {
+  func updateColor(active: Bool) {
     self.color = active ? Constants.Active.textColor : Constants.Inactive.textColor
   }
 
@@ -88,6 +88,7 @@ class TimerView: UIView {
       self.animateTo(font: Constants.Active.font, color: Constants.Active.textColor, animate: animate)
     }
   }
+
   func soften(animate: Bool = true) {
     if self.label.font != Constants.Inactive.font {
       self.animateTo(font: Constants.Inactive.font, color: Constants.Inactive.textColor, animate: animate)
