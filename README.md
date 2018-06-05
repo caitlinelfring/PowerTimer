@@ -32,7 +32,7 @@ The best part is, **you can continue to keep the time of your entire workout!**
 - [x] Use eventing to inform views when timer states have changed
 
 ### Nice to haves
-- [ ] Light/dark theme
+- [x] Light/dark theme
 
 
 # Icons
