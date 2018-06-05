@@ -22,7 +22,7 @@ class TimerView: UIView {
 
     class Inactive {
       static var font: UIFont {
-        return Constants.Active.font.withSize(Constants.Active.font.pointSize - 20)
+        return Constants.Active.font.withSize(Constants.Active.font.pointSize - (Settings.minScreenDimension * 0.06))
       }
       static var textColor: UIColor { return Colors.timerInactive }
     }
@@ -56,7 +56,7 @@ class TimerView: UIView {
     self.setTime(seconds: 0)
 
     self.textLabel.textAlignment = .center
-    self.textLabel.font = UIFont.systemFont(ofSize: 20)
+    self.textLabel.font = UIFont.systemFont(ofSize: min(80, Settings.minScreenDimension * 0.06))
     self.textLabel.adjustsFontSizeToFitWidth = true
     self.addSubview(self.textLabel)
     self.textLabel.snp.makeConstraints { (make) in

@@ -31,7 +31,7 @@ class ClockView: UIView {
     })
     self.clockUpdateTimer.tolerance = 30
 
-    let font = UIFont(name: "Helvetica Light", size: 55)
+    let font = UIFont(name: "Helvetica Light", size: min(100, Settings.minScreenDimension * 0.15))
     self.clock.font = font
     self.clock.textColor = .darkGray
     self.clock.textAlignment = .center
@@ -55,7 +55,7 @@ class ClockView: UIView {
     let ampm = String(chars[1].lowercased())
 
     let attributedString = NSMutableAttributedString(string: time, attributes: [NSAttributedStringKey.font : self.clock.font])
-    attributedString.append(NSMutableAttributedString(string: " " + ampm, attributes: [NSAttributedStringKey.font : self.clock.font.withSize(20)]))
+    attributedString.append(NSMutableAttributedString(string: " " + ampm, attributes: [NSAttributedStringKey.font : self.clock.font.withSize(self.clock.font.pointSize * 0.5)]))
 
     self.clock.attributedText = attributedString
   }

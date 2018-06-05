@@ -79,14 +79,16 @@ class TimerViewController: UIViewController {
 
     let titleLabel: UILabel = {
       let label = UILabel()
+      let fontSize = min(Settings.minScreenDimension * 0.06, self.navigationController!.navigationBar.frame.size.height)
       let attributes: [NSAttributedStringKey: Any] = [
         NSAttributedStringKey.foregroundColor: UIColor(red: 1, green: 0.4, blue: 0.4, alpha: 1),
         NSAttributedStringKey.kern: 2,
-        NSAttributedStringKey.font: UIFont(name: "AvenirNext-DemiBold", size: Settings.minScreenDimension * 0.06)!,
+        NSAttributedStringKey.font: UIFont(name: "AvenirNext-DemiBold", size: fontSize)!,
         ]
       label.shadowColor = UIColor(red: 0.35, green: 0.25, blue: 1, alpha: 1)
       label.shadowOffset = CGSize(width: 3, height: 3)
       label.attributedText = NSAttributedString(string: "PowerTimer", attributes: attributes)
+
       label.sizeToFit()
       return label
     }()
@@ -299,7 +301,7 @@ class TimerViewController: UIViewController {
 
     self.buttonStack.snp.remakeConstraints { (make) in
       make.centerX.equalToSuperview()
-      make.height.equalTo(50)
+      make.height.equalTo(min(100, Settings.minScreenDimension * 0.15))
       if isPortrait {
         make.top.equalTo(self.totalTimerView.snp.bottom).offset(25)
       } else {
