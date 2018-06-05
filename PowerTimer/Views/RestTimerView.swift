@@ -35,6 +35,9 @@ class RestTimerView: TimerActions {
     self.stepper.snp.makeConstraints { (make) in
       make.top.equalTo(self.timerView.snp.bottom).offset(10)
       make.centerX.equalToSuperview()
+      if UIDevice.current.userInterfaceIdiom == .pad {
+        make.height.equalTo(35)
+      }
       make.bottom.equalToSuperview()
     }
 
