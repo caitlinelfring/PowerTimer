@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
-    <device id="retina3_5" orientation="portrait">
+    <device id="ipad12_9" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -16,11 +17,11 @@
             <objects>
                 <viewController id="01J-lp-oVM" sceneMemberID="viewController">
                     <view key="view" clipsSubviews="YES" contentMode="scaleAspectFill" id="Ze5-6b-2t3">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1366" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" insetsLayoutMarginsFromSafeArea="NO" text="PowerTimer" textAlignment="natural" lineBreakMode="tailTruncation" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="fjg-Jr-udt">
-                                <rect key="frame" x="7" y="201" width="306" height="79"/>
+                                <rect key="frame" x="530" y="472" width="306" height="80.5"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="fjg-Jr-udt" secondAttribute="height" multiplier="300:79" id="hpU-Vc-en0"/>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="nQc-CE-o6s"/>
@@ -38,7 +39,7 @@
                                 </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="JEddie, LLC" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="kik-2A-xeH">
-                                <rect key="frame" x="124" y="399" width="73" height="19"/>
+                                <rect key="frame" x="646.5" y="944.5" width="73" height="19"/>
                                 <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="17"/>
                                 <color key="textColor" red="0.4673678682883875" green="0.57115006661155632" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -47,7 +48,13 @@
                         <color key="backgroundColor" red="0.78946011329844246" green="1" blue="0.83735316362771495" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="kik-2A-xeH" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="3VB-uB-IvU"/>
+                            <constraint firstItem="fjg-Jr-udt" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="54H-pV-iVW"/>
+                            <constraint firstItem="kik-2A-xeH" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="-60" id="EfJ-Cz-VEA">
+                                <variation key="widthClass=regular" constant="-70"/>
+                            </constraint>
                             <constraint firstItem="kik-2A-xeH" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="-62" id="Tx3-18-bam"/>
+                            <constraint firstItem="fjg-Jr-udt" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="aa3-Ab-b6i"/>
                             <constraint firstItem="fjg-Jr-udt" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="otd-iU-5FF"/>
                             <constraint firstItem="fjg-Jr-udt" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="why-cp-4hV"/>
                             <constraint firstItem="fjg-Jr-udt" firstAttribute="centerX" secondItem="kik-2A-xeH" secondAttribute="centerX" id="yMC-1o-f90"/>
@@ -55,18 +62,30 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="3VB-uB-IvU"/>
+                                <exclude reference="EfJ-Cz-VEA"/>
+                                <exclude reference="Tx3-18-bam"/>
+                                <exclude reference="54H-pV-iVW"/>
+                                <exclude reference="aa3-Ab-b6i"/>
                                 <exclude reference="otd-iU-5FF"/>
                                 <exclude reference="why-cp-4hV"/>
                                 <exclude reference="yMC-1o-f90"/>
-                                <exclude reference="Tx3-18-bam"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="constraints">
+                                <include reference="Tx3-18-bam"/>
                                 <include reference="otd-iU-5FF"/>
                                 <include reference="why-cp-4hV"/>
                                 <include reference="yMC-1o-f90"/>
-                                <include reference="Tx3-18-bam"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=regular">
+                            <mask key="constraints">
+                                <include reference="3VB-uB-IvU"/>
+                                <include reference="EfJ-Cz-VEA"/>
+                                <include reference="54H-pV-iVW"/>
+                                <include reference="aa3-Ab-b6i"/>
                             </mask>
                         </variation>
                     </view>
