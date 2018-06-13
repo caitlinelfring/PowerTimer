@@ -132,9 +132,13 @@ class TimerViewController: UIViewController {
       guard let strongSelf = self else { return }
       switch event {
       case .timerDidReset:
+        if !strongSelf.totalTimerView.timer.isPaused {
+          strongSelf.totalTimerView.timerView.updateColor(active: true)
+        }
         strongSelf.totalTimerView.timerView.enlarge()
         strongSelf.tipsManager?.dismiss(forType: .stopRestTimer)
       case .timerDidStart:
+        strongSelf.totalTimerView.timerView.updateColor(active: false)
         strongSelf.totalTimerView.timerView.soften()
         strongSelf.tipsManager?.dismiss(forType: .startRestTimer)
       case .timerDidFailToStart:

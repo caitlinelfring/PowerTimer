@@ -130,6 +130,7 @@ extension RestTimerView: TimerDelegate {
 
   func onStart() {
     print(#function)
+    self.timerView.updateColor(active: true)
     self.timerView.enlarge()
     self.stepper.isHidden = true
     self.postToObservers(.timerDidStart)
@@ -137,6 +138,7 @@ extension RestTimerView: TimerDelegate {
 
   func onReset() {
     print(#function)
+    self.timerView.updateColor(active: false)
     self.timerView.soften()
     self.timerView.setTime(seconds: 0)
     self.stepper.isHidden = false

@@ -85,17 +85,17 @@ class TimerView: UIView {
 
   func enlarge(animate: Bool = true) {
     if self.label.font != Constants.Active.font {
-      self.animateTo(font: Constants.Active.font, color: Constants.Active.textColor, animate: animate)
+      self.animateTo(font: Constants.Active.font, animate: animate)
     }
   }
 
   func soften(animate: Bool = true) {
     if self.label.font != Constants.Inactive.font {
-      self.animateTo(font: Constants.Inactive.font, color: Constants.Inactive.textColor, animate: animate)
+      self.animateTo(font: Constants.Inactive.font, animate: animate)
     }
   }
 
-  func animateTo(font: UIFont, color: UIColor, animate: Bool = true) {
+  func animateTo(font: UIFont, animate: Bool = true) {
     let duration: TimeInterval = 0.25
     let oldFont = self.label.font
     self.label.font = font
@@ -105,7 +105,6 @@ class TimerView: UIView {
     self.label.setNeedsUpdateConstraints()
     let animations = {
       self.label.transform = .identity
-      self.color = color
       self.layoutIfNeeded()
       // So all the views that are around this view animate too
       self.superview?.layoutIfNeeded()
