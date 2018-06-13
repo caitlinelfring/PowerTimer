@@ -63,7 +63,7 @@ class SettingTableViewController: UITableViewController {
 
     let countDownTimerMinutesCell = SettingsCell(accessory: countDownTimerStepper())
     var cdt = Item(title: "CountDown Minutes", height: 80, cell: countDownTimerMinutesCell)
-    cdt.shouldEnable = { return Settings.SavedTimerType == .countDown }
+    cdt.shouldEnable = { return Settings.SavedTimerType == .countDown && self.canChangeTimerType }
     self.items.append(cdt)
 
     self.items.append(Item(title: "Reset Intro Tips", didPress: {
@@ -100,7 +100,7 @@ class SettingTableViewController: UITableViewController {
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     if let vc = (UIApplication.shared.keyWindow?.rootViewController as? UINavigationController)?.childViewControllers.first as? TimerViewController {
-      self.canChangeTimerType = !vc.totalTimerView.timer.isActive
+      self.canChangeTimerType = !vc.totalTimerView.timer.isActive && !vc.totalTimerView.timer.isPaused
     }
   }
 

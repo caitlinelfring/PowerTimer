@@ -68,12 +68,19 @@ class TotalTimerView: TimerActions {
     fatalError("init(coder:) has not been implemented")
   }
   func updateCountTimer() {
+    if self.timer != nil {
+      self.timer.delegate = nil
+      self.timer = nil
+    }
+
     if Settings.SavedTimerType == .countDown {
       self.timer = CountDownTimer(seconds: Settings.CountDownTimerMinutes * 60)
     } else {
       self.timer = CountUpTimer()
     }
     self.timer.delegate = self
+    self.timerView.enlarge()
+    self.timerView.updateColor(active: true)
     self.timerView.setTime(seconds: self.timer.currentSeconds)
   }
 }

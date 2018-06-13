@@ -210,39 +210,24 @@ class TimerViewController: UIViewController {
   @objc private func resetBtnTapped(sender: ImageButton) {
     print(#function)
     if self.totalTimerView.timer.isActive {
-      self.present(self.resetAlert(okAction: self.resetTimers), animated: true, completion: nil)
+      let alert = UIAlertController(title: "Are you sure you want to reset the timer?", message: nil, preferredStyle: .alert)
+      alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: { _ in
+        self.resetTimers()
+      }))
+      alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+      self.present(alert, animated: true, completion: nil)
     } else {
       self.resetTimers()
     }
   }
 
   @objc private func presentSettings() {
-    func settings() {
-      self.present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
-    }
-    if self.totalTimerView.timer.isActive || self.totalTimerView.timer.isPaused {
-      let alert = self.resetAlert(okAction: {
-        self.resetTimers()
-        settings()
-      })
-      self.present(alert, animated: true, completion: nil)
-    } else {
-      settings()
-    }
+    self.present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
     self.tipsManager?.dismiss(forType: .settings)
   }
 
   func keepScreenFromLocking(_ isIdleTimerDisabled: Bool) {
     UIApplication.shared.isIdleTimerDisabled = isIdleTimerDisabled
-  }
-
-  private func resetAlert(okAction: @escaping (() -> ())) -> UIAlertController {
-    let alert = UIAlertController(title: "Are you sure you want to reset the timer?", message: nil, preferredStyle: .alert)
-    alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: { _ in
-      okAction()
-    }))
-    alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-    return alert
   }
 
   private func resetTimers() {
@@ -332,7 +317,9 @@ extension TimerViewController: UISideMenuNavigationControllerDelegate {
   func sideMenuWillDisappear(menu: UISideMenuNavigationController, animated: Bool) {
     print("SideMenu Disappearing! (animated: \(animated))")
     self.restTimerView.updateStepper()
-    self.totalTimerView.updateCountTimer()
+    if !self.totalTimerView.timer.isActive && !self.totalTimerView.timer.isPaused {
+      self.totalTimerView.updateCountTimer()
+    }
     self.overrideStatusBar = nil
     UIView.animate(withDuration: 0.25) {
       self.setNeedsStatusBarAppearanceUpdate()
