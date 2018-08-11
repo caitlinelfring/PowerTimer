@@ -162,15 +162,18 @@ class TimerViewController: UIViewController {
         strongSelf.restTimerView.isEnabled = false
         strongSelf.restTimerView.timer.reset()
         strongSelf.playPauseButton.currentButtonImage = .play
+        strongSelf.resetButton.isEnabled = true
       case .timerDidStart:
         strongSelf.keepScreenFromLocking(true)
         strongSelf.restTimerView.isEnabled = true
         strongSelf.playPauseButton.currentButtonImage = .pause
+        strongSelf.resetButton.isEnabled = false
       case .timerDidPause:
         strongSelf.keepScreenFromLocking(false)
         strongSelf.restTimerView.isEnabled = false
         strongSelf.restTimerView.timer.reset()
         strongSelf.playPauseButton.currentButtonImage = .play
+        strongSelf.resetButton.isEnabled = true
       default: return
       }
     }

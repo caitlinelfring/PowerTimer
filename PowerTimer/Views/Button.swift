@@ -37,6 +37,18 @@ class ImageButton: UIButton {
     fatalError("init(coder:) has not been implemented")
   }
 
+  override var isHighlighted: Bool {
+    didSet {
+      self.color = self.isHighlighted ? UIColor.gray : Colors.buttonColor
+    }
+  }
+
+  override var isEnabled: Bool {
+    didSet {
+      self.color = self.isEnabled ? Colors.buttonColor : UIColor.lightGray
+    }
+  }
+
   override func layoutSubviews() {
     super.layoutSubviews()
 
