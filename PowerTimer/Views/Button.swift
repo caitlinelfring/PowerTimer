@@ -92,7 +92,7 @@ class PlayPauseButton: ImageButton {
   }
 }
 
-class RefreshButton: ImageButton {
+class ResetButton: ImageButton {
   convenience init() {
     self.init(image: UIImage(named: "refresh")!)
   }

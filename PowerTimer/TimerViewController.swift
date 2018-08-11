@@ -31,7 +31,7 @@ class TimerViewController: UIViewController {
 
   let buttonStack = UIStackView()
   let playPauseButton = PlayPauseButton()
-  let refreshButton = RefreshButton()
+  let resetButton = ResetButton()
 
   // This is so the launch animation can use a dark status bar (matches the launchscreen storyboard config)
   // and the view controller can use the light status bar
@@ -63,7 +63,7 @@ class TimerViewController: UIViewController {
       self.navigationController?.view.backgroundColor = Colors.backgroundColor
       self.navigationController?.navigationBar.tintColor = Colors.navigationBarTintColor
       self.playPauseButton.color = Colors.buttonColor
-      self.refreshButton.color = Colors.buttonColor
+      self.resetButton.color = Colors.buttonColor
       self.setNeedsStatusBarAppearanceUpdate()
       UIApplication.shared.keyWindow?.backgroundColor = Colors.backgroundColor
       self.view.layoutSubviews()
@@ -122,12 +122,12 @@ class TimerViewController: UIViewController {
     self.buttonStack.spacing = 10
     self.view.addSubview(self.buttonStack)
     self.buttonStack.addArrangedSubview(self.playPauseButton)
-    self.buttonStack.addArrangedSubview(self.refreshButton)
+    self.buttonStack.addArrangedSubview(self.resetButton)
 
     self.remakeConstraintsBasedOnOrientation()
 
     self.playPauseButton.addTarget(self, action: #selector(self.startBtnTapped), for: .touchUpInside)
-    self.refreshButton.addTarget(self, action: #selector(self.resetBtnTapped), for: .touchUpInside)
+    self.resetButton.addTarget(self, action: #selector(self.resetBtnTapped), for: .touchUpInside)
 
     // MARK: TimerView functions
     _ = self.restTimerView.addObserver { [weak self] (event, userInfo) in
