@@ -26,10 +26,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     self.window!.backgroundColor = UIColor(red: 0.789, green: 1, blue: 0.837, alpha: 1) // trying to match lauch screen
     self.window!.makeKeyAndVisible()
-    let timerVC = TimerViewController()
-    let root = UINavigationController(rootViewController: timerVC)
+    let root = MainViewController()
     self.window!.rootViewController = root
-    timerVC.overrideStatusBar = .default
 
     let maskBgView = UIView(frame: root.view.frame)
     maskBgView.backgroundColor = UIColor(red: 0.789, green: 1, blue: 0.837, alpha: 1)
@@ -66,9 +64,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         label.transform = label.transform.scaledBy(x: 100, y: 100)
         label.layoutIfNeeded()
       }, completion: { finished in
-        timerVC.overrideStatusBar = nil
+        root.startAnimationFinished()
         maskBgView.removeFromSuperview()
-        timerVC.setNeedsStatusBarAppearanceUpdate()
       })
     })
 

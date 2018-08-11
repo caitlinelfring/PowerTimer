@@ -11,6 +11,7 @@ import UIKit
 import ValueStepper
 import SnapKit
 import EasyTipView
+import SlideMenuControllerSwift
 
 class SettingTableViewController: UITableViewController {
   struct Item {
@@ -99,9 +100,9 @@ class SettingTableViewController: UITableViewController {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    if let vc = (UIApplication.shared.keyWindow?.rootViewController as? UINavigationController)?.childViewControllers.first as? TimerViewController {
-      self.canChangeTimerType = !vc.totalTimerView.timer.isActive && !vc.totalTimerView.timer.isPaused
-    }
+    let nav = (self.parent as! SlideMenuController).mainViewController as! UINavigationController
+    let parent = nav.childViewControllers.first! as! TimerViewController
+    self.canChangeTimerType = !parent.totalTimerView.timer.isActive && !parent.totalTimerView.timer.isPaused
   }
 
   func restStepper() -> ValueStepper {
@@ -136,13 +137,9 @@ class SettingTableViewController: UITableViewController {
 
   @objc private func didChangeTheme(sender: UISegmentedControl) {
     Settings.currentTheme = Settings.Theme(rawValue: sender.selectedSegmentIndex)!
-
-    let nav = self.presentingViewController as! UINavigationController
+    let nav = (self.parent as! SlideMenuController).mainViewController as! UINavigationController
     let parent = nav.childViewControllers.first! as! TimerViewController
     parent.setColors()
-    parent.overrideStatusBar = Settings.currentTheme == .light ? .lightContent : nil
-    parent.setNeedsStatusBarAppearanceUpdate()
-    parent.view.layoutSubviews()
   }
 
   private func soundOnOffSwitch() -> UISwitch {

@@ -8,7 +8,7 @@
 
 import UIKit
 import SnapKit
-import SideMenu
+import SlideMenuControllerSwift
 
 // Since I'm not subclassing UINavigationController, this is the simplist way
 // to get the status bar styles working correctly in a navigation stack
@@ -45,6 +45,13 @@ class TimerViewController: UIViewController {
     // lightContent: intended for use on dark backgrounds
   }
 
+  convenience init() {
+    self.init(nibName: nil, bundle: nil)
+    self.overrideStatusBar = .default
+    let menu = UIImage(named: "menu")!.withAlignmentRectInsets(UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0))
+    self.addLeftBarButtonWithImage(menu)
+  }
+
   var tipsManager: TipManager?
 
   func setColors(animated: Bool = true) {
@@ -58,6 +65,7 @@ class TimerViewController: UIViewController {
       self.playPauseButton.color = Colors.buttonColor
       self.refreshButton.color = Colors.buttonColor
       self.setNeedsStatusBarAppearanceUpdate()
+      UIApplication.shared.keyWindow?.backgroundColor = Colors.backgroundColor
       self.view.layoutSubviews()
     }
 
@@ -77,9 +85,12 @@ class TimerViewController: UIViewController {
     self.navigationController?.navigationBar.shadowImage = UIImage()
     self.navigationController?.navigationBar.isTranslucent = true
 
-    let titleLabel: UILabel = {
+    self.navigationItem.titleView = {
+      guard let nav = self.navigationController else {
+        return nil
+      }
       let label = UILabel()
-      let fontSize = min(Settings.minScreenDimension * 0.06, self.navigationController!.navigationBar.frame.size.height)
+      let fontSize = min(Settings.minScreenDimension * 0.06, nav.navigationBar.frame.size.height)
       let attributes: [NSAttributedStringKey: Any] = [
         NSAttributedStringKey.foregroundColor: UIColor(red: 1, green: 0.4, blue: 0.4, alpha: 1),
         NSAttributedStringKey.kern: 2,
@@ -92,7 +103,7 @@ class TimerViewController: UIViewController {
       label.sizeToFit()
       return label
     }()
-    self.navigationItem.titleView = titleLabel
+
 
     self.view.addSubview(self.clock)
     self.clock.snp.makeConstraints { (make) in
@@ -117,15 +128,6 @@ class TimerViewController: UIViewController {
 
     self.playPauseButton.addTarget(self, action: #selector(self.startBtnTapped), for: .touchUpInside)
     self.refreshButton.addTarget(self, action: #selector(self.resetBtnTapped), for: .touchUpInside)
-
-    let menu = UIImage(named: "menu")!.withAlignmentRectInsets(UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0))
-    let settings = UIBarButtonItem(image: menu, style: .plain, target: self, action: #selector(self.presentSettings))
-    self.navigationItem.leftBarButtonItem = settings
-
-    SideMenuManager.default.menuLeftNavigationController = UISideMenuNavigationController(rootViewController: SettingTableViewController())
-    SideMenuManager.default.menuLeftNavigationController!.sideMenuDelegate = self
-    SideMenuManager.default.menuAddScreenEdgePanGesturesToPresent(toView: self.navigationController!.view, forMenu: .left)
-    SideMenuManager.default.menuPresentMode = .viewSlideInOut
 
     // MARK: TimerView functions
     _ = self.restTimerView.addObserver { [weak self] (event, userInfo) in
@@ -225,11 +227,6 @@ class TimerViewController: UIViewController {
     }
   }
 
-  @objc private func presentSettings() {
-    self.present(SideMenuManager.default.menuLeftNavigationController!, animated: true, completion: nil)
-    self.tipsManager?.dismiss(forType: .settings)
-  }
-
   func keepScreenFromLocking(_ isIdleTimerDisabled: Bool) {
     UIApplication.shared.isIdleTimerDisabled = isIdleTimerDisabled
   }
@@ -300,40 +297,26 @@ class TimerViewController: UIViewController {
   }
 }
 
-extension TimerViewController: UISideMenuNavigationControllerDelegate {
-
-  func sideMenuWillAppear(menu: UISideMenuNavigationController, animated: Bool) {
-    print("SideMenu Appearing! (animated: \(animated))")
-    if Settings.currentTheme == .light {
-      self.overrideStatusBar = .lightContent
-      self.setNeedsStatusBarAppearanceUpdate()
-      UIView.animate(withDuration: 0.25) {
-        self.view.layoutSubviews()
-      }
-    }
+extension TimerViewController: SlideMenuControllerDelegate {
+  func leftWillOpen() {
+    print("SlideMenuControllerDelegate: leftWillOpen")
+    self.tipsManager?.dismiss(forType: .settings)
   }
 
-  func sideMenuDidAppear(menu: UISideMenuNavigationController, animated: Bool) {
-    print("SideMenu Appeared! (animated: \(animated))")
-
+  func leftDidOpen() {
+    print("SlideMenuControllerDelegate: leftDidOpen")
   }
 
-  func sideMenuWillDisappear(menu: UISideMenuNavigationController, animated: Bool) {
-    print("SideMenu Disappearing! (animated: \(animated))")
+  func leftWillClose() {
+    print("SlideMenuControllerDelegate: leftWillClose")
     self.restTimerView.updateStepper()
     if !self.totalTimerView.timer.isActive && !self.totalTimerView.timer.isPaused {
       self.totalTimerView.updateCountTimer()
     }
-    self.overrideStatusBar = nil
-    UIView.animate(withDuration: 0.25) {
-      self.setNeedsStatusBarAppearanceUpdate()
-      self.view.layoutSubviews()
-    }
   }
 
-  func sideMenuDidDisappear(menu: UISideMenuNavigationController, animated: Bool) {
-    print("SideMenu Disappeared! (animated: \(animated))")
+  func leftDidClose() {
+    print("SlideMenuControllerDelegate: leftDidClose")
     self.showNextTip()
   }
-
 }
