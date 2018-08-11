@@ -154,9 +154,6 @@ class SettingTableViewController: UITableViewController {
 
   @objc func soundSwitchDidChange(sender: UISwitch) {
     Settings.Sound.playSoundAlert = sender.isOn
-    if sender.isOn {
-      self.present(UINavigationController(rootViewController: SoundsTableViewController()), animated: true, completion: nil)
-    }
   }
 
   @objc func didChangeRestMinutes(sender: UIStepper) {
