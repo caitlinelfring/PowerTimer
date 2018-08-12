@@ -24,50 +24,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //      self.window = fingertips
     #endif
 
-    self.window!.backgroundColor = UIColor(red: 0.789, green: 1, blue: 0.837, alpha: 1) // trying to match lauch screen
+    self.window!.backgroundColor = UIColor(red: 0.789, green: 1, blue: 0.837, alpha: 1) // trying to match launch screen
     self.window!.makeKeyAndVisible()
     let root = MainViewController()
     self.window!.rootViewController = root
-
-    let maskBgView = UIView(frame: root.view.frame)
-    maskBgView.backgroundColor = UIColor(red: 0.789, green: 1, blue: 0.837, alpha: 1)
-
-    // Label should match the launch screen label
-    let label = UILabel()
-    let attributes: [NSAttributedStringKey: Any] = [
-      NSAttributedStringKey.foregroundColor: UIColor(red: 1, green: 0.4, blue: 0.93, alpha: 0.45),
-      NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: 55)!,
-      ]
-    label.allowsDefaultTighteningForTruncation = true
-    label.shadowColor = UIColor(red: 0.35, green: 0.25, blue: 1, alpha: 0.45)
-    label.shadowOffset = CGSize(width: 4, height: 4)
-    label.attributedText = NSAttributedString(string: "PowerTimer", attributes: attributes)
-    label.sizeToFit()
-
-    maskBgView.addSubview(label)
-    label.snp.makeConstraints { (make) in
-      make.center.equalToSuperview()
-      make.width.equalTo(306)
-    }
-    root.view.addSubview(maskBgView)
-    root.view.bringSubview(toFront: maskBgView)
-    maskBgView.snp.makeConstraints { (make) in
-      make.center.equalToSuperview()
-      make.edges.equalToSuperview()
-    }
-    UIView.animate(withDuration: 0.25, delay: 1, options: UIViewAnimationOptions.curveEaseInOut, animations: {
-      label.transform = label.transform.scaledBy(x: 0.9, y: 0.9)
-      label.layoutIfNeeded()
-    }, completion: { finished in
-      UIView.animate(withDuration: 0.25, delay: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {
-        maskBgView.alpha = 0.0
-        label.transform = label.transform.scaledBy(x: 100, y: 100)
-        label.layoutIfNeeded()
-      }, completion: { finished in
-        root.startAnimationFinished()
-        maskBgView.removeFromSuperview()
-      })
-    })
 
     print(Date())
 
