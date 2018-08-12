@@ -17,6 +17,11 @@ class MainViewController: SlideMenuController {
 
   convenience init() {
     self.init(nibName: nil, bundle: nil)
+    // These two are for stopping the Slide menu from scaling the timers down to 0.96 when
+    // the menu opens.
+    // TODO: I think the scaling is a cool effect, find out why the timer animations being weird
+    SlideMenuOptions.contentViewDrag = false
+    SlideMenuOptions.contentViewScale = 1
     SlideMenuOptions.hideStatusBar = false
     self.mainViewController = UINavigationController(rootViewController: self.timerVC)
     self.delegate = self.timerVC
