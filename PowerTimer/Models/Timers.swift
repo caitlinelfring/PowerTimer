@@ -34,11 +34,22 @@ protocol TimerDelegate: class {
 }
 
 class CountTimer {
-  enum State {
+  enum State: CustomDebugStringConvertible {
     case paused
     case running
     case reset
+
+    var debugDescription: String {
+      var s: String
+      switch self {
+      case .paused: s = "paused"
+      case .running: s = "running"
+      case .reset: s = "reset"
+      }
+      return "CountTimer.State = \(s)"
+    }
   }
+
   fileprivate(set) var currentSeconds: Int = 0 {
     didSet {
       if oldValue != self.currentSeconds {

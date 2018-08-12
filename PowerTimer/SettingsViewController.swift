@@ -37,7 +37,7 @@ class SettingTableViewController: UITableViewController {
   private var canChangeTimerType: Bool {
     let nav = (self.parent as! SlideMenuController).mainViewController as! UINavigationController
     let parentTimer = (nav.childViewControllers.first! as! TimerViewController).totalTimerView.timer!
-    return parentTimer.state != .running
+    return parentTimer.state == .reset
   }
 
   private var items = [Item]()
