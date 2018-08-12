@@ -21,7 +21,7 @@ class RestTimerView: TimerActions {
     self.timer = CountUpTimer()
     self.timer.delegate = self
 
-    self.timerView.soften(animate: false)
+    self.timerView.state = .inactive
     self.timerView.setTime(seconds: 0)
     self.timerView.textLabel.text = "Rest Time"
     self.addSubview(self.timerView)
@@ -79,7 +79,7 @@ class RestTimerView: TimerActions {
       return
     }
 
-    if self.timer.isActive {
+    if self.timer.state == .running {
       self.timer.reset()
     } else {
       self.timer.start()
@@ -130,16 +130,14 @@ extension RestTimerView: TimerDelegate {
 
   func onStart() {
     print(#function)
-    self.timerView.updateColor(active: true)
-    self.timerView.enlarge()
+    self.timerView.state = .active
     self.stepper.isHidden = true
     self.postToObservers(.timerDidStart)
   }
 
   func onReset() {
     print(#function)
-    self.timerView.updateColor(active: false)
-    self.timerView.soften()
+    self.timerView.state = .inactive
     self.timerView.setTime(seconds: 0)
     self.stepper.isHidden = false
     self.postToObservers(.timerDidReset)

@@ -13,6 +13,7 @@ class Colors {
   static let green = hexToRGB(hexString: "#2A7100")
   static let red = hexToRGB(hexString: "#801B00")
   static let orange = hexToRGB(hexString: "#C66304")
+  static let yellow = forCurrentTheme(dark: .yellow, light: hexToRGB(hex: 0xFFD300))
 
   static var navigationBarTintColor: UIColor { return forCurrentTheme(dark: .gray, light: .black) }
   static var backgroundColor: UIColor { return forCurrentTheme(dark: .black, light: .white) }

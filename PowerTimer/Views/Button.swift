@@ -10,6 +10,10 @@ import Foundation
 import UIKit
 
 class ImageButton: UIButton {
+  fileprivate class Constants {
+    static let highlighted = Colors.forCurrentTheme(dark: .lightGray, light: .darkGray)
+    static let disabled = UIColor.darkGray
+  }
   convenience init(image: UIImage) {
     self.init(frame: .zero)
     self.setImage(image.withRenderingMode(.alwaysTemplate), for: .normal)
@@ -17,14 +21,17 @@ class ImageButton: UIButton {
 
   var color: UIColor = Colors.timerActive {
     didSet {
-      self.imageView!.tintColor = self.color
-      self.layer.borderColor = self.color.cgColor
+      let color = self.isEnabled ? self.color : Constants.disabled
+      self.imageView!.tintColor = color
+      self.layer.borderColor = color.cgColor
     }
   }
 
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.isUserInteractionEnabled = true
+    self.adjustsImageWhenDisabled = false
+    self.adjustsImageWhenHighlighted = false
     self.imageView!.tintColor = self.color
     self.layer.borderColor = self.color.cgColor
     self.layer.borderWidth = 2
@@ -39,13 +46,13 @@ class ImageButton: UIButton {
 
   override var isHighlighted: Bool {
     didSet {
-      self.color = self.isHighlighted ? UIColor.gray : Colors.buttonColor
+      self.color = self.isHighlighted ? Constants.highlighted : Colors.buttonColor
     }
   }
 
   override var isEnabled: Bool {
     didSet {
-      self.color = self.isEnabled ? Colors.buttonColor : UIColor.lightGray
+      self.color = self.isEnabled ? Colors.buttonColor : Constants.disabled
     }
   }
 
@@ -54,6 +61,10 @@ class ImageButton: UIButton {
 
     let radius = self.bounds.size.width / 2
     self.layer.cornerRadius = radius
+
+    if self.state == .disabled {
+      self.isEnabled = false
+    }
   }
 }
 

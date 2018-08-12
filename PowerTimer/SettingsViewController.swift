@@ -34,7 +34,11 @@ class SettingTableViewController: UITableViewController {
     self.init(style: .plain)
   }
 
-  private var canChangeTimerType: Bool = true
+  private var canChangeTimerType: Bool {
+    let nav = (self.parent as! SlideMenuController).mainViewController as! UINavigationController
+    let parentTimer = (nav.childViewControllers.first! as! TimerViewController).totalTimerView.timer!
+    return parentTimer.state != .running
+  }
 
   private var items = [Item]()
   private var currentTip: EasyTipView?
@@ -53,7 +57,7 @@ class SettingTableViewController: UITableViewController {
         var prefs = EasyTipView.Preferences()
         prefs.animating.dismissOnTap = true
         self.currentTip?.dismiss()
-        self.currentTip = EasyTipView(text: "Pause the current timer before changing the timer type.", preferences: prefs, delegate: nil)
+        self.currentTip = EasyTipView(text: "Reset the current timer to change this.", preferences: prefs, delegate: nil)
         self.currentTip!.show(animated: true, forView: timerTypeCell.accessory, withinSuperview: self.view)
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 5, execute: {
           self.currentTip?.dismiss()
@@ -100,10 +104,9 @@ class SettingTableViewController: UITableViewController {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    let nav = (self.parent as! SlideMenuController).mainViewController as! UINavigationController
-    let parent = nav.childViewControllers.first! as! TimerViewController
-    self.canChangeTimerType = !parent.totalTimerView.timer.isActive && !parent.totalTimerView.timer.isPaused
+    self.tableView.reloadData()
   }
+  
 
   func restStepper() -> ValueStepper {
     let stepper = RestTimerStepper()

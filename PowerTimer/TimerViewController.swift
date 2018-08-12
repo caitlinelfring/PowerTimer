@@ -134,17 +134,17 @@ class TimerViewController: UIViewController {
       guard let strongSelf = self else { return }
       switch event {
       case .timerDidReset:
-        if !strongSelf.totalTimerView.timer.isPaused {
-          strongSelf.totalTimerView.timerView.updateColor(active: true)
+        if strongSelf.totalTimerView.timer.state == .paused {
+          strongSelf.totalTimerView.timerView.state = .paused
+        } else {
+          strongSelf.totalTimerView.timerView.state = .active
         }
-        strongSelf.totalTimerView.timerView.enlarge()
         strongSelf.tipsManager?.dismiss(forType: .stopRestTimer)
       case .timerDidStart:
-        strongSelf.totalTimerView.timerView.updateColor(active: false)
-        strongSelf.totalTimerView.timerView.soften()
+        strongSelf.totalTimerView.timerView.state = .inactive
         strongSelf.tipsManager?.dismiss(forType: .startRestTimer)
       case .timerDidFailToStart:
-        if strongSelf.totalTimerView.timer.isPaused {
+        if strongSelf.totalTimerView.timer.state == .paused {
           strongSelf.playPauseButton.shake(withDirection: .rotate)
         } else {
           strongSelf.totalTimerView.timer.start()
@@ -207,7 +207,7 @@ class TimerViewController: UIViewController {
   }
 
   @objc private func startBtnTapped(sender: PlayPauseButton) {
-    print(#function)
+    print(#function, "isPlay:", sender.isPlay)
     if sender.isPlay {
       self.totalTimerView.timer.start()
       self.tipsManager?.dismiss(forType: .startTimer)
@@ -218,7 +218,7 @@ class TimerViewController: UIViewController {
 
   @objc private func resetBtnTapped(sender: ImageButton) {
     print(#function)
-    if self.totalTimerView.timer.isActive {
+    if self.totalTimerView.timer.state == .running {
       let alert = UIAlertController(title: "Are you sure you want to reset the timer?", message: nil, preferredStyle: .alert)
       alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: { _ in
         self.resetTimers()
@@ -313,7 +313,7 @@ extension TimerViewController: SlideMenuControllerDelegate {
   func leftWillClose() {
     print("SlideMenuControllerDelegate: leftWillClose")
     self.restTimerView.updateStepper()
-    if !self.totalTimerView.timer.isActive && !self.totalTimerView.timer.isPaused {
+    if self.totalTimerView.timer.state != .running && self.totalTimerView.timer.state != .paused {
       self.totalTimerView.updateCountTimer()
     }
   }

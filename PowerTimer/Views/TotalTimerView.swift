@@ -46,7 +46,12 @@ class TimerActions: UIView {
   }
 
   func updateTimerColor() {
-    self.timerView.color = TimerView.Constants.Active.textColor
+//    if self.timer == nil { return }
+//    if self.timer.state == .paused {
+//      self.timerView.color = Colors.yellow
+//    } else {
+//      self.timerView.color = TimerView.Constants.Active.textColor
+//    }
   }
 }
 
@@ -54,7 +59,7 @@ class TotalTimerView: TimerActions {
   override init(frame: CGRect) {
     super.init(frame: frame)
     self.updateTimerColor()
-    self.timerView.enlarge()
+    self.timerView.state = .active
     self.timerView.textLabel.text = "Total Time"
 
     self.addSubview(self.timerView)
@@ -79,8 +84,7 @@ class TotalTimerView: TimerActions {
       self.timer = CountUpTimer()
     }
     self.timer.delegate = self
-    self.timerView.enlarge()
-    self.timerView.updateColor(active: true)
+    self.timerView.state = .active
     self.timerView.setTime(seconds: self.timer.currentSeconds)
   }
 }
@@ -91,19 +95,17 @@ extension TotalTimerView: TimerDelegate {
   }
 
   func onPaused() {
-    self.timerView.color = .yellow
+    self.timerView.state = .paused
     self.postToObservers(.timerDidPause)
   }
 
   func onStart() {
-    self.timerView.enlarge()
-    self.timerView.updateColor(active: true)
+    self.timerView.state = .active
     self.postToObservers(.timerDidStart)
   }
 
   func onReset() {
-    self.timerView.enlarge()
-    self.timerView.updateColor(active: true)
+    self.timerView.state = .active
     self.timerView.setTime(seconds: self.timer.currentSeconds)
     self.postToObservers(.timerDidReset)
   }

@@ -11,6 +11,11 @@ import UIKit
 import SnapKit
 
 class TimerView: UIView {
+  enum State {
+    case active
+    case paused
+    case inactive
+  }
 
   class Constants {
     class Active {
@@ -42,6 +47,22 @@ class TimerView: UIView {
     didSet {
       let attributedText = NSAttributedString(string: self.currentText, attributes: [NSAttributedStringKey.kern: 5])
       self.label.attributedText = attributedText
+    }
+  }
+
+  var state: State = .active {
+    didSet {
+      switch state {
+      case .active:
+        self.color = Constants.Active.textColor
+        self.enlarge(animate: true)
+      case .inactive:
+        self.color = Constants.Inactive.textColor
+        self.soften(animate: true)
+      case .paused:
+        self.color = Colors.yellow
+        self.enlarge(animate: true)
+      }
     }
   }
 
@@ -79,23 +100,19 @@ class TimerView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
 
-  func updateColor(active: Bool) {
-    self.color = active ? Constants.Active.textColor : Constants.Inactive.textColor
-  }
-
-  func enlarge(animate: Bool = true) {
+  private func enlarge(animate: Bool = true) {
     if self.label.font != Constants.Active.font {
       self.animateTo(font: Constants.Active.font, animate: animate)
     }
   }
 
-  func soften(animate: Bool = true) {
+  private func soften(animate: Bool = true) {
     if self.label.font != Constants.Inactive.font {
       self.animateTo(font: Constants.Inactive.font, animate: animate)
     }
   }
 
-  func animateTo(font: UIFont, animate: Bool = true) {
+  private func animateTo(font: UIFont, animate: Bool = true) {
     let duration: TimeInterval = 0.25
     let oldFont = self.label.font
     self.label.font = font
@@ -118,7 +135,6 @@ class TimerView: UIView {
     }
   }
 }
-
 
 extension UIView {
   enum ShakeDirection {

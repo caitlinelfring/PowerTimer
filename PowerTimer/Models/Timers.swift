@@ -34,6 +34,11 @@ protocol TimerDelegate: class {
 }
 
 class CountTimer {
+  enum State {
+    case paused
+    case running
+    case reset
+  }
   fileprivate(set) var currentSeconds: Int = 0 {
     didSet {
       if oldValue != self.currentSeconds {
@@ -45,12 +50,14 @@ class CountTimer {
   var startTime: TimeInterval!
   weak var delegate: TimerDelegate?
   var elapsedTime = TimeInterval()
-  var isActive: Bool {
-    return self.timer != nil
+
+  var state: State {
+    if self.timer != nil {
+      return .running
+    }
+    return self.elapsedTime > 0 ? .paused : .reset
   }
-  var isPaused: Bool {
-    return self.elapsedTime > 0 && !self.isActive
-  }
+
 
   func timerBlock(_ timer: Timer) {
     let currentTime = Date.timeIntervalSinceReferenceDate
