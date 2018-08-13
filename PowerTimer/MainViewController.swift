@@ -23,6 +23,7 @@ class MainViewController: SlideMenuController {
     SlideMenuOptions.contentViewDrag = false
     SlideMenuOptions.contentViewScale = 1
     SlideMenuOptions.hideStatusBar = false
+    SlideMenuOptions.simultaneousGestureRecognizers = false
     self.mainViewController = UINavigationController(rootViewController: self.timerVC)
     self.delegate = self.timerVC
     self.leftViewController = self.settingsVC
