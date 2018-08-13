@@ -46,12 +46,7 @@ class TimerActions: UIView {
   }
 
   func updateTimerColor() {
-//    if self.timer == nil { return }
-//    if self.timer.state == .paused {
-//      self.timerView.color = Colors.yellow
-//    } else {
-//      self.timerView.color = TimerView.Constants.Active.textColor
-//    }
+    self.timerView.color = self.timerView.state.color()
   }
 }
 

@@ -15,6 +15,17 @@ class TimerView: UIView {
     case active
     case paused
     case inactive
+
+    func color() -> UIColor {
+      switch self {
+      case .active:
+        return Constants.Active.textColor
+      case .inactive:
+        return Constants.Inactive.textColor
+      case .paused:
+        return Colors.yellow
+      }
+    }
   }
 
   class Constants {
@@ -52,15 +63,13 @@ class TimerView: UIView {
 
   var state: State = .active {
     didSet {
+      self.color = self.state.color()
       switch state {
       case .active:
-        self.color = Constants.Active.textColor
         self.enlarge(animate: true)
       case .inactive:
-        self.color = Constants.Inactive.textColor
         self.soften(animate: true)
       case .paused:
-        self.color = Colors.yellow
         self.enlarge(animate: true)
       }
     }

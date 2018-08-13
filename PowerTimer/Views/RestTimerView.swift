@@ -45,7 +45,7 @@ class RestTimerView: TimerActions {
   }
 
   override func updateTimerColor() {
-    self.timerView.color = TimerView.Constants.Inactive.textColor
+    super.updateTimerColor()
     self.stepper.updateColors()
   }
 
