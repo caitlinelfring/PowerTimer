@@ -54,32 +54,24 @@ class TimerViewController: UIViewController {
 
   var tipsManager: TipManager?
 
-  func setColors(animated: Bool = true) {
+  func setColors() {
     print(#function)
-    let animations = {
-      self.view.backgroundColor = Colors.backgroundColor
-      self.totalTimerView.updateTimerColor()
-      self.restTimerView.updateTimerColor()
-      self.navigationController?.view.backgroundColor = Colors.backgroundColor
-      self.navigationController?.navigationBar.tintColor = Colors.navigationBarTintColor
-      self.playPauseButton.color = Colors.buttonColor
-      self.resetButton.color = Colors.buttonColor
-      self.setNeedsStatusBarAppearanceUpdate()
-      UIApplication.shared.keyWindow?.backgroundColor = Colors.backgroundColor
-      self.view.layoutSubviews()
-    }
-
-    if animated {
-      UIView.animate(withDuration: 0.5, animations: animations)
-    } else {
-      animations()
-    }
+    self.view.backgroundColor = Colors.backgroundColor
+    self.totalTimerView.updateTimerColor()
+    self.restTimerView.updateTimerColor()
+    self.navigationController?.view.backgroundColor = Colors.backgroundColor
+    self.navigationController?.navigationBar.tintColor = Colors.navigationBarTintColor
+    self.playPauseButton.color = Colors.buttonColor
+    self.resetButton.color = Colors.buttonColor
+    self.setNeedsStatusBarAppearanceUpdate()
+    UIApplication.shared.keyWindow?.backgroundColor = Colors.backgroundColor
+    self.view.layoutSubviews()
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    self.setColors(animated: false)
+    self.setColors()
     // Make the nav bar transparent
     self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
     self.navigationController?.navigationBar.shadowImage = UIImage()

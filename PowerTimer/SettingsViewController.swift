@@ -42,6 +42,7 @@ class SettingTableViewController: UITableViewController {
 
   private var items = [Item]()
   private var currentTip: EasyTipView?
+  let header = UIView()
 
   override init(style: UITableViewStyle) {
     super.init(style: style)
@@ -91,6 +92,15 @@ class SettingTableViewController: UITableViewController {
     self.tableView.rowHeight = 44
 
     self.navigationItem.title = "SETTINGS"
+
+    self.header.backgroundColor = Colors.backgroundColor
+    self.view.addSubview(self.header)
+    self.header.snp.makeConstraints { (make) in
+      make.centerX.equalToSuperview()
+      make.width.equalToSuperview()
+      make.height.equalTo(UIApplication.shared.statusBarFrame.size.height)
+      make.top.equalTo(self.view).offset(-UIApplication.shared.statusBarFrame.size.height)
+    }
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -140,9 +150,13 @@ class SettingTableViewController: UITableViewController {
 
   @objc private func didChangeTheme(sender: UISegmentedControl) {
     Settings.currentTheme = Settings.Theme(rawValue: sender.selectedSegmentIndex)!
-    let nav = (self.parent as! SlideMenuController).mainViewController as! UINavigationController
-    let parent = nav.childViewControllers.first! as! TimerViewController
-    parent.setColors()
+
+    UIView.animate(withDuration: 0.5) {
+      self.header.backgroundColor = Colors.backgroundColor
+      let nav = (self.parent as! SlideMenuController).mainViewController as! UINavigationController
+      let parent = nav.childViewControllers.first! as! TimerViewController
+      parent.setColors()
+    }
   }
 
   private func soundOnOffSwitch() -> UISwitch {
