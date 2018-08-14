@@ -53,6 +53,9 @@ class RestTimerView: TimerActions {
     let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.startTap))
     tapGestureRecognizer.cancelsTouchesInView = false
     view.addGestureRecognizer(tapGestureRecognizer)
+
+    let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress))
+    view.addGestureRecognizer(longPressGestureRecognizer)
   }
 
   func updateStepper() {
@@ -66,6 +69,28 @@ class RestTimerView: TimerActions {
     Settings.RestTimerMinutes = Int(sender.value)
   }
 
+  @objc private func longPress(sender: UILongPressGestureRecognizer) {
+    if sender.state != .began {
+      return
+    }
+    print(#function)
+    if self.stepper.frame.contains(sender.location(in: self)) {
+      print("tapped stepper")
+      return
+    }
+
+    if !self.isEnabled {
+      self.postToObservers(.timerDidFailToStart)
+      return
+    }
+
+    if self.timer.state == .running {
+      self.timer.reset()
+      DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25, execute: self.timer.start)
+    } else {
+      self.timer.start()
+    }
+  }
   @objc private func startTap(sender: UITapGestureRecognizer) {
     print(#function)
     // Ignore taps on the stepper
