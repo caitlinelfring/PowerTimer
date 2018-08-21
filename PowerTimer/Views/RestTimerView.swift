@@ -50,12 +50,17 @@ class RestTimerView: TimerActions {
   }
 
   func addTapGestureRecognizer(to view: UIView) {
-    let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.startTap))
-    tapGestureRecognizer.cancelsTouchesInView = false
-    view.addGestureRecognizer(tapGestureRecognizer)
+    let singleTap = UITapGestureRecognizer(target: self, action: #selector(self.singleTap))
+    singleTap.numberOfTapsRequired = 1
+    singleTap.cancelsTouchesInView = false
+    view.addGestureRecognizer(singleTap)
 
-    let longPressGestureRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress))
-    view.addGestureRecognizer(longPressGestureRecognizer)
+    let doubleTap = UITapGestureRecognizer(target: self, action: #selector(self.doubleTap))
+    doubleTap.numberOfTapsRequired = 2
+    doubleTap.cancelsTouchesInView = false
+    view.addGestureRecognizer(doubleTap)
+
+    singleTap.require(toFail: doubleTap)
   }
 
   func updateStepper() {
@@ -69,11 +74,17 @@ class RestTimerView: TimerActions {
     Settings.RestTimerMinutes = Int(sender.value)
   }
 
-  @objc private func longPress(sender: UILongPressGestureRecognizer) {
-    if sender.state != .began {
-      return
-    }
+  @objc private func singleTap(sender: UITapGestureRecognizer) {
     print(#function)
+    self.tap(sender, withTaps: 1)
+  }
+
+  @objc private func doubleTap(sender: UITapGestureRecognizer) {
+    print(#function)
+    self.tap(sender, withTaps: 2)
+  }
+
+  private func tap(_ sender: UITapGestureRecognizer, withTaps taps: Int) {
     if self.stepper.frame.contains(sender.location(in: self)) {
       print("tapped stepper")
       return
@@ -86,30 +97,14 @@ class RestTimerView: TimerActions {
 
     if self.timer.state == .running {
       self.timer.reset()
-      DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25, execute: self.timer.start)
+      if taps > 1 {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25, execute: self.timer.start)
+      }
     } else {
       self.timer.start()
     }
   }
-  @objc private func startTap(sender: UITapGestureRecognizer) {
-    print(#function)
-    // Ignore taps on the stepper
-    if self.stepper.frame.contains(sender.location(in: self)) {
-      print("tapped stepper")
-      return
-    }
 
-    if !self.isEnabled {
-      self.postToObservers(.timerDidFailToStart)
-      return
-    }
-
-    if self.timer.state == .running {
-      self.timer.reset()
-    } else {
-      self.timer.start()
-    }
-  }
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -168,4 +163,3 @@ extension RestTimerView: TimerDelegate {
     self.postToObservers(.timerDidReset)
   }
 }
-
