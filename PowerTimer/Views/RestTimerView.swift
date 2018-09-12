@@ -40,8 +40,6 @@ class RestTimerView: TimerActions {
       }
       make.bottom.equalToSuperview()
     }
-
-    self.addTapGestureRecognizer(to: self)
   }
 
   override func updateTimerColor() {
@@ -51,17 +49,8 @@ class RestTimerView: TimerActions {
 
   func addTapGestureRecognizer(to view: UIView) {
     let singleTap = UITapGestureRecognizer(target: self, action: #selector(self.singleTap))
-    singleTap.numberOfTapsRequired = 1
-    singleTap.cancelsTouchesInView = false
-    view.addGestureRecognizer(singleTap)
     singleTap.delegate = self
-
-    let doubleTap = UITapGestureRecognizer(target: self, action: #selector(self.doubleTap))
-    doubleTap.numberOfTapsRequired = 2
-    doubleTap.cancelsTouchesInView = false
-    view.addGestureRecognizer(doubleTap)
-
-    singleTap.require(toFail: doubleTap)
+    view.addGestureRecognizer(singleTap)
   }
 
   func updateStepper() {
@@ -77,20 +66,6 @@ class RestTimerView: TimerActions {
 
   @objc private func singleTap(sender: UITapGestureRecognizer) {
     print(#function)
-    self.tap(sender)
-  }
-
-  @objc private func doubleTap(sender: UITapGestureRecognizer) {
-    print(#function)
-    self.tap(sender, restartIfRunning: true)
-  }
-
-  private func tap(_ sender: UITapGestureRecognizer, restartIfRunning: Bool = false) {
-    if self.stepper.frame.contains(sender.location(in: self)) {
-      print("tapped stepper")
-      return
-    }
-
     if !self.isEnabled {
       self.postToObservers(.timerDidFailToStart)
       return
@@ -98,9 +73,6 @@ class RestTimerView: TimerActions {
 
     if self.timer.state == .running {
       self.timer.reset()
-      if restartIfRunning {
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25, execute: self.timer.start)
-      }
     } else {
       self.timer.start()
     }
@@ -119,8 +91,12 @@ class RestTimerView: TimerActions {
 }
 
 extension RestTimerView: UIGestureRecognizerDelegate {
-  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-    print(otherGestureRecognizer.numberOfTouches)
+  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
+    print(#function)
+    if self.stepper.frame.contains(touch.location(in: self)) {
+      print("tapped stepper")
+      return false
+    }
     return true
   }
 }

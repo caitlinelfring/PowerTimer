@@ -103,13 +103,13 @@ class TimerViewController: UIViewController {
       make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom).inset(5)
     }
 
-    // This is so taps for the rest timer are registered from anywhere in the topView
-    self.restTimerView.addTapGestureRecognizer(to: self.topView)
-
     self.view.addSubview(self.topView)
     self.view.addSubview(self.bottomView)
     self.view.addSubview(self.totalTimerView)
-    self.view.addSubview(self.restTimerView)
+
+    self.topView.addSubview(self.restTimerView)
+    // This is so taps for the rest timer are registered from anywhere in the topView
+    self.restTimerView.addTapGestureRecognizer(to: self.topView)
 
     self.buttonStack.spacing = 10
     self.view.addSubview(self.buttonStack)

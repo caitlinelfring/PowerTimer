@@ -142,7 +142,11 @@ class TimerView: UIView {
     }
 
     if animate {
-      UIView.animate(withDuration: duration, animations: animations)
+      UIView.animate(withDuration: duration,
+                     delay: 0,
+                     options: UIViewAnimationOptions.allowUserInteraction,
+                     animations: animations,
+                     completion: nil)
     } else {
       animations()
     }
