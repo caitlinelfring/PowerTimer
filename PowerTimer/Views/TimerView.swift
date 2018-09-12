@@ -100,9 +100,13 @@ class TimerView: UIView {
   }
 
   func setTime(seconds: Int) {
+    self.currentText = TimerView.formatTime(seconds: seconds)
+  }
+
+  class func formatTime(seconds: Int) -> String {
     let minutesValue =  seconds % (1000 * 60) / 60
     let secondsValue = seconds % 60
-    self.currentText = String(format: "%02d:%02d", minutesValue, secondsValue)
+    return String(format: "%02d:%02d", minutesValue, secondsValue)
   }
 
   required init?(coder aDecoder: NSCoder) {
