@@ -54,6 +54,7 @@ class RestTimerView: TimerActions {
     singleTap.numberOfTapsRequired = 1
     singleTap.cancelsTouchesInView = false
     view.addGestureRecognizer(singleTap)
+    singleTap.delegate = self
 
     let doubleTap = UITapGestureRecognizer(target: self, action: #selector(self.doubleTap))
     doubleTap.numberOfTapsRequired = 2
@@ -76,15 +77,15 @@ class RestTimerView: TimerActions {
 
   @objc private func singleTap(sender: UITapGestureRecognizer) {
     print(#function)
-    self.tap(sender, withTaps: 1)
+    self.tap(sender)
   }
 
   @objc private func doubleTap(sender: UITapGestureRecognizer) {
     print(#function)
-    self.tap(sender, withTaps: 2)
+    self.tap(sender, restartIfRunning: true)
   }
 
-  private func tap(_ sender: UITapGestureRecognizer, withTaps taps: Int) {
+  private func tap(_ sender: UITapGestureRecognizer, restartIfRunning: Bool = false) {
     if self.stepper.frame.contains(sender.location(in: self)) {
       print("tapped stepper")
       return
@@ -97,7 +98,7 @@ class RestTimerView: TimerActions {
 
     if self.timer.state == .running {
       self.timer.reset()
-      if taps > 1 {
+      if restartIfRunning {
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25, execute: self.timer.start)
       }
     } else {
@@ -114,6 +115,13 @@ class RestTimerView: TimerActions {
       return false
     }
     return to != self.timerView.color
+  }
+}
+
+extension RestTimerView: UIGestureRecognizerDelegate {
+  func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+    print(otherGestureRecognizer.numberOfTouches)
+    return true
   }
 }
 
