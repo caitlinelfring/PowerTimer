@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="ipad12_9" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
@@ -27,9 +27,9 @@
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="nQc-CE-o6s"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="55"/>
-                                <color key="textColor" red="1" green="0.40110265618660168" blue="0.92759935767689339" alpha="0.45067671650000002" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="1" green="0.40110265618660168" blue="0.92759935767689339" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
-                                <color key="shadowColor" red="0.34293374728687487" green="0.25001040038430855" blue="1" alpha="0.45067671650000002" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="shadowColor" red="0.34293374728687487" green="0.25001040038430855" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <size key="shadowOffset" width="4" height="4"/>
                                 <variation key="widthClass=compact">
                                     <mask key="constraints">
@@ -45,7 +45,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.78946011329844246" green="1" blue="0.83735316362771495" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="kik-2A-xeH" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="3VB-uB-IvU"/>
@@ -62,30 +62,30 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="3VB-uB-IvU"/>
-                                <exclude reference="EfJ-Cz-VEA"/>
-                                <exclude reference="Tx3-18-bam"/>
                                 <exclude reference="54H-pV-iVW"/>
                                 <exclude reference="aa3-Ab-b6i"/>
                                 <exclude reference="otd-iU-5FF"/>
                                 <exclude reference="why-cp-4hV"/>
                                 <exclude reference="yMC-1o-f90"/>
+                                <exclude reference="3VB-uB-IvU"/>
+                                <exclude reference="EfJ-Cz-VEA"/>
+                                <exclude reference="Tx3-18-bam"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="constraints">
-                                <include reference="Tx3-18-bam"/>
                                 <include reference="otd-iU-5FF"/>
                                 <include reference="why-cp-4hV"/>
                                 <include reference="yMC-1o-f90"/>
+                                <include reference="Tx3-18-bam"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=regular">
                             <mask key="constraints">
-                                <include reference="3VB-uB-IvU"/>
-                                <include reference="EfJ-Cz-VEA"/>
                                 <include reference="54H-pV-iVW"/>
                                 <include reference="aa3-Ab-b6i"/>
+                                <include reference="3VB-uB-IvU"/>
+                                <include reference="EfJ-Cz-VEA"/>
                             </mask>
                         </variation>
                     </view>

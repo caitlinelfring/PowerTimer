@@ -37,16 +37,16 @@ class MainViewController: SlideMenuController {
 
   private func startLoadingAnimation() {
     let maskBgView = UIView(frame: self.view.frame)
-    maskBgView.backgroundColor = UIColor(red: 0.789, green: 1, blue: 0.837, alpha: 1)
+    maskBgView.backgroundColor = .black
 
     // Label should match the launch screen label
     let label = UILabel()
     let attributes: [NSAttributedStringKey: Any] = [
-      NSAttributedStringKey.foregroundColor: UIColor(red: 1, green: 0.4, blue: 0.93, alpha: 0.45),
+      NSAttributedStringKey.foregroundColor: UIColor(red: 1, green: 0.4, blue: 0.93, alpha: 1),
       NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: 55)!,
-      ]
+    ]
     label.allowsDefaultTighteningForTruncation = true
-    label.shadowColor = UIColor(red: 0.35, green: 0.25, blue: 1, alpha: 0.45)
+    label.shadowColor = UIColor(red: 0.35, green: 0.25, blue: 1, alpha: 1)
     label.shadowOffset = CGSize(width: 4, height: 4)
     label.attributedText = NSAttributedString(string: "PowerTimer", attributes: attributes)
     label.sizeToFit()
@@ -62,16 +62,12 @@ class MainViewController: SlideMenuController {
       make.center.equalToSuperview()
       make.edges.equalToSuperview()
     }
-    UIView.animate(withDuration: 0.25, delay: 1, options: UIViewAnimationOptions.curveEaseInOut, animations: {
-      label.transform = label.transform.scaledBy(x: 0.9, y: 0.9)
-      label.layoutIfNeeded()
+    UIView.animate(withDuration: 0.25, delay: 0, options: UIViewAnimationOptions.curveEaseInOut, animations: {
+      label.alpha = 0.0
     }, completion: { finished in
-      UIView.animate(withDuration: 0.25, delay: 0, options: UIViewAnimationOptions.curveEaseIn, animations: {
+      UIView.animate(withDuration: 0.25, delay: 0, options: UIViewAnimationOptions.curveEaseInOut, animations: {
         maskBgView.alpha = 0.0
-        label.transform = label.transform.scaledBy(x: 100, y: 100)
-        label.layoutIfNeeded()
       }, completion: { finished in
-        self.timerVC.overrideStatusBar = nil
         self.timerVC.setNeedsStatusBarAppearanceUpdate()
         maskBgView.removeFromSuperview()
       })

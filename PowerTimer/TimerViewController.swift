@@ -33,13 +33,7 @@ class TimerViewController: UIViewController {
   let playPauseButton = PlayPauseButton()
   let resetButton = ResetButton()
 
-  // This is so the launch animation can use a dark status bar (matches the launchscreen storyboard config)
-  // and the view controller can use the light status bar
-  var overrideStatusBar: UIStatusBarStyle?
   override var preferredStatusBarStyle: UIStatusBarStyle {
-    if let override = self.overrideStatusBar {
-      return override
-    }
     return Settings.currentTheme == .dark ? .lightContent : .default
     // default: intended for use on light backgrounds
     // lightContent: intended for use on dark backgrounds
@@ -47,7 +41,6 @@ class TimerViewController: UIViewController {
 
   convenience init() {
     self.init(nibName: nil, bundle: nil)
-    self.overrideStatusBar = .default
     let menu = UIImage(named: "menu")!.withAlignmentRectInsets(UIEdgeInsets(top: 0, left: -5, bottom: 0, right: 0))
     self.addLeftBarButtonWithImage(menu)
   }
