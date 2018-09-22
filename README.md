@@ -25,6 +25,9 @@ The best part is, **you can continue to keep the time of your entire workout!**
 - [ ] Finish ads
 - [ ] Add more details to settings
 - [ ] New app icon
+- [ ] Localization
+
+### Pre-app store
 - [ ] Website
 - [ ] Privacy Policy/TOC?
 - [ ] Email address?
