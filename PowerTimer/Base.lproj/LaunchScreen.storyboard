@@ -26,9 +26,9 @@
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="300" id="nQc-CE-o6s"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="55"/>
-                                <color key="textColor" red="1" green="0.40110265618660168" blue="0.92759935767689339" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="textColor" red="1" green="0.4" blue="0.4" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
-                                <color key="shadowColor" red="0.34293374728687487" green="0.25001040038430855" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="shadowColor" red="0.35" green="0.25" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <size key="shadowOffset" width="4" height="4"/>
                                 <variation key="widthClass=compact">
                                     <mask key="constraints">

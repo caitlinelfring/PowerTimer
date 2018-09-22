@@ -42,11 +42,11 @@ class MainViewController: SlideMenuController {
     // Label should match the launch screen label
     let label = UILabel()
     let attributes: [NSAttributedStringKey: Any] = [
-      NSAttributedStringKey.foregroundColor: UIColor(red: 1, green: 0.4, blue: 0.93, alpha: 1),
+      NSAttributedStringKey.foregroundColor: Colors.logoForeground,
       NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: 55)!,
     ]
     label.allowsDefaultTighteningForTruncation = true
-    label.shadowColor = UIColor(red: 0.35, green: 0.25, blue: 1, alpha: 1)
+    label.shadowColor = Colors.logoShadow
     label.shadowOffset = CGSize(width: 4, height: 4)
     label.attributedText = NSAttributedString(string: "PowerTimer", attributes: attributes)
     label.sizeToFit()

@@ -21,6 +21,9 @@ class Colors {
   static var timerActive: UIColor { return forCurrentTheme(dark: .white, light: .black) }
   static var buttonColor: UIColor { return forCurrentTheme(dark: .white, light: .black) }
 
+  static let logoForeground: UIColor = UIColor(red: 1, green: 0.4, blue: 0.4, alpha: 1)
+  static let logoShadow: UIColor = UIColor(red: 0.35, green: 0.25, blue: 1, alpha: 1)
+
   class func forCurrentTheme(dark: UIColor, light: UIColor) -> UIColor {
     return Settings.currentTheme == .dark ? dark : light
   }
