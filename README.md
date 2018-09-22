@@ -20,6 +20,21 @@ The best part is, **you can continue to keep the time of your entire workout!**
 
 
 ### TODO
+- [ ] Website
+- [ ] Privacy Policy/TOC?
+- [ ] Email address?
+- [ ] Analytics
+- [ ] Remove theme changing
+- [ ] Finish ads
+- [ ] Add more details to settings
+- [ ] New app icon
+
+## v2
+- [ ] Watch App
+- [ ] Add theme support
+
+
+### Done
 - [x] Handle backgrounding (make sure timers are stopped, but are still counting)
 - [x] Use TableView in settings
 - [x] Move rest minute setting into main VC
@@ -30,8 +45,6 @@ The best part is, **you can continue to keep the time of your entire workout!**
 - [x] Use SnapKit and handle portrait/landscape modes
 - [x] Slide-out menu for settings
 - [x] Use eventing to inform views when timer states have changed
-
-### Nice to haves
 - [x] Light/dark theme
 
 
