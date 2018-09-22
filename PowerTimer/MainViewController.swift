@@ -40,16 +40,8 @@ class MainViewController: SlideMenuController {
     maskBgView.backgroundColor = .black
 
     // Label should match the launch screen label
-    let label = UILabel()
-    let attributes: [NSAttributedStringKey: Any] = [
-      NSAttributedStringKey.foregroundColor: Colors.logoForeground,
-      NSAttributedStringKey.font: UIFont(name: "AvenirNext-Medium", size: 55)!,
-    ]
-    label.allowsDefaultTighteningForTruncation = true
-    label.shadowColor = Colors.logoShadow
+    let label = PowerTimerLogo(font: UIFont(name: "AvenirNext-Medium", size: 55)!)
     label.shadowOffset = CGSize(width: 4, height: 4)
-    label.attributedText = NSAttributedString(string: "PowerTimer", attributes: attributes)
-    label.sizeToFit()
 
     maskBgView.addSubview(label)
     label.snp.makeConstraints { (make) in

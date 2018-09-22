@@ -74,19 +74,9 @@ class TimerViewController: UIViewController {
       guard let nav = self.navigationController else {
         return nil
       }
-      let label = UILabel()
-      let fontSize = min(Settings.minScreenDimension * 0.06, nav.navigationBar.frame.size.height)
-      let attributes: [NSAttributedStringKey: Any] = [
-        NSAttributedStringKey.foregroundColor: Colors.logoForeground,
-        NSAttributedStringKey.kern: 2,
-        NSAttributedStringKey.font: UIFont(name: "AvenirNext-DemiBold", size: fontSize)!,
-        ]
-      label.shadowColor = Colors.logoShadow
-      label.shadowOffset = CGSize(width: 3, height: 3)
-      label.attributedText = NSAttributedString(string: "PowerTimer", attributes: attributes)
 
-      label.sizeToFit()
-      return label
+      let fontSize = min(Settings.minScreenDimension * 0.06, nav.navigationBar.frame.size.height)
+      return PowerTimerLogo(kerning: 2, font: UIFont(name: "AvenirNext-DemiBold", size: fontSize)!)
     }()
 
 
