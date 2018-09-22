@@ -10,7 +10,7 @@ import Foundation
 
 enum TimerType: Int {
   case countUp
-  case countDown // TODO: Not implemented
+  case countDown
 
   var description: String {
     switch self {

@@ -195,8 +195,17 @@ class TimerViewController: UIViewController {
   @objc private func startBtnTapped(sender: PlayPauseButton) {
     print(#function, "isPlay:", sender.isPlay)
     if sender.isPlay {
-      self.totalTimerView.timer.start()
-      self.tipsManager?.dismiss(forType: .startTimer)
+      let start = {
+        self.totalTimerView.timer.start()
+        self.tipsManager?.dismiss(forType: .startTimer)
+      }
+
+      if self.totalTimerView.timer.state == .reset {
+        // Only show the PrepareTimerViewController if the timer is starting fresh
+        self.present(PrepareTimerViewController(completion: start), animated: true, completion: nil)
+      } else {
+        start()
+      }
     } else {
       self.totalTimerView.timer.pause()
     }
