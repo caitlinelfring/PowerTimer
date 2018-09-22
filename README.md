@@ -20,14 +20,14 @@ The best part is, **you can continue to keep the time of your entire workout!**
 
 
 ### TODO
-- [ ] Website
-- [ ] Privacy Policy/TOC?
-- [ ] Email address?
 - [ ] Analytics
 - [ ] Remove theme changing
 - [ ] Finish ads
 - [ ] Add more details to settings
 - [ ] New app icon
+- [ ] Website
+- [ ] Privacy Policy/TOC?
+- [ ] Email address?
 
 ## v2
 - [ ] Watch App
