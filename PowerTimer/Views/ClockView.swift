@@ -31,7 +31,7 @@ class ClockView: UIView {
     })
     self.clockUpdateTimer.tolerance = 30
 
-    let font = UIFont(name: "Helvetica Light", size: min(100, Settings.minScreenDimension * 0.15))
+    let font = UIFont(name: "Helvetica Light", size: min(100, Settings.minScreenDimension * 0.125))
     self.clock.font = font
     self.clock.textColor = .darkGray
     self.clock.textAlignment = .center
