@@ -47,9 +47,6 @@ class SettingTableViewController: UITableViewController {
   override init(style: UITableViewStyle) {
     super.init(style: style)
 
-    let restCell = SettingsCell(accessory: restStepper())
-    self.items.append(Item(title: "Rest Time", height: 80, cell: restCell))
-
     let timerTypeCell = SettingsCell(accessory: timerTypeControl())
     var ttcItem = Item(title: "Timer Type", height: 80, cell: timerTypeCell)
     ttcItem.shouldEnable = { return self.canChangeTimerType }
@@ -116,15 +113,6 @@ class SettingTableViewController: UITableViewController {
     super.viewWillAppear(animated)
     self.tableView.reloadData()
   }
-  
-
-  func restStepper() -> ValueStepper {
-    let stepper = RestTimerStepper()
-    stepper.labelTextColor = self.view.tintColor
-    stepper.value = Double(Settings.RestTimerMinutes)
-    stepper.addTarget(self, action: #selector(self.didChangeRestMinutes), for: .valueChanged)
-    return stepper
-  }
 
   func countDownTimerStepper() -> ValueStepper {
     let stepper = SettingsCountDownTimerStepper()
@@ -168,10 +156,6 @@ class SettingTableViewController: UITableViewController {
 
   @objc func soundSwitchDidChange(sender: UISwitch) {
     Settings.Sound.playSoundAlert = sender.isOn
-  }
-
-  @objc func didChangeRestMinutes(sender: UIStepper) {
-    Settings.RestTimerMinutes = Int(sender.value)
   }
 
   @objc func didChangeCountDownTimerMinutes(sender: UIStepper) {
