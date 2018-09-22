@@ -62,7 +62,7 @@ class MainViewController: SlideMenuController {
       make.center.equalToSuperview()
       make.edges.equalToSuperview()
     }
-    UIView.animate(withDuration: 0.25, delay: 0, options: UIViewAnimationOptions.curveEaseInOut, animations: {
+    UIView.animate(withDuration: 0.25, delay: 0.5, options: UIViewAnimationOptions.curveEaseInOut, animations: {
       label.alpha = 0.0
     }, completion: { finished in
       UIView.animate(withDuration: 0.25, delay: 0, options: UIViewAnimationOptions.curveEaseInOut, animations: {
