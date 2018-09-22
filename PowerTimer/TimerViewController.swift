@@ -201,16 +201,7 @@ class TimerViewController: UIViewController {
 
   @objc private func resetBtnTapped(sender: ImageButton) {
     print(#function)
-    if self.totalTimerView.timer.state == .running {
-      let alert = UIAlertController(title: "Are you sure you want to reset the timer?", message: nil, preferredStyle: .alert)
-      alert.addAction(UIAlertAction(title: "OK", style: .destructive, handler: { _ in
-        self.resetTimers()
-      }))
-      alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-      self.present(alert, animated: true, completion: nil)
-    } else {
-      self.resetTimers()
-    }
+    self.resetTimers()
   }
 
   func keepScreenFromLocking(_ isIdleTimerDisabled: Bool) {

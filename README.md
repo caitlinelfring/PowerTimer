@@ -21,7 +21,7 @@ The best part is, **you can continue to keep the time of your entire workout!**
 
 ### TODO
 - [ ] Analytics
-- [ ] Remove theme changing
+- [x] Remove theme changing
 - [ ] Finish ads
 - [ ] Add more details to settings
 - [ ] New app icon

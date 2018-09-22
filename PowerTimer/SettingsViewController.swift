@@ -65,7 +65,7 @@ class SettingTableViewController: UITableViewController {
     self.items.append(ttcItem)
 
     let countDownTimerMinutesCell = SettingsCell(accessory: countDownTimerStepper())
-    var cdt = Item(title: "CountDown Minutes", height: 80, cell: countDownTimerMinutesCell)
+    var cdt = Item(title: "Count Down Minutes", height: 80, cell: countDownTimerMinutesCell)
     cdt.shouldEnable = { return Settings.SavedTimerType == .countDown && self.canChangeTimerType }
     self.items.append(cdt)
 
@@ -77,7 +77,7 @@ class SettingTableViewController: UITableViewController {
 
     let soundCell = UITableViewCell(style: .default, reuseIdentifier: nil)
     soundCell.accessoryView = soundOnOffSwitch()
-    self.items.append(Item(title: "Alerts", cell: soundCell))
+    self.items.append(Item(title: "Rest Alerts", cell: soundCell))
 
 //    TODO Add this in another version
 //    let themeCell = SettingsCell(accessory: themeControl())
