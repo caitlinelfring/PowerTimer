@@ -129,6 +129,9 @@ class TimerViewController: UIViewController {
         strongSelf.tipsManager?.dismiss(forType: .startRestTimer)
       case .timerDidFailToStart:
         if strongSelf.totalTimerView.timer.state == .paused {
+          let feedback = UINotificationFeedbackGenerator()
+          feedback.prepare()
+          feedback.notificationOccurred(.warning)
           strongSelf.playPauseButton.shake(withDirection: .rotate)
         } else {
           strongSelf.totalTimerView.timer.start()

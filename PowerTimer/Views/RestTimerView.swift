@@ -161,6 +161,9 @@ extension RestTimerView: TimerDelegate {
     if self.timerLabelColorChanged(to: textColor) {
       self.timerView.shake()
       Sounds.playIfConfigured()
+      let feedback = UINotificationFeedbackGenerator()
+      feedback.prepare()
+      feedback.notificationOccurred(.warning)
     }
 
     self.timerView.color = textColor
