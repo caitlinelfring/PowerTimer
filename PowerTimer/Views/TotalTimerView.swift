@@ -55,7 +55,7 @@ class TotalTimerView: TimerActions {
     super.init(frame: frame)
     self.updateTimerColor()
     self.timerView.state = .active
-    self.timerView.textLabel.text = "Total Time"
+    self.timerView.textLabel.text = "Total".uppercased()
 
     self.addSubview(self.timerView)
     self.timerView.snp.makeConstraints { (make) in

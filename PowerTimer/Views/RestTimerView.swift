@@ -23,7 +23,7 @@ class RestTimerView: TimerActions {
 
     self.timerView.state = .inactive
     self.timerView.setTime(seconds: 0)
-    self.timerView.textLabel.text = "Rest Time"
+    self.timerView.textLabel.text = "Rest".uppercased()
     self.addSubview(self.timerView)
     self.timerView.snp.makeConstraints { (make) in
       make.top.left.right.equalToSuperview()
