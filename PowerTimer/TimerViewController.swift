@@ -295,6 +295,5 @@ extension TimerViewController: SlideMenuControllerDelegate {
 
   func leftDidClose() {
     print("SlideMenuControllerDelegate: leftDidClose")
-    self.showNextTip()
   }
 }
