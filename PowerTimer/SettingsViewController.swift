@@ -78,8 +78,9 @@ class SettingTableViewController: UITableViewController {
     soundCell.accessoryView = soundOnOffSwitch()
     self.items.append(Item(title: "Alerts", cell: soundCell))
 
-    let themeCell = SettingsCell(accessory: themeControl())
-    self.items.append(Item(title: "Theme", height: 80, cell: themeCell))
+//    TODO Add this in another version
+//    let themeCell = SettingsCell(accessory: themeControl())
+//    self.items.append(Item(title: "Theme", height: 80, cell: themeCell))
 
     self.tableView.delegate = self
     self.tableView.dataSource = self
