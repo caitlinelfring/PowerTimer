@@ -329,3 +329,4 @@ extension TimerViewController: SlideMenuControllerDelegate {
     print("SlideMenuControllerDelegate: leftDidClose")
   }
 }
+

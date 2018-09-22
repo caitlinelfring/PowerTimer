@@ -71,6 +71,10 @@ class RestTimerView: TimerActions {
       return
     }
 
+    if self.isCurrentlyForceTouch {
+      return
+    }
+
     if self.timer.state == .running {
       self.timer.reset()
     } else {
@@ -87,6 +91,41 @@ class RestTimerView: TimerActions {
       return false
     }
     return to != self.timerView.color
+  }
+
+  // TODO: This force-touch listener stuff should be the entire topView in TimerViewController
+  private var isCurrentlyForceTouch: Bool = false
+
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    print(#function)
+  }
+  override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    print(#function)
+    self.isCurrentlyForceTouch = false
+  }
+
+  override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+    print(#function)
+    self.isCurrentlyForceTouch = false
+  }
+
+  override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+    if self.timer.state != .running { return }
+    if let touch = touches.first {
+      if self.traitCollection.forceTouchCapability == UIForceTouchCapability.available {
+        // 3D Touch capable
+        let force = touch.force/touch.maximumPossibleForce
+        print("% Touch pressure: \(force)")
+        if force == 1.0 && !self.isCurrentlyForceTouch {
+          self.isCurrentlyForceTouch = true
+          let generator = UISelectionFeedbackGenerator()
+          generator.prepare()
+          generator.selectionChanged()
+          self.timer.reset()
+          DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25, execute: self.timer.start)
+        }
+      }
+    }
   }
 }
 
@@ -147,3 +186,4 @@ extension RestTimerView: TimerDelegate {
     self.postToObservers(.timerDidReset)
   }
 }
+
