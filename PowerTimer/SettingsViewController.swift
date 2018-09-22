@@ -70,7 +70,9 @@ class SettingTableViewController: UITableViewController {
     self.items.append(cdt)
 
     #if DEBUG
-    self.items.append(Item(title: "Reset Intro Tips", didPress: Settings.IntroTips.reset))
+    self.items.append(Item(title: "Reset Intro Tips", didPress: {
+      Settings.IntroTips.reset()
+    }))
     #endif
 
     let soundCell = UITableViewCell(style: .default, reuseIdentifier: nil)

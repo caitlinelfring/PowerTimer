@@ -25,9 +25,9 @@ class TipManager {
       case .startTimer:
         return "Tap here to start/pause the TOTAL timer"
       case .startRestTimer:
-        return "When you're ready to reset, TAP HERE to start your REST timer"
+        return "When you're ready to reset, tap this area to start your REST timer"
       case .stopRestTimer:
-        return "Tap the REST timer again to clear it"
+        return "Tap this area again to clear your REST timer"
       case .settings:
         return "Head into settings for more info!"
       }

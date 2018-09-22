@@ -104,6 +104,15 @@ class TimerViewController: UIViewController {
     self.playPauseButton.addTarget(self, action: #selector(self.startBtnTapped), for: .touchUpInside)
     self.resetButton.addTarget(self, action: #selector(self.resetBtnTapped), for: .touchUpInside)
 
+    self.setupTimerObservers()
+  }
+
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    self.showNextTip()
+  }
+
+  private func setupTimerObservers() {
     // MARK: TimerView functions
     _ = self.restTimerView.addObserver { [weak self] (event, userInfo) in
       guard let strongSelf = self else { return }
@@ -152,8 +161,6 @@ class TimerViewController: UIViewController {
       default: return
       }
     }
-
-    self.showNextTip()
   }
 
   override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -175,6 +182,7 @@ class TimerViewController: UIViewController {
       self.tipsManager!.show(inView: self.playPauseButton, forType: next, withinSuperView: self.view)
     case .startRestTimer, .stopRestTimer:
       self.tipsManager!.show(inView: self.restTimerView.timerView, forType: next, withinSuperView: self.restTimerView)
+      self.animateTopViewBorder()
     case .settings:
       self.tipsManager!.show(forItem: self.navigationItem.leftBarButtonItem!, forType: next)
     }
@@ -273,8 +281,32 @@ class TimerViewController: UIViewController {
       }
     }
   }
+
+  func animateTopViewBorder() {
+    let animation: CABasicAnimation = CABasicAnimation(keyPath: "borderWidth")
+    let borderWidth: CGFloat = 2
+    animation.fromValue = 0
+    animation.toValue = borderWidth
+    animation.duration = 0.75
+    animation.autoreverses = true
+    animation.repeatCount = 3
+    animation.isRemovedOnCompletion = true
+    animation.delegate = self
+
+    self.topView.layer.add(animation, forKey: nil)
+    self.topView.layer.borderWidth = borderWidth
+    self.topView.layer.cornerRadius = 10
+    self.topView.layer.borderColor = UIColor.red.cgColor
+  }
 }
 
+extension TimerViewController: CAAnimationDelegate {
+  func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
+    if flag {
+      self.topView.layer.borderColor = nil
+    }
+  }
+}
 extension TimerViewController: SlideMenuControllerDelegate {
   func leftWillOpen() {
     print("SlideMenuControllerDelegate: leftWillOpen")
