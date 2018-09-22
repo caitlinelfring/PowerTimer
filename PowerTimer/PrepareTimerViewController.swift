@@ -18,7 +18,6 @@ class PrepareTimerViewController: UIViewController {
   private let timer = CountDownTimer(seconds: seconds)
 
   private let timerView = UILabel()
-  private let startButton = UIButton(type: .system)
 
   convenience init(completion: (() -> ())?) {
     self.init()
@@ -30,59 +29,28 @@ class PrepareTimerViewController: UIViewController {
 
     self.view.backgroundColor = .clear
 
-    self.modalView.backgroundColor = Colors.backgroundColor
-    self.modalView.layer.borderWidth = 2
-    self.modalView.layer.borderColor = UIColor.gray.cgColor
-    self.modalView.layer.cornerRadius = 5
-    self.view.addSubview(self.modalView)
-    // TODO: Make sure this isn't too big on iPad
-    self.modalView.snp.makeConstraints { (make) in
-      make.center.equalToSuperview()
-      make.width.equalToSuperview().dividedBy(1.5)
-      make.height.equalToSuperview().dividedBy(4)
-    }
-
-    let offset: CGFloat = -15
-
-    let color: UIColor = self.view.tintColor
-    self.startButton.setTitle("START NOW", for: .normal)
-    self.startButton.setTitleColor(color, for: .normal)
-    self.startButton.addTarget(self, action: #selector(self.startButtonTapped), for: .touchUpInside)
-    self.startButton.layer.borderColor = color.cgColor
-    self.startButton.layer.borderWidth = 1.5
-    self.startButton.contentEdgeInsets = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
-    self.modalView.addSubview(self.startButton)
-    self.startButton.snp.makeConstraints { (make) in
-      make.bottom.equalToSuperview().offset(offset)
-      make.centerX.equalToSuperview()
+    let blur = UIBlurEffect(style: .dark)
+    let blurView = UIVisualEffectView(effect: blur)
+    self.view.addSubview(blurView)
+    blurView.snp.makeConstraints { (make) in
+      make.edges.equalToSuperview()
     }
 
     self.timerView.text = "\(self.timer.currentSeconds)"
-    self.timerView.font = TimerView.Constants.Active.font
-    self.timerView.textColor = .green
+    // TODO: Better font size based on frame?
+    self.timerView.font = TimerView.Constants.Active.font.withSize(Settings.minScreenDimension)
+    self.timerView.textColor = .green // TODO: Better green
     self.timerView.textAlignment = .center
-    self.modalView.addSubview(self.timerView)
+    self.view.addSubview(self.timerView)
     self.timerView.snp.makeConstraints { (make) in
-      make.centerX.equalToSuperview()
-      make.centerY.equalToSuperview().offset(offset)
+      make.top.equalTo(self.view.safeAreaLayoutGuide.snp.top)
+      make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.bottom)
+      make.left.equalTo(self.view.safeAreaLayoutGuide.snp.left)
+      make.right.equalTo(self.view.safeAreaLayoutGuide.snp.right)
     }
 
     self.timer.delegate = self
     self.timer.start()
-  }
-
-  @objc func startButtonTapped(sender: UIButton) {
-    self.done()
-  }
-
-  func done() {
-    self.dismiss(animated: true, completion: self.completion)
-  }
-
-  override func viewDidLayoutSubviews() {
-    super.viewDidLayoutSubviews()
-    self.startButton.layer.cornerRadius = self.startButton.frame.height / 2
-
   }
 }
 
@@ -95,6 +63,6 @@ extension PrepareTimerViewController: TimerDelegate {
   func onReset() {}
   func onStart() {}
   func onPaused() {
-    self.done()
+    self.dismiss(animated: true, completion: self.completion)
   }
 }
