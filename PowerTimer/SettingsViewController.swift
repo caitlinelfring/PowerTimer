@@ -69,10 +69,9 @@ class SettingTableViewController: UITableViewController {
     cdt.shouldEnable = { return Settings.SavedTimerType == .countDown && self.canChangeTimerType }
     self.items.append(cdt)
 
-    self.items.append(Item(title: "Reset Intro Tips", didPress: {
-      Settings.IntroTips.reset()
-      self.dismiss(animated: true, completion: nil)
-    }))
+    #if DEBUG
+    self.items.append(Item(title: "Reset Intro Tips", didPress: Settings.IntroTips.reset))
+    #endif
 
     let soundCell = UITableViewCell(style: .default, reuseIdentifier: nil)
     soundCell.accessoryView = soundOnOffSwitch()
