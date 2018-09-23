@@ -23,19 +23,21 @@ The best part is, **you can continue to keep the time of your entire workout!**
 - [x] Analytics
 - [x] Remove theme changing
 - [ ] Finish ads
+- [ ] Crash reporting (Crashlytics?)
 - [x] Add more details to settings
 - [ ] New app icon
-- [ ] Localization
 
 ### Pre-app store
 - [ ] Website
 - [ ] Privacy Policy/TOC?
 - [ ] Email address?
+- [ ] Apple Developers Program
+- [ ] Fastlane
 
 ## v2
 - [ ] Watch App
 - [ ] Add theme support
-
+- [ ] Localization
 
 ### Done
 - [x] Handle backgrounding (make sure timers are stopped, but are still counting)
