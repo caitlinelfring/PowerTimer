@@ -134,5 +134,14 @@ class Settings {
       return Theme(rawValue: defaults.integer(forKey: "theme")) ?? Theme.dark
     }
   }
+
+  static var prepareCountdown: Bool {
+    set(value) {
+      defaults.set(value, forKey: "prepareCountdown")
+    }
+    get {
+      return defaults.bool(forKey: "prepareCountdown")
+    }
+  }
 }
 

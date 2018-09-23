@@ -79,6 +79,10 @@ class SettingTableViewController: UITableViewController {
     soundCell.accessoryView = soundOnOffSwitch()
     self.items.append(Item(title: "Rest timer sounds", cell: soundCell))
 
+    let prepareCountdownCell = UITableViewCell(style: .default, reuseIdentifier: nil)
+    prepareCountdownCell.accessoryView = prepareCountdownSwitch()
+    self.items.append(Item(title: "5s pre-start timer", cell: prepareCountdownCell))
+
 //    TODO Add this in another version
 //    let themeCell = SettingsCell(accessory: themeControl())
 //    self.items.append(Item(title: "Theme", height: 80, cell: themeCell))
@@ -167,6 +171,17 @@ class SettingTableViewController: UITableViewController {
   @objc private func didChangeTimerType(sender: UISegmentedControl) {
     Settings.SavedTimerType = TimerType(rawValue: sender.selectedSegmentIndex)!
     self.tableView.reloadData()
+  }
+
+  private func prepareCountdownSwitch() -> UISwitch {
+    let uiswitch = UISwitch()
+    uiswitch.setOn(Settings.prepareCountdown, animated: false)
+    uiswitch.addTarget(self, action: #selector(self.prepareCountdownDidChange), for: .valueChanged)
+    return uiswitch
+  }
+
+  @objc private func prepareCountdownDidChange(sender: UISwitch) {
+    Settings.prepareCountdown = sender.isOn
   }
 
   // MARK: Tableview functions

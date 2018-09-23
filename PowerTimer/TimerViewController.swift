@@ -200,7 +200,7 @@ class TimerViewController: UIViewController {
         self.tipsManager?.dismiss(forType: .startTimer)
       }
 
-      if self.totalTimerView.timer.state == .reset {
+      if self.totalTimerView.timer.state == .reset && Settings.prepareCountdown {
         // Only show the PrepareTimerViewController if the timer is starting fresh
         self.present(PrepareTimerViewController(completion: start), animated: true, completion: nil)
       } else {
