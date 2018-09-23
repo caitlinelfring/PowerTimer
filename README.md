@@ -23,7 +23,7 @@ The best part is, **you can continue to keep the time of your entire workout!**
 - [ ] Analytics
 - [x] Remove theme changing
 - [ ] Finish ads
-- [ ] Add more details to settings
+- [x] Add more details to settings
 - [ ] New app icon
 - [ ] Localization
 

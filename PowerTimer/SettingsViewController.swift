@@ -12,6 +12,8 @@ import ValueStepper
 import SnapKit
 import EasyTipView
 import SlideMenuControllerSwift
+import MessageUI
+import StoreKit
 
 class SettingTableViewController: UITableViewController {
   struct Item {
@@ -96,6 +98,25 @@ class SettingTableViewController: UITableViewController {
 //    TODO Add this in another version
 //    let themeCell = SettingsCell(accessory: themeControl())
 //    self.items.append(Item(title: "Theme", height: 80, cell: themeCell))
+
+    let contactCell = UITableViewCell(style: .default, reuseIdentifier: nil)
+    self.secondItems.append(Item(title: "Contact", cell: contactCell, didPress: {
+      let email = "powertimerapp@gmail.com" // TODO: get this email
+      if MFMailComposeViewController.canSendMail() {
+        let mail = MFMailComposeViewController(rootViewController: self)
+        mail.mailComposeDelegate = self
+        mail.setSubject("PowerTimer App")
+        mail.setToRecipients([email])
+        mail.setMessageBody("<br><br><br><br><br><br><hr><strong>Technical info for developer, please don't delete</strong><hr><p>ID: TODO</p>", isHTML: true)
+        self.present(mail, animated: true, completion: nil)
+      } else {
+        let alert = UIAlertController(title: "Mail not configured", message: "But you can still send an email to '\(email)'", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+      }
+    }))
+
+    self.secondItems.append(Item(title: "Rate PowerTimer", didPress: SKStoreReviewController.requestReview))
 
     self.tableView.delegate = self
     self.tableView.dataSource = self
@@ -261,6 +282,13 @@ class SettingTableViewController: UITableViewController {
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     let item = self.getItem(at: indexPath)
     return item.height
+  }
+}
+
+extension SettingTableViewController: MFMailComposeViewControllerDelegate {
+  func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+    if let err = error { print(err) }
+    controller.dismiss(animated: true, completion: nil)
   }
 }
 
