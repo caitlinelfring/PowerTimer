@@ -13,7 +13,7 @@ import SlideMenuControllerSwift
 class MainViewController: SlideMenuController {
 
   private var timerVC = TimerViewController()
-  private var settingsVC = SettingTableViewController()
+  private var settingsVC = SettingTableViewController(style: .grouped)
 
   convenience init() {
     self.init(nibName: nil, bundle: nil)

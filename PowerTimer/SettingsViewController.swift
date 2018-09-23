@@ -41,21 +41,21 @@ class SettingTableViewController: UITableViewController {
   }
 
   private var items = [Item]()
+  private var secondItems = [Item]()
+  private let sections = ["Timer", "General"]
   private var currentTip: EasyTipView?
   let header = UIView()
-
-  var versionLabel: UILabel = {
-    let label = UILabel()
-    let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "???"
-    label.textAlignment = .center
-    label.textColor = UIColor.lightGray
-    label.backgroundColor = .white
-    label.text = "Version: \(version)"
-    return label
-  }()
+  let versionLabel = UILabel()
 
   override init(style: UITableViewStyle) {
     super.init(style: style)
+
+    let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "???"
+    self.versionLabel.textAlignment = .center
+    self.versionLabel.textColor = UIColor.lightGray
+    self.versionLabel.font = UIFont.systemFont(ofSize: UIFont.smallSystemFontSize)
+    self.versionLabel.backgroundColor = self.tableView.backgroundColor ?? .white
+    self.versionLabel.text = "Version: \(version)"
 
     let timerTypeCell = SettingsCell(accessory: timerTypeControl())
     var ttcItem = Item(title: "Timer Type", height: 80, cell: timerTypeCell)
@@ -99,16 +99,17 @@ class SettingTableViewController: UITableViewController {
 
     self.tableView.delegate = self
     self.tableView.dataSource = self
-    self.tableView.tableHeaderView = UIView()
     self.tableView.tableFooterView = UIView()
     self.tableView.estimatedRowHeight = 44
     self.tableView.rowHeight = 44
+    self.tableView.sectionHeaderHeight = 30
 
     self.navigationItem.title = "SETTINGS"
 
     // This is the area the is under the status bar
     self.header.backgroundColor = Colors.backgroundColor
     self.view.addSubview(self.header)
+    self.view.bringSubview(toFront: self.header)
     self.header.snp.makeConstraints { (make) in
       make.centerX.equalToSuperview()
       make.width.equalToSuperview()
@@ -122,7 +123,13 @@ class SettingTableViewController: UITableViewController {
       make.centerX.equalToSuperview()
       make.width.equalToSuperview()
     }
+  }
 
+  override func viewWillLayoutSubviews() {
+    super.viewWillLayoutSubviews()
+    // Makes sure these views are above the section headers
+    self.view.bringSubview(toFront: self.header)
+    self.view.bringSubview(toFront: self.versionLabel)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -206,19 +213,33 @@ class SettingTableViewController: UITableViewController {
 
   // MARK: Tableview functions
 
+  override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    return self.sections[section]
+  }
   override func numberOfSections(in tableView: UITableView) -> Int {
-    return self.items.count
+    return 2
   }
 
   override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     if section == 0 {
       return self.items.count
+    } else if section == 1 {
+      return self.secondItems.count
     }
     return 0
   }
 
+  func getItem(at indexPath: IndexPath) -> Item {
+    if indexPath.section == 0 {
+      return self.items[indexPath.row]
+    } else {
+      return self.secondItems[indexPath.row]
+    }
+  }
+
   override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let item = self.items[indexPath.row]
+    let item = self.getItem(at: indexPath)
+
     if item.didPress == nil {
       item.cell.selectionStyle = .none
     }
@@ -234,11 +255,11 @@ class SettingTableViewController: UITableViewController {
 
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     self.tableView.deselectRow(at: indexPath, animated: true)
-    self.items[indexPath.row].didPress?()
+    self.getItem(at: indexPath).didPress?()
   }
 
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-    let item = self.items[indexPath.row]
+    let item = self.getItem(at: indexPath)
     return item.height
   }
 }
