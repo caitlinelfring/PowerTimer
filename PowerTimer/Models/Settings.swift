@@ -12,6 +12,8 @@ import UIKit
 fileprivate var defaults = UserDefaults.standard
 
 class Settings {
+  static let DeviceID = UIDevice.current.identifierForVendor?.uuidString ?? "unknown"
+
   static var SavedTimerType: TimerType {
     set(value) {
       defaults.set(value.rawValue, forKey: "timerType")

@@ -10,6 +10,7 @@
 		48331C4E20AF80DC00E20B37 /* RestTimeStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48331C4D20AF80DC00E20B37 /* RestTimeStepper.swift */; };
 		485B75DB211F2C0E007391BD /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = 485B75DA211F2C0D007391BD /* sounds */; };
 		485B75DD211F3711007391BD /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485B75DC211F3711007391BD /* MainViewController.swift */; };
+		486DAA2E2157372A00A05187 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 486DAA2D2157372A00A05187 /* GoogleService-Info.plist */; };
 		4870AFB020A9B0E800DAB1C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4870AFAF20A9B0E800DAB1C1 /* AppDelegate.swift */; };
 		4870AFB720A9B0E900DAB1C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4870AFB620A9B0E900DAB1C1 /* Assets.xcassets */; };
 		4870AFBA20A9B0E900DAB1C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4870AFB820A9B0E900DAB1C1 /* LaunchScreen.storyboard */; };
@@ -34,6 +35,7 @@
 		48331C4D20AF80DC00E20B37 /* RestTimeStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestTimeStepper.swift; sourceTree = "<group>"; };
 		485B75DA211F2C0D007391BD /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sounds; sourceTree = "<group>"; };
 		485B75DC211F3711007391BD /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		486DAA2D2157372A00A05187 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4870AFAC20A9B0E800DAB1C1 /* PowerTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PowerTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4870AFAF20A9B0E800DAB1C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4870AFB620A9B0E900DAB1C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 		4870AFAE20A9B0E800DAB1C1 /* PowerTimer */ = {
 			isa = PBXGroup;
 			children = (
+				486DAA2D2157372A00A05187 /* GoogleService-Info.plist */,
 				4870AFAF20A9B0E800DAB1C1 /* AppDelegate.swift */,
 				485B75DC211F3711007391BD /* MainViewController.swift */,
 				4870E05820B0BDDE00C6ABF6 /* TimerViewController.swift */,
@@ -215,6 +218,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4870AFBA20A9B0E900DAB1C1 /* LaunchScreen.storyboard in Resources */,
+				486DAA2E2157372A00A05187 /* GoogleService-Info.plist in Resources */,
 				4870AFB720A9B0E900DAB1C1 /* Assets.xcassets in Resources */,
 				485B75DB211F2C0E007391BD /* sounds in Resources */,
 			);
@@ -249,18 +253,20 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-PowerTimer/Pods-PowerTimer-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/EasyTipView/EasyTipView.framework",
-				"${BUILT_PRODUCTS_DIR}/Fingertips/Fingertips.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/SlideMenuControllerSwift/SlideMenuControllerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
 				"${BUILT_PRODUCTS_DIR}/ValueStepper/ValueStepper.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EasyTipView.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fingertips.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SlideMenuControllerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ValueStepper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -434,7 +440,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = app.jeddie.PowerTimer;
+				PRODUCT_BUNDLE_IDENTIFIER = app.powertimer.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -453,7 +459,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = app.jeddie.PowerTimer;
+				PRODUCT_BUNDLE_IDENTIFIER = app.powertimer.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

@@ -7,8 +7,8 @@
 //
 
 import UIKit
-import Fingertips
 import SnapKit
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,20 +16,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow? = UIWindow(frame: UIScreen.main.bounds)
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-    #if DEBUG
-//      print("Using Fingertips window")
-//      let fingertips = MBFingerTipWindow(frame: UIScreen.main.bounds)
-//      fingertips.alwaysShowTouches = true
-//      fingertips.fadeDuration = 0.7
-//      self.window = fingertips
-    #endif
-
-    self.window!.backgroundColor = UIColor(red: 0.789, green: 1, blue: 0.837, alpha: 1) // trying to match launch screen
+    self.window!.backgroundColor = .black
     self.window!.makeKeyAndVisible()
     let root = MainViewController()
     self.window!.rootViewController = root
 
     print(Date())
+    FirebaseApp.configure()
+    Analytics.setUserID(Settings.DeviceID)
 
     TipManager.setup()
     return true
