@@ -20,7 +20,7 @@ The best part is, **you can continue to keep the time of your entire workout!**
 
 
 ### TODO
-- [ ] Analytics
+- [x] Analytics
 - [x] Remove theme changing
 - [ ] Finish ads
 - [x] Add more details to settings

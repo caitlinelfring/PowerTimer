@@ -11,6 +11,7 @@
 		485B75DB211F2C0E007391BD /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = 485B75DA211F2C0D007391BD /* sounds */; };
 		485B75DD211F3711007391BD /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485B75DC211F3711007391BD /* MainViewController.swift */; };
 		486DAA2E2157372A00A05187 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 486DAA2D2157372A00A05187 /* GoogleService-Info.plist */; };
+		486DAA30215739BB00A05187 /* Tracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 486DAA2F215739BB00A05187 /* Tracker.swift */; };
 		4870AFB020A9B0E800DAB1C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4870AFAF20A9B0E800DAB1C1 /* AppDelegate.swift */; };
 		4870AFB720A9B0E900DAB1C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4870AFB620A9B0E900DAB1C1 /* Assets.xcassets */; };
 		4870AFBA20A9B0E900DAB1C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4870AFB820A9B0E900DAB1C1 /* LaunchScreen.storyboard */; };
@@ -36,6 +37,7 @@
 		485B75DA211F2C0D007391BD /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sounds; sourceTree = "<group>"; };
 		485B75DC211F3711007391BD /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		486DAA2D2157372A00A05187 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		486DAA2F215739BB00A05187 /* Tracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tracker.swift; sourceTree = "<group>"; };
 		4870AFAC20A9B0E800DAB1C1 /* PowerTimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PowerTimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4870AFAF20A9B0E800DAB1C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4870AFB620A9B0E900DAB1C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -131,6 +133,7 @@
 				489033C220ACA97A009234E3 /* Settings.swift */,
 				489033C820ACD594009234E3 /* TipManager.swift */,
 				489308D720B6EBE60060E3EB /* Sounds.swift */,
+				486DAA2F215739BB00A05187 /* Tracker.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 				489033C920ACD594009234E3 /* TipManager.swift in Sources */,
 				485B75DD211F3711007391BD /* MainViewController.swift in Sources */,
 				4870E05920B0BDDE00C6ABF6 /* TimerViewController.swift in Sources */,
+				486DAA30215739BB00A05187 /* Tracker.swift in Sources */,
 				489033C120AC640E009234E3 /* Button.swift in Sources */,
 				489308D820B6EBE60060E3EB /* Sounds.swift in Sources */,
 				48331C4E20AF80DC00E20B37 /* RestTimeStepper.swift in Sources */,

@@ -101,7 +101,11 @@ class SettingTableViewController: UITableViewController {
 
     let contactCell = UITableViewCell(style: .default, reuseIdentifier: nil)
     self.secondItems.append(Item(title: "Contact", cell: contactCell, didPress: {
+
+      Tracking.log("settings.contact", parameters: ["mail_configured": MFMailComposeViewController.canSendMail()])
+
       let email = "powertimerapp@gmail.com" // TODO: get this email
+
       if MFMailComposeViewController.canSendMail() {
         let mail = MFMailComposeViewController(rootViewController: self)
         mail.mailComposeDelegate = self
@@ -116,7 +120,10 @@ class SettingTableViewController: UITableViewController {
       }
     }))
 
-    self.secondItems.append(Item(title: "Rate PowerTimer", didPress: SKStoreReviewController.requestReview))
+    self.secondItems.append(Item(title: "Rate PowerTimer", didPress: {
+      Tracking.log("settings.rating")
+      SKStoreReviewController.requestReview()
+    }))
 
     self.tableView.delegate = self
     self.tableView.dataSource = self
@@ -166,6 +173,8 @@ class SettingTableViewController: UITableViewController {
     super.viewWillAppear(animated)
     self.header.isHidden = UIApplication.shared.isStatusBarHidden
     self.tableView.reloadData()
+
+    Tracking.log("settings.opened")
   }
 
   func countDownTimerStepper() -> ValueStepper {
@@ -192,6 +201,7 @@ class SettingTableViewController: UITableViewController {
 
   @objc private func didChangeTheme(sender: UISegmentedControl) {
     Settings.currentTheme = Settings.Theme(rawValue: sender.selectedSegmentIndex)!
+    Tracking.log("settings.theme.changed", parameters: ["theme": Settings.currentTheme.description])
 
     UIView.animate(withDuration: 0.5) {
       self.header.backgroundColor = Colors.backgroundColor
@@ -210,6 +220,8 @@ class SettingTableViewController: UITableViewController {
 
   @objc func soundSwitchDidChange(sender: UISwitch) {
     Settings.Sound.playSoundAlert = sender.isOn
+    Tracking.log("settings.sound.changed", parameters: ["state": sender.isOn])
+
   }
 
   @objc func didChangeCountDownTimerMinutes(sender: UIStepper) {
@@ -218,6 +230,7 @@ class SettingTableViewController: UITableViewController {
 
   @objc private func didChangeTimerType(sender: UISegmentedControl) {
     Settings.SavedTimerType = TimerType(rawValue: sender.selectedSegmentIndex)!
+    Tracking.log("settings.timer.changed", parameters: ["type": Settings.SavedTimerType.description])
     self.tableView.reloadData()
   }
 
@@ -230,6 +243,7 @@ class SettingTableViewController: UITableViewController {
 
   @objc private func prepareCountdownDidChange(sender: UISwitch) {
     Settings.prepareCountdown = sender.isOn
+    Tracking.log("settings.prepareCountdown.changed", parameters: ["state": sender.isOn])
   }
 
   // MARK: Tableview functions
