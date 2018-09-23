@@ -15,7 +15,14 @@ class ClockView: UIView {
 
   private var dateFormatter: DateFormatter = {
     let df = DateFormatter()
-    df.dateFormat = "h:mm a"
+    // https://stackoverflow.com/questions/1929958/how-can-i-determine-if-iphone-is-set-for-12-hour-or-24-hour-time-display
+    let formatString = DateFormatter.dateFormat(fromTemplate: "j", options: 0, locale: Locale.current)!
+    let hasAMPM = formatString.contains("a")
+    if hasAMPM {
+      df.dateFormat = "h:mm a"
+    } else {
+      df.dateFormat = "HH:mm"
+    }
     return df
   }()
 
@@ -49,14 +56,16 @@ class ClockView: UIView {
     fatalError("init(coder:) has not been implemented")
   }
 
+  // TODO: This should update if the clock 12/24 hr setting changes, but how likely is that to really happen?
   func update() {
     let chars = self.currentTime.split(separator: " ")
     let time = String(chars[0])
-    let ampm = String(chars[1].lowercased())
-
     let attributedString = NSMutableAttributedString(string: time, attributes: [NSAttributedStringKey.font : self.clock.font])
-    attributedString.append(NSMutableAttributedString(string: " " + ampm, attributes: [NSAttributedStringKey.font : self.clock.font.withSize(self.clock.font.pointSize * 0.5)]))
 
+    if chars.count > 1 {
+      let ampm = String(chars[1].lowercased())
+      attributedString.append(NSMutableAttributedString(string: " " + ampm, attributes: [NSAttributedStringKey.font : self.clock.font.withSize(self.clock.font.pointSize * 0.5)]))
+    }
     self.clock.attributedText = attributedString
   }
 }
