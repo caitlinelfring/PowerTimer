@@ -98,20 +98,12 @@ class Settings {
 
   static var minScreenDimension: CGFloat {
     let bounds = UIScreen.main.bounds
-    var smallerBounds = bounds.width
-    if bounds.width > bounds.height {
-      smallerBounds = bounds.height
-    }
-    return smallerBounds
+    return min(bounds.width, bounds.height)
   }
 
   static var maxScreenDimension: CGFloat {
     let bounds = UIScreen.main.bounds
-    var largerBounds = bounds.width
-    if bounds.height > bounds.width {
-      largerBounds = bounds.height
-    }
-    return largerBounds
+    return max(bounds.width, bounds.height)
   }
 
   enum Theme: Int {
@@ -147,3 +139,10 @@ class Settings {
   }
 }
 
+extension UIView {
+  func minSafeAreaDimension() -> CGFloat {
+    let width = self.frame.width - self.safeAreaInsets.left - self.safeAreaInsets.right
+    let height = self.frame.height - self.safeAreaInsets.top - self.safeAreaInsets.bottom
+    return min(width, height)
+  }
+}

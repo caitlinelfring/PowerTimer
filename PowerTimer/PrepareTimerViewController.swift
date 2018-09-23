@@ -37,8 +37,6 @@ class PrepareTimerViewController: UIViewController {
     }
 
     self.timerView.text = "\(self.timer.currentSeconds)"
-    // TODO: Better font size based on frame?
-    self.timerView.font = TimerView.Constants.Active.font.withSize(Settings.minScreenDimension)
     self.timerView.textColor = .green // TODO: Better green
     self.timerView.textAlignment = .center
     self.view.addSubview(self.timerView)
@@ -51,6 +49,11 @@ class PrepareTimerViewController: UIViewController {
 
     self.timer.delegate = self
     self.timer.start()
+  }
+
+  override func viewDidLayoutSubviews() {
+    super.viewDidLayoutSubviews()
+    self.timerView.font = TimerView.Constants.Active.font.withSize(self.view.minSafeAreaDimension())
   }
 }
 
