@@ -44,6 +44,16 @@ class SettingTableViewController: UITableViewController {
   private var currentTip: EasyTipView?
   let header = UIView()
 
+  var versionLabel: UILabel = {
+    let label = UILabel()
+    let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "???"
+    label.textAlignment = .center
+    label.textColor = UIColor.lightGray
+    label.backgroundColor = .white
+    label.text = "Version: \(version)"
+    return label
+  }()
+
   override init(style: UITableViewStyle) {
     super.init(style: style)
 
@@ -96,14 +106,23 @@ class SettingTableViewController: UITableViewController {
 
     self.navigationItem.title = "SETTINGS"
 
+    // This is the area the is under the status bar
     self.header.backgroundColor = Colors.backgroundColor
     self.view.addSubview(self.header)
     self.header.snp.makeConstraints { (make) in
       make.centerX.equalToSuperview()
       make.width.equalToSuperview()
-      make.height.equalTo(UIApplication.shared.statusBarFrame.size.height)
-      make.top.equalTo(self.view).offset(-UIApplication.shared.statusBarFrame.size.height)
+      make.height.equalTo(self.view) // extend above the view so it's still black when you try to scroll
+      make.bottom.equalTo(self.view.safeAreaLayoutGuide.snp.top)
     }
+
+    self.view.addSubview(self.versionLabel)
+    self.versionLabel.snp.makeConstraints { (make) in
+      make.bottom.equalTo(self.view.safeAreaLayoutGuide)
+      make.centerX.equalToSuperview()
+      make.width.equalToSuperview()
+    }
+
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -117,6 +136,7 @@ class SettingTableViewController: UITableViewController {
 
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
+    self.header.isHidden = UIApplication.shared.isStatusBarHidden
     self.tableView.reloadData()
   }
 
