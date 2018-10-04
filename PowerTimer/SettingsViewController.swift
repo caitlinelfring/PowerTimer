@@ -173,8 +173,6 @@ class SettingTableViewController: UITableViewController {
     super.viewWillAppear(animated)
     self.header.isHidden = UIApplication.shared.isStatusBarHidden
     self.tableView.reloadData()
-
-    Tracking.log("settings.opened")
   }
 
   func countDownTimerStepper() -> ValueStepper {
