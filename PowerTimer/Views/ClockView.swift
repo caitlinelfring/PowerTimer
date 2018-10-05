@@ -8,6 +8,9 @@
 
 import Foundation
 import UIKit
+#if DEBUG
+import SimulatorStatusMagic
+#endif
 
 class ClockView: UIView {
   let clock = UILabel()
@@ -27,6 +30,11 @@ class ClockView: UIView {
   }()
 
   var currentTime: String {
+    #if DEBUG
+    if UserDefaults.standard.bool(forKey: "FASTLANE_SNAPSHOT") {
+      return SDStatusBarManager().timeString
+    }
+    #endif
     return self.dateFormatter.string(from: Date())
   }
 

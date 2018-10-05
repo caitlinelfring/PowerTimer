@@ -52,6 +52,10 @@ class TipManager {
   }
 
   class func next() -> TipType? {
+    if UserDefaults.standard.bool(forKey: "FASTLANE_SNAPSHOT") {
+      // runtime check that we are in snapshot mode
+      return nil
+    }
     if !Settings.IntroTips.startTimer {
       return .startTimer
     } else if !Settings.IntroTips.startRestTimer {
