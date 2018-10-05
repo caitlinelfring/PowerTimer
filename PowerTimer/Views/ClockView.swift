@@ -32,7 +32,7 @@ class ClockView: UIView {
   var currentTime: String {
     #if DEBUG
     if UserDefaults.standard.bool(forKey: "FASTLANE_SNAPSHOT") {
-      return SDStatusBarManager().timeString
+      return "9:14 AM"
     }
     #endif
     return self.dateFormatter.string(from: Date())
