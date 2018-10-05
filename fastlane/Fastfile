@@ -19,5 +19,10 @@ platform :ios do
   desc "Generate new localized screenshots"
   lane :screenshots do
     capture_screenshots(workspace: "PowerTimer.xcworkspace", scheme: "PowerTimer")
+    frame
+  end
+
+  lane :frame do
+    frame_screenshots(white: true, path: "./screenshots")
   end
 end
