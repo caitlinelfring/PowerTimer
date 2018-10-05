@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		48309B772166F66400B0D9AD /* PowerTimerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48309B762166F66400B0D9AD /* PowerTimerUITests.swift */; };
+		48309B7F2166FCA400B0D9AD /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48309B7E2166FCA400B0D9AD /* SnapshotHelper.swift */; };
 		48331C4E20AF80DC00E20B37 /* RestTimeStepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48331C4D20AF80DC00E20B37 /* RestTimeStepper.swift */; };
 		485B75DB211F2C0E007391BD /* sounds in Resources */ = {isa = PBXBuildFile; fileRef = 485B75DA211F2C0D007391BD /* sounds */; };
 		485B75DD211F3711007391BD /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 485B75DC211F3711007391BD /* MainViewController.swift */; };
@@ -47,6 +48,7 @@
 		48309B742166F66400B0D9AD /* PowerTimerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PowerTimerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		48309B762166F66400B0D9AD /* PowerTimerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerTimerUITests.swift; sourceTree = "<group>"; };
 		48309B782166F66400B0D9AD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		48309B7E2166FCA400B0D9AD /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		48331C4D20AF80DC00E20B37 /* RestTimeStepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestTimeStepper.swift; sourceTree = "<group>"; };
 		485B75DA211F2C0D007391BD /* sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = sounds; sourceTree = "<group>"; };
 		485B75DC211F3711007391BD /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -98,6 +100,7 @@
 		48309B752166F66400B0D9AD /* PowerTimerUITests */ = {
 			isa = PBXGroup;
 			children = (
+				48309B7E2166FCA400B0D9AD /* SnapshotHelper.swift */,
 				48309B762166F66400B0D9AD /* PowerTimerUITests.swift */,
 				48309B782166F66400B0D9AD /* Info.plist */,
 			);
@@ -346,6 +349,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				48309B772166F66400B0D9AD /* PowerTimerUITests.swift in Sources */,
+				48309B7F2166FCA400B0D9AD /* SnapshotHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
