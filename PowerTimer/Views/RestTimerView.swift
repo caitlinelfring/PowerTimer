@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import ValueStepper
 import SnapKit
+import PTTimer
 
 class RestTimerView: TimerActions {
 
@@ -18,7 +19,7 @@ class RestTimerView: TimerActions {
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-    self.timer = CountUpTimer()
+    self.timer = PTTimer.Up()
     self.timer.delegate = self
 
     self.timerView.state = .inactive
@@ -140,8 +141,8 @@ extension RestTimerView: UIGestureRecognizerDelegate {
   }
 }
 
-extension RestTimerView: TimerDelegate {
-  func onTimeChanged(seconds: Int) {
+extension RestTimerView: PTTimerDelegate {
+  func timerTimeDidChange(seconds: Int) {
     self.timerView.setTime(seconds: seconds)
     let restTimerSeconds = Settings.RestTimerMinutes * 60
     var textColor: UIColor = TimerView.Constants.Active.textColor
@@ -169,19 +170,19 @@ extension RestTimerView: TimerDelegate {
     self.timerView.color = textColor
   }
 
-  func onPaused() {
+  func timerDidPause() {
     print(#function)
     self.postToObservers(.timerDidPause)
   }
 
-  func onStart() {
+  func timerDidStart() {
     print(#function)
     self.timerView.state = .active
     self.stepper.isHidden = true
     self.postToObservers(.timerDidStart)
   }
 
-  func onReset() {
+  func timerDidReset() {
     print(#function)
     self.timerView.state = .inactive
     self.timerView.setTime(seconds: 0)

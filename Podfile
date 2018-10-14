@@ -7,6 +7,7 @@ target 'PowerTimer' do
   pod 'SnapKit', '~> 4.0'
   pod 'SlideMenuControllerSwift'
   pod 'Firebase/Core'
+  pod 'PTTimer' #, :path => '../PTTimer/PTTimer.podspec'
 
   pod 'SimulatorStatusMagic', :configurations => ['Debug']
 end

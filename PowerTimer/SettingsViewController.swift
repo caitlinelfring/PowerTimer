@@ -14,6 +14,7 @@ import EasyTipView
 import SlideMenuControllerSwift
 import MessageUI
 import StoreKit
+import PTTimer
 
 class SettingTableViewController: UITableViewController {
   struct Item {
@@ -78,7 +79,7 @@ class SettingTableViewController: UITableViewController {
 
     let countDownTimerMinutesCell = SettingsCell(accessory: countDownTimerStepper())
     var cdt = Item(title: "Countdown Minutes", height: 80, cell: countDownTimerMinutesCell)
-    cdt.shouldEnable = { return Settings.SavedTimerType == .countDown && self.canChangeTimerType }
+    cdt.shouldEnable = { return Settings.SavedTimerType == .down && self.canChangeTimerType }
     self.items.append(cdt)
 
     #if DEBUG
@@ -184,9 +185,9 @@ class SettingTableViewController: UITableViewController {
   }
 
   private func timerTypeControl() -> UISegmentedControl {
-    let segmentControl = UISegmentedControl(items: TimerType.available.map { $0.description })
+    let segmentControl = UISegmentedControl(items: PTTimerType.available.map { $0.rawValue })
     segmentControl.addTarget(self, action: #selector(self.didChangeTimerType), for: .valueChanged)
-    segmentControl.selectedSegmentIndex = Settings.SavedTimerType.rawValue
+    segmentControl.selectedSegmentIndex = PTTimerType.available.index(of: Settings.SavedTimerType) ?? 0
     return segmentControl
   }
 
@@ -227,8 +228,8 @@ class SettingTableViewController: UITableViewController {
   }
 
   @objc private func didChangeTimerType(sender: UISegmentedControl) {
-    Settings.SavedTimerType = TimerType(rawValue: sender.selectedSegmentIndex)!
-    Tracking.log("settings.timer.changed", parameters: ["type": Settings.SavedTimerType.description])
+    Settings.SavedTimerType = PTTimerType(rawValue: PTTimerType.available[sender.selectedSegmentIndex].rawValue)!
+    Tracking.log("settings.timer.changed", parameters: ["type": Settings.SavedTimerType.rawValue])
     self.tableView.reloadData()
   }
 

@@ -49,6 +49,7 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - PTTimer (1.0.1)
   - SimulatorStatusMagic (2.3)
   - SlideMenuControllerSwift (4.0.0)
   - SnapKit (4.0.1)
@@ -57,6 +58,7 @@ PODS:
 DEPENDENCIES:
   - EasyTipView (from `https://github.com/jitendragaur/EasyTipView.git`, commit `4f8eb82`)
   - Firebase/Core
+  - PTTimer
   - SimulatorStatusMagic
   - SlideMenuControllerSwift
   - SnapKit (~> 4.0)
@@ -71,6 +73,7 @@ SPEC REPOS:
     - GoogleAppMeasurement
     - GoogleUtilities
     - nanopb
+    - PTTimer
     - SimulatorStatusMagic
     - SlideMenuControllerSwift
     - SnapKit
@@ -100,11 +103,12 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: 2b3a023a61239c8d002e6e4fcf4abce8eddce0e0
   GoogleUtilities: 760ccb53b7c7f40f9c02d8c241f76f841a7a6162
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  PTTimer: 0e198a592295ac69c12ee304c70d9700efd50542
   SimulatorStatusMagic: 631fe6e4195a8a8d587ad8744af9015126526cc2
   SlideMenuControllerSwift: 021d6318201c53d4d4d3710517d43d6c556c7dd0
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   ValueStepper: 577857afaa07313c82a7ac686ae2f06994b913c4
 
-PODFILE CHECKSUM: 29658bc5c54b22d5def75c8bff05d9fceca924f4
+PODFILE CHECKSUM: 2a6f0405b3af0f97aeb2a4631cea18eb9999c97c
 
 COCOAPODS: 1.5.3

@@ -17,7 +17,6 @@
 		4870AFB020A9B0E800DAB1C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4870AFAF20A9B0E800DAB1C1 /* AppDelegate.swift */; };
 		4870AFB720A9B0E900DAB1C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4870AFB620A9B0E900DAB1C1 /* Assets.xcassets */; };
 		4870AFBA20A9B0E900DAB1C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4870AFB820A9B0E900DAB1C1 /* LaunchScreen.storyboard */; };
-		4870AFC220A9CBD200DAB1C1 /* Timers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4870AFC120A9CBD200DAB1C1 /* Timers.swift */; };
 		4870AFC420A9D52D00DAB1C1 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4870AFC320A9D52D00DAB1C1 /* Colors.swift */; };
 		4870AFC620A9E2A300DAB1C1 /* RestTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4870AFC520A9E2A300DAB1C1 /* RestTimerView.swift */; };
 		4870AFC820A9F54E00DAB1C1 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4870AFC720A9F54E00DAB1C1 /* SettingsViewController.swift */; };
@@ -59,7 +58,6 @@
 		4870AFB620A9B0E900DAB1C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4870AFB920A9B0E900DAB1C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		4870AFBB20A9B0E900DAB1C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		4870AFC120A9CBD200DAB1C1 /* Timers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Timers.swift; sourceTree = "<group>"; };
 		4870AFC320A9D52D00DAB1C1 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		4870AFC520A9E2A300DAB1C1 /* RestTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestTimerView.swift; sourceTree = "<group>"; };
 		4870AFC720A9F54E00DAB1C1 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -164,7 +162,6 @@
 			isa = PBXGroup;
 			children = (
 				4870AFC320A9D52D00DAB1C1 /* Colors.swift */,
-				4870AFC120A9CBD200DAB1C1 /* Timers.swift */,
 				489033C220ACA97A009234E3 /* Settings.swift */,
 				489033C820ACD594009234E3 /* TipManager.swift */,
 				489308D720B6EBE60060E3EB /* Sounds.swift */,
@@ -322,6 +319,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-PowerTimer/Pods-PowerTimer-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/EasyTipView/EasyTipView.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/PTTimer/PTTimer.framework",
 				"${BUILT_PRODUCTS_DIR}/SimulatorStatusMagic/SimulatorStatusMagic.framework",
 				"${BUILT_PRODUCTS_DIR}/SlideMenuControllerSwift/SlideMenuControllerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework",
@@ -332,6 +330,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/EasyTipView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PTTimer.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SimulatorStatusMagic.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SlideMenuControllerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SnapKit.framework",
@@ -365,7 +364,6 @@
 				489033C520ACBAF0009234E3 /* ClockView.swift in Sources */,
 				4870AFC420A9D52D00DAB1C1 /* Colors.swift in Sources */,
 				489033C320ACA97A009234E3 /* Settings.swift in Sources */,
-				4870AFC220A9CBD200DAB1C1 /* Timers.swift in Sources */,
 				4870AFB020A9B0E800DAB1C1 /* AppDelegate.swift in Sources */,
 				489033BF20AC6396009234E3 /* TimerView.swift in Sources */,
 				489033C920ACD594009234E3 /* TipManager.swift in Sources */,
@@ -409,7 +407,11 @@
 				DEVELOPMENT_TEAM = FLQ9EPP5P3;
 				INFOPLIST_FILE = PowerTimerUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.jeddie.PowerTimerUITests;
@@ -427,7 +429,11 @@
 				DEVELOPMENT_TEAM = FLQ9EPP5P3;
 				INFOPLIST_FILE = PowerTimerUITests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = app.jeddie.PowerTimerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -559,7 +565,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FLQ9EPP5P3;
 				INFOPLIST_FILE = PowerTimer/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = app.powertimer.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -575,7 +584,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = FLQ9EPP5P3;
 				INFOPLIST_FILE = PowerTimer/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = app.powertimer.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;

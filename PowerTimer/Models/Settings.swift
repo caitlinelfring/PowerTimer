@@ -8,18 +8,19 @@
 
 import Foundation
 import UIKit
+import PTTimer
 
 fileprivate var defaults = UserDefaults.standard
 
 class Settings {
   static let DeviceID = UIDevice.current.identifierForVendor?.uuidString ?? "unknown"
 
-  static var SavedTimerType: TimerType {
+  static var SavedTimerType: PTTimerType {
     set(value) {
       defaults.set(value.rawValue, forKey: "timerType")
     }
     get {
-      return TimerType(rawValue: defaults.integer(forKey: "timerType")) ?? TimerType.countUp
+      return PTTimerType(rawValue: defaults.string(forKey: "timerType") ?? PTTimerType.up.rawValue) ?? PTTimerType.up
     }
   }
 

@@ -9,10 +9,11 @@
 import Foundation
 import UIKit
 import SnapKit
+import PTTimer
 
 class TimerActions: UIView {
 
-  var timer: CountTimer!
+  var timer: PTTimer!
   let timerView = TimerView()
 
   enum Event: String {
@@ -73,35 +74,34 @@ class TotalTimerView: TimerActions {
       self.timer = nil
     }
 
-    if Settings.SavedTimerType == .countDown {
-      self.timer = CountDownTimer(seconds: Settings.CountDownTimerMinutes * 60)
+    if Settings.SavedTimerType == .down {
+      self.timer = PTTimer.Down(initialTime: Settings.CountDownTimerMinutes * 60)
     } else {
-      self.timer = CountUpTimer()
+      self.timer = PTTimer.Up()
     }
     self.timer.delegate = self
-    self.timerView.state = .active
-    self.timerView.setTime(seconds: self.timer.currentSeconds)
+    self.timer.reset()
   }
 }
 
-extension TotalTimerView: TimerDelegate {
-  func onTimeChanged(seconds: Int) {
+extension TotalTimerView: PTTimerDelegate {
+  func timerTimeDidChange(seconds: Int) {
     self.timerView.setTime(seconds: seconds)
   }
 
-  func onPaused() {
+  func timerDidPause() {
     self.timerView.state = .paused
     self.postToObservers(.timerDidPause)
   }
 
-  func onStart() {
+  func timerDidStart() {
     self.timerView.state = .active
     self.postToObservers(.timerDidStart)
   }
 
-  func onReset() {
+  func timerDidReset() {
     self.timerView.state = .active
-    self.timerView.setTime(seconds: self.timer.currentSeconds)
+    self.timerView.setTime(seconds: self.timer.seconds())
     self.postToObservers(.timerDidReset)
   }
 }

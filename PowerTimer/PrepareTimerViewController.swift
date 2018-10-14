@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import PTTimer
 
 class PrepareTimerViewController: UIViewController {
   var completion: (() -> ())?
@@ -15,7 +16,7 @@ class PrepareTimerViewController: UIViewController {
   static let seconds = 5
 
   private let modalView = UIView()
-  private let timer = CountDownTimer(seconds: seconds)
+  private let timer = PTTimer.Down(initialTime: seconds)
 
   private let timerView = UILabel()
 
@@ -36,7 +37,7 @@ class PrepareTimerViewController: UIViewController {
       make.edges.equalToSuperview()
     }
 
-    self.timerView.text = "\(self.timer.currentSeconds)"
+    self.timerView.text = "\(self.timer.seconds())"
     self.timerView.textColor = .green // TODO: Better green
     self.timerView.textAlignment = .center
     self.view.addSubview(self.timerView)
@@ -58,14 +59,12 @@ class PrepareTimerViewController: UIViewController {
 }
 
 
-extension PrepareTimerViewController: TimerDelegate {
-  func onTimeChanged(seconds: Int) {
+extension PrepareTimerViewController: PTTimerDelegate {
+  func timerTimeDidChange(seconds: Int) {
     self.timerView.text = "\(seconds)"
   }
 
-  func onReset() {}
-  func onStart() {}
-  func onPaused() {
+  func timerDidPause() {
     self.dismiss(animated: true, completion: self.completion)
   }
 }
