@@ -2,7 +2,8 @@ platform :ios, '9.0'
 use_frameworks!
 
 target 'PowerTimer' do
-  pod 'EasyTipView', :git => 'https://github.com/jitendragaur/EasyTipView.git', :commit => '4f8eb82'
+  # Should be 2.0.1, but they haven't bumped the version yet
+  pod 'EasyTipView', :git => 'https://github.com/teodorpatras/EasyTipView.git', :commit => '651a16e83cd15b58a92feadae117ab8ccbeb786b'
   pod 'ValueStepper', :git => 'https://github.com/caitlin615/ValueStepper.git', :branch => 'master'
   pod 'SnapKit', '~> 4.0'
   pod 'SlideMenuControllerSwift'

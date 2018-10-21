@@ -1,5 +1,5 @@
 PODS:
-  - EasyTipView (1.0.2)
+  - EasyTipView (2.0.1)
   - Firebase/Core (5.9.0):
     - Firebase/CoreOnly
     - FirebaseAnalytics (= 5.2.0)
@@ -56,7 +56,7 @@ PODS:
   - ValueStepper (1.5)
 
 DEPENDENCIES:
-  - EasyTipView (from `https://github.com/jitendragaur/EasyTipView.git`, commit `4f8eb82`)
+  - EasyTipView (from `https://github.com/teodorpatras/EasyTipView.git`, commit `651a16e83cd15b58a92feadae117ab8ccbeb786b`)
   - Firebase/Core
   - PTTimer
   - SimulatorStatusMagic
@@ -80,22 +80,22 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   EasyTipView:
-    :commit: 4f8eb82
-    :git: https://github.com/jitendragaur/EasyTipView.git
+    :commit: 651a16e83cd15b58a92feadae117ab8ccbeb786b
+    :git: https://github.com/teodorpatras/EasyTipView.git
   ValueStepper:
     :branch: master
     :git: https://github.com/caitlin615/ValueStepper.git
 
 CHECKOUT OPTIONS:
   EasyTipView:
-    :commit: 4f8eb82
-    :git: https://github.com/jitendragaur/EasyTipView.git
+    :commit: 651a16e83cd15b58a92feadae117ab8ccbeb786b
+    :git: https://github.com/teodorpatras/EasyTipView.git
   ValueStepper:
     :commit: cfb8be7356c0c464db4f8a56fd7b6fd9e8ae7f33
     :git: https://github.com/caitlin615/ValueStepper.git
 
 SPEC CHECKSUMS:
-  EasyTipView: b93a19be981cc2221d6d7191d49872f547e0bebf
+  EasyTipView: 1515544456d6e943240012e9be5d25d1bb766603
   Firebase: 383fa29aca93e371cab776b48a5c66544d3c2003
   FirebaseAnalytics: 831f1f127f4a75698e9875a87bf7e2668730d953
   FirebaseCore: 2a84b6b325792a4319ef71ee18819dcba08d2fd7
@@ -109,6 +109,6 @@ SPEC CHECKSUMS:
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   ValueStepper: 577857afaa07313c82a7ac686ae2f06994b913c4
 
-PODFILE CHECKSUM: 2a6f0405b3af0f97aeb2a4631cea18eb9999c97c
+PODFILE CHECKSUM: fa5c90e2b7d1646740508068142bd2f0c5fcaa4e
 
 COCOAPODS: 1.5.3
