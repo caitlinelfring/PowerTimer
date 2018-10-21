@@ -51,7 +51,7 @@ PODS:
   - nanopb/encode (0.3.8)
   - PTTimer (1.0.1)
   - SimulatorStatusMagic (2.3)
-  - SlideMenuControllerSwift (4.0.0)
+  - SlideMenuControllerSwift (4.2.0)
   - SnapKit (4.0.1)
   - ValueStepper (1.5)
 
@@ -60,9 +60,9 @@ DEPENDENCIES:
   - Firebase/Core
   - PTTimer
   - SimulatorStatusMagic
-  - SlideMenuControllerSwift
+  - SlideMenuControllerSwift (from `https://github.com/huuphuc/SlideMenuControllerSwift.git`, commit `7790a2e`)
   - SnapKit (~> 4.0)
-  - ValueStepper (from `https://github.com/caitlin615/ValueStepper.git`, branch `master`)
+  - ValueStepper (from `https://github.com/caitlin615/ValueStepper.git`, tag `1.6`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -75,24 +75,29 @@ SPEC REPOS:
     - nanopb
     - PTTimer
     - SimulatorStatusMagic
-    - SlideMenuControllerSwift
     - SnapKit
 
 EXTERNAL SOURCES:
   EasyTipView:
     :commit: 651a16e83cd15b58a92feadae117ab8ccbeb786b
     :git: https://github.com/teodorpatras/EasyTipView.git
+  SlideMenuControllerSwift:
+    :commit: 7790a2e
+    :git: https://github.com/huuphuc/SlideMenuControllerSwift.git
   ValueStepper:
-    :branch: master
     :git: https://github.com/caitlin615/ValueStepper.git
+    :tag: '1.6'
 
 CHECKOUT OPTIONS:
   EasyTipView:
     :commit: 651a16e83cd15b58a92feadae117ab8ccbeb786b
     :git: https://github.com/teodorpatras/EasyTipView.git
+  SlideMenuControllerSwift:
+    :commit: 7790a2e
+    :git: https://github.com/huuphuc/SlideMenuControllerSwift.git
   ValueStepper:
-    :commit: cfb8be7356c0c464db4f8a56fd7b6fd9e8ae7f33
     :git: https://github.com/caitlin615/ValueStepper.git
+    :tag: '1.6'
 
 SPEC CHECKSUMS:
   EasyTipView: 1515544456d6e943240012e9be5d25d1bb766603
@@ -105,10 +110,10 @@ SPEC CHECKSUMS:
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   PTTimer: 0e198a592295ac69c12ee304c70d9700efd50542
   SimulatorStatusMagic: 631fe6e4195a8a8d587ad8744af9015126526cc2
-  SlideMenuControllerSwift: 021d6318201c53d4d4d3710517d43d6c556c7dd0
+  SlideMenuControllerSwift: 4cdeb5a8d4fa76f64fe4de71823a1db2dfbab9fe
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   ValueStepper: 577857afaa07313c82a7ac686ae2f06994b913c4
 
-PODFILE CHECKSUM: fa5c90e2b7d1646740508068142bd2f0c5fcaa4e
+PODFILE CHECKSUM: 0c021a5f17a14e5cf2061f6a395483d17c52cd17
 
 COCOAPODS: 1.5.3
