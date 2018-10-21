@@ -39,7 +39,7 @@ extension UILabel {
   @IBInspectable var kerning: Float {
     get {
       var range = NSMakeRange(0, (self.text?.count ?? 0))
-      guard let kern = self.attributedText?.attribute(NSAttributedStringKey.kern, at: 0, effectiveRange: &range),
+      guard let kern = self.attributedText?.attribute(NSAttributedString.Key.kern, at: 0, effectiveRange: &range),
         let value = kern as? NSNumber
         else {
           return 0
@@ -58,7 +58,7 @@ extension UILabel {
       }
 
       let range = NSMakeRange(0, attText.length)
-      attText.addAttribute(NSAttributedStringKey.kern, value: NSNumber(value: newValue), range: range)
+      attText.addAttribute(NSAttributedString.Key.kern, value: NSNumber(value: newValue), range: range)
       self.attributedText = attText
     }
   }

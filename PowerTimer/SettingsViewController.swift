@@ -39,7 +39,7 @@ class SettingTableViewController: UITableViewController {
 
   private var canChangeTimerType: Bool {
     let nav = (self.parent as! SlideMenuController).mainViewController as! UINavigationController
-    let parentTimer = (nav.childViewControllers.first! as! TimerViewController).totalTimerView.timer!
+    let parentTimer = (nav.children.first! as! TimerViewController).totalTimerView.timer!
     return parentTimer.state == .reset
   }
 
@@ -50,7 +50,7 @@ class SettingTableViewController: UITableViewController {
   let header = UIView()
   let versionLabel = UILabel()
 
-  override init(style: UITableViewStyle) {
+  override init(style: UITableView.Style) {
     super.init(style: style)
 
     let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "???"
@@ -138,7 +138,7 @@ class SettingTableViewController: UITableViewController {
     // This is the area the is under the status bar
     self.header.backgroundColor = Colors.backgroundColor
     self.view.addSubview(self.header)
-    self.view.bringSubview(toFront: self.header)
+    self.view.bringSubviewToFront(self.header)
     self.header.snp.makeConstraints { (make) in
       make.centerX.equalToSuperview()
       make.width.equalToSuperview()
@@ -157,8 +157,8 @@ class SettingTableViewController: UITableViewController {
   override func viewWillLayoutSubviews() {
     super.viewWillLayoutSubviews()
     // Makes sure these views are above the section headers
-    self.view.bringSubview(toFront: self.header)
-    self.view.bringSubview(toFront: self.versionLabel)
+    self.view.bringSubviewToFront(self.header)
+    self.view.bringSubviewToFront(self.versionLabel)
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -205,7 +205,7 @@ class SettingTableViewController: UITableViewController {
     UIView.animate(withDuration: 0.5) {
       self.header.backgroundColor = Colors.backgroundColor
       let nav = (self.parent as! SlideMenuController).mainViewController as! UINavigationController
-      let parent = nav.childViewControllers.first! as! TimerViewController
+      let parent = nav.children.first! as! TimerViewController
       parent.setColors()
     }
   }
@@ -331,7 +331,7 @@ class SettingsCell: UITableViewCell {
     self.init(style: .default, reuseIdentifier: nil)
   }
 
-  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     self.contentView.addSubview(self.container)
     self.container.snp.makeConstraints { (make) in

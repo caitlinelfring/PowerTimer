@@ -68,11 +68,11 @@ class ClockView: UIView {
   func update() {
     let chars = self.currentTime.split(separator: " ")
     let time = String(chars[0])
-    let attributedString = NSMutableAttributedString(string: time, attributes: [NSAttributedStringKey.font : self.clock.font])
+    let attributedString = NSMutableAttributedString(string: time, attributes: [NSAttributedString.Key.font : self.clock.font])
 
     if chars.count > 1 {
       let ampm = String(chars[1].lowercased())
-      attributedString.append(NSMutableAttributedString(string: " " + ampm, attributes: [NSAttributedStringKey.font : self.clock.font.withSize(self.clock.font.pointSize * 0.5)]))
+      attributedString.append(NSMutableAttributedString(string: " " + ampm, attributes: [NSAttributedString.Key.font : self.clock.font.withSize(self.clock.font.pointSize * 0.5)]))
     }
     self.clock.attributedText = attributedString
   }

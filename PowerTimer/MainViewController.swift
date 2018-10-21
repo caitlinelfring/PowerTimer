@@ -49,15 +49,15 @@ class MainViewController: SlideMenuController {
       make.width.equalTo(306)
     }
     self.view.addSubview(maskBgView)
-    self.view.bringSubview(toFront: maskBgView)
+    self.view.bringSubviewToFront(maskBgView)
     maskBgView.snp.makeConstraints { (make) in
       make.center.equalToSuperview()
       make.edges.equalToSuperview()
     }
-    UIView.animate(withDuration: 0.25, delay: 0.5, options: UIViewAnimationOptions.curveEaseInOut, animations: {
+    UIView.animate(withDuration: 0.25, delay: 0.5, options: UIView.AnimationOptions.curveEaseInOut, animations: {
       label.alpha = 0.0
     }, completion: { finished in
-      UIView.animate(withDuration: 0.25, delay: 0, options: UIViewAnimationOptions.curveEaseInOut, animations: {
+      UIView.animate(withDuration: 0.25, delay: 0, options: UIView.AnimationOptions.curveEaseInOut, animations: {
         maskBgView.alpha = 0.0
       }, completion: { finished in
         self.timerVC.setNeedsStatusBarAppearanceUpdate()

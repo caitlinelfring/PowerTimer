@@ -56,7 +56,7 @@ class TimerView: UIView {
 
   private var currentText = "00:00" {
     didSet {
-      let attributedText = NSAttributedString(string: self.currentText, attributes: [NSAttributedStringKey.kern: 5])
+      let attributedText = NSAttributedString(string: self.currentText, attributes: [NSAttributedString.Key.kern: 5])
       self.label.attributedText = attributedText
     }
   }
@@ -144,7 +144,7 @@ class TimerView: UIView {
     if animate {
       UIView.animate(withDuration: duration,
                      delay: 0,
-                     options: UIViewAnimationOptions.allowUserInteraction,
+                     options: UIView.AnimationOptions.allowUserInteraction,
                      animations: animations,
                      completion: nil)
     } else {
