@@ -61,7 +61,7 @@ DEPENDENCIES:
   - PTTimer
   - SimulatorStatusMagic
   - SlideMenuControllerSwift (from `https://github.com/huuphuc/SlideMenuControllerSwift.git`, commit `7790a2e`)
-  - SnapKit (~> 4.0)
+  - SnapKit (~> 4.0.1)
   - ValueStepper (from `https://github.com/caitlin615/ValueStepper.git`, tag `1.6`)
 
 SPEC REPOS:
@@ -114,6 +114,6 @@ SPEC CHECKSUMS:
   SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
   ValueStepper: 577857afaa07313c82a7ac686ae2f06994b913c4
 
-PODFILE CHECKSUM: 0c021a5f17a14e5cf2061f6a395483d17c52cd17
+PODFILE CHECKSUM: f1ec019251b9a363eac96ee61dea4159f0362b52
 
 COCOAPODS: 1.5.3
