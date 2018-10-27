@@ -78,8 +78,10 @@ class RestTimerView: TimerActions {
 
     if self.timer.state == .running {
       self.timer.reset()
+      Tracking.log("timer.rest.reset")
     } else {
       self.timer.start()
+      Tracking.log("timer.rest.started")
     }
   }
 
@@ -122,6 +124,7 @@ class RestTimerView: TimerActions {
           let generator = UISelectionFeedbackGenerator()
           generator.prepare()
           generator.selectionChanged()
+          Tracking.log("timer.rest.reset", parameters: ["forceTouch": true])
           self.timer.reset()
           DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.25, execute: self.timer.start)
         }

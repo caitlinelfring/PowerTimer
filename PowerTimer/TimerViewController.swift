@@ -118,7 +118,6 @@ class TimerViewController: UIViewController {
       guard let strongSelf = self else { return }
       switch event {
       case .timerDidReset:
-        Tracking.log("timer.rest.reset")
         if strongSelf.totalTimerView.timer.state == .paused {
           strongSelf.totalTimerView.timerView.state = .paused
         } else {
@@ -128,17 +127,17 @@ class TimerViewController: UIViewController {
       case .timerDidStart:
         strongSelf.totalTimerView.timerView.state = .inactive
         strongSelf.tipsManager?.dismiss(forType: .startRestTimer)
-        Tracking.log("timer.rest.started")
       case .timerDidFailToStart:
-        Tracking.log("timer.rest.failedToStart")
         if strongSelf.totalTimerView.timer.state == .paused {
           let feedback = UINotificationFeedbackGenerator()
           feedback.prepare()
           feedback.notificationOccurred(.warning)
           strongSelf.playPauseButton.shake(withDirection: .rotate)
+          Tracking.log("timer.rest.failedToStart")
         } else {
           strongSelf.totalTimerView.timer.start()
           strongSelf.restTimerView.timer.start()
+          Tracking.log("timer.rest.started")
         }
       default: return
       }
@@ -148,20 +147,17 @@ class TimerViewController: UIViewController {
       guard let strongSelf = self else { return }
       switch event {
       case .timerDidReset:
-        Tracking.log("timer.total.reset")
         strongSelf.keepScreenFromLocking(false)
         strongSelf.restTimerView.isEnabled = false
         strongSelf.restTimerView.timer.reset()
         strongSelf.playPauseButton.currentButtonImage = .play
         strongSelf.resetButton.isEnabled = true
       case .timerDidStart:
-        Tracking.log("timer.total.started")
         strongSelf.keepScreenFromLocking(true)
         strongSelf.restTimerView.isEnabled = true
         strongSelf.playPauseButton.currentButtonImage = .pause
         strongSelf.resetButton.isEnabled = false
       case .timerDidPause:
-        Tracking.log("timer.total.paused")
         strongSelf.keepScreenFromLocking(false)
         strongSelf.restTimerView.isEnabled = false
         strongSelf.restTimerView.timer.reset()
@@ -204,6 +200,7 @@ class TimerViewController: UIViewController {
       let start = {
         self.totalTimerView.timer.start()
         self.tipsManager?.dismiss(forType: .startTimer)
+        Tracking.log("timer.total.started")
       }
 
       if self.totalTimerView.timer.state == .reset && Settings.prepareCountdown {
@@ -214,12 +211,14 @@ class TimerViewController: UIViewController {
       }
     } else {
       self.totalTimerView.timer.pause()
+      Tracking.log("timer.total.paused")
     }
   }
 
   @objc private func resetBtnTapped(sender: ImageButton) {
     print(#function)
     self.resetTimers()
+    Tracking.log("timer.total.reset")
   }
 
   func keepScreenFromLocking(_ isIdleTimerDisabled: Bool) {
