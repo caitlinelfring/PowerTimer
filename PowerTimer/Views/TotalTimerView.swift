@@ -75,7 +75,7 @@ class TotalTimerView: TimerActions {
     }
 
     if Settings.SavedTimerType == .down {
-      self.timer = PTTimer.Down(initialTime: Settings.CountDownTimerMinutes * 60)
+      self.timer = PTTimer.Down(startSeconds: Settings.CountDownTimerMinutes * 60)
     } else {
       self.timer = PTTimer.Up()
     }

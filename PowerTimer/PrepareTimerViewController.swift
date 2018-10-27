@@ -16,7 +16,7 @@ class PrepareTimerViewController: UIViewController {
   static let seconds = 5
 
   private let modalView = UIView()
-  private let timer = PTTimer.Down(initialTime: seconds)
+  private let timer = PTTimer.Down(startSeconds: seconds)
 
   private let timerView = UILabel()
 
