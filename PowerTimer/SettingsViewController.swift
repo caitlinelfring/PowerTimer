@@ -105,7 +105,7 @@ class SettingTableViewController: UITableViewController {
 
       Tracking.log("settings.contact", parameters: ["mail_configured": MFMailComposeViewController.canSendMail()])
 
-      let email = "powertimerapp@gmail.com" // TODO: get this email
+      let email = "support@powertimer.app"
 
       if MFMailComposeViewController.canSendMail() {
         let mail = MFMailComposeViewController(rootViewController: self)
