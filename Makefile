@@ -1,2 +1,5 @@
 clean_frames:
-	rm -vf screenshots/**/*_framed.png
+	rm -vf ./fastlane/screenshots/**/*_framed.png
+
+clean_original_screenshots:
+	find ./fastlane/screenshots -maxdepth 2 -not -name "*_framed.png"  | grep png | tr '\n' '\0' | xargs -0 rm

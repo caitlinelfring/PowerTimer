@@ -31,6 +31,11 @@ fastlane ios frame
 fastlane ios release
 ```
 
+### ios update_metadata
+```
+fastlane ios update_metadata
+```
+
 
 ----
 
