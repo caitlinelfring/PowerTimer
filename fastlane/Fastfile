@@ -21,7 +21,9 @@ platform :ios do
     capture_screenshots(
       workspace: "PowerTimer.xcworkspace",
       scheme: "PowerTimer",
-      output_directory: "./fastlane/screenshots"
+      output_directory: "./fastlane/screenshots",
+      skip_open_summary: true,
+      reinstall_app: true,
     )
   end
 
