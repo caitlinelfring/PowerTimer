@@ -23,7 +23,6 @@ platform :ios do
       scheme: "PowerTimer",
       output_directory: "./fastlane/screenshots"
     )
-    frame
   end
 
   lane :frame do
@@ -32,6 +31,7 @@ platform :ios do
 
   lane :release do
     screenshots
+    frame
     build_app(
       clean: true,
       include_bitcode: true,
