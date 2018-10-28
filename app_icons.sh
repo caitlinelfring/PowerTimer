@@ -10,6 +10,10 @@ sips -Z 80 ${MASTER} --out ${OUTPUT_DIR}/Icon80.png
 # iPhone: App - iOS 7,8 (60pt 2x,3x)
 sips -Z 180 ${MASTER} --out ${OUTPUT_DIR}/Icon180.png
 
+# iPhone Settings - iOS 7-12 (29pt 2x,3x)
+sips -Z 58 ${MASTER} --out ${OUTPUT_DIR}/Icon58.png
+sips -Z 87 ${MASTER} --out ${OUTPUT_DIR}/Icon87.png
+
 # iPhone Notifications - iOS 7-10 (20pt 2x,3x)
 sips -Z 40 ${MASTER} --out ${OUTPUT_DIR}/Icon40.png
 sips -Z 60 ${MASTER} --out ${OUTPUT_DIR}/Icon60.png
