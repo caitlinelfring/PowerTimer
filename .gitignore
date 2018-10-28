@@ -3,3 +3,6 @@ xcuserdata
 
 Pods
 screenshots
+git-hours.json
+*.ipa
+*.dSYM.zip

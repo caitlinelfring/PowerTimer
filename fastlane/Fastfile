@@ -23,6 +23,17 @@ platform :ios do
   end
 
   lane :frame do
-    frame_screenshots(white: true, path: "./screenshots")
+    frame_screenshots(white: true, path: "./fastlane/screenshots")
+  end
+
+  lane :release do
+    screenshots
+    build_app(
+      clean: true,
+      include_bitcode: true,
+      workspace: "PowerTimer.xcworkspace",
+      export_xcargs: "-allowProvisioningUpdates"
+    )
+    upload_to_app_store
   end
 end
