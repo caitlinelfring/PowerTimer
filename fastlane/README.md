@@ -26,6 +26,18 @@ Generate new localized screenshots
 fastlane ios frame
 ```
 
+### ios bump_version
+```
+fastlane ios bump_version
+```
+Bump version number (type: [patch | minor | major])
+
+Example: `fastlane ios bump_version type:patch`
+### ios bump_build_number
+```
+fastlane ios bump_build_number
+```
+Bump build number and create/push a new git tag
 ### ios release
 ```
 fastlane ios release

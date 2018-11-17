@@ -10,10 +10,20 @@
 #     https://docs.fastlane.tools/plugins/available-plugins
 #
 
-# Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
+update_fastlane
 
 default_platform(:ios)
+
+def create_and_push_tag(version, build_number)
+  git_tag = "v#{version}.#{build_number}"
+  if git_tag_exists(tag: git_tag)
+    UI.error "Git tag `#{git_tag}` exists, cannot set version number."
+    raise
+  end
+  commit_version_bump(message: "Version bump: #{git_tag}")
+  add_git_tag(tag: git_tag)
+  push_git_tags
+end
 
 platform :ios do
   desc "Generate new localized screenshots"
@@ -31,7 +41,28 @@ platform :ios do
     frame_screenshots(white: true, path: "./fastlane/screenshots")
   end
 
+  desc "Bump version number (type: [patch | minor | major])"
+  desc "Example: `fastlane ios bump_version type:patch`"
+  lane :bump_version do |options|
+    version = increment_version_number(
+      bump_type: options[:type] # without providing a type, defaults to 'patch'
+    )
+
+    # Reset build number to 0
+    build_number = "0"
+    increment_build_number(build_number: build_number)
+    create_and_push_tag(version, build_number)
+  end
+
+  desc "Bump build number and create/push a new git tag"
+  lane :bump_build_number do
+    version = get_version_number
+    build_number = increment_build_number
+    create_and_push_tag(version, build_number)
+  end
+
   lane :release do
+    bump_build_number
     screenshots
     frame
     build_app(
