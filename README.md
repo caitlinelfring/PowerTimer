@@ -25,14 +25,14 @@ The best part is, **you can continue to keep the time of your entire workout!**
 - [ ] Finish ads
 - [ ] Crash reporting (Crashlytics?)
 - [x] Add more details to settings
-- [ ] New app icon
+- [x] New app icon
 
 ### Pre-app store
-- [ ] Website
-- [ ] Privacy Policy/TOC?
-- [ ] Email address?
-- [ ] Apple Developers Program
-- [ ] Fastlane
+- [x] Website
+- [x] Privacy Policy/TOC?
+- [x] Email address?
+- [x] Apple Developers Program
+- [x] Fastlane
 
 ## v2
 - [ ] Watch App
