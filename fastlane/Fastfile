@@ -31,7 +31,37 @@ platform :ios do
     frame_screenshots(white: true, path: "./fastlane/screenshots")
   end
 
+  desc "Bump version number (type: [patch | minor | major])"
+  desc "Example: `fastlane ios bump_version type:patch`"
+  desc "**Should only be run prior to building for uploading to Testflight**"
+  desc "This will upload a new version to S3 as well."
+  lane :bump_version do |options|
+    version = increment_version_number(
+      bump_type: options[:type] # without providing a type, defaults to 'patch'
+    )
+
+    # Reset build number to 0
+    build_number = "0"
+    increment_build_number(build_number: build_number)
+    commit_version_bump(message: "Version Bump: #{version}.#{build_number}")
+  end
+
+  lane :bump_build_number do
+    version = get_version_number
+    build_number = increment_build_number
+
+    git_tag = "v#{version}.#{build_number}"
+    if git_tag_exists(tag: git_tag)
+      UI.error "Git tag `#{git_tag}` exists, cannot set version number."
+      raise
+    end
+    commit_version_bump(message: "Version bump: #{git_tag}")
+    add_git_tag(tag: git_tag)
+    push_git_tags
+  end
+
   lane :release do
+    bump_build_number
     screenshots
     frame
     build_app(

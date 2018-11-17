@@ -26,6 +26,22 @@ Generate new localized screenshots
 fastlane ios frame
 ```
 
+### ios bump_version
+```
+fastlane ios bump_version
+```
+Bump version number (type: [patch | minor | major])
+
+Example: `fastlane ios bump_version type:patch`
+
+**Should only be run prior to building for uploading to Testflight**
+
+This will upload a new version to S3 as well.
+### ios bump_build_number
+```
+fastlane ios bump_build_number
+```
+
 ### ios release
 ```
 fastlane ios release
