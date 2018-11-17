@@ -12,8 +12,8 @@ import SlideMenuControllerSwift
 
 class MainViewController: SlideMenuController {
 
-  private var timerVC = TimerViewController()
-  private var settingsVC = SettingTableViewController(style: .grouped)
+  let timerVC = TimerViewController()
+  private let settingsVC = SettingTableViewController(style: .grouped)
 
   convenience init() {
     self.init(nibName: nil, bundle: nil)
@@ -33,6 +33,12 @@ class MainViewController: SlideMenuController {
   override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     self.startLoadingAnimation()
+  }
+
+  func setupRestNotification() {
+    if self.timerVC.restTimerView.timer.state == .running {
+      Notifications.notifyRest(seconds: self.timerVC.restTimerView.timer.seconds())
+    }
   }
 
   private func startLoadingAnimation() {
