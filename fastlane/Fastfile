@@ -10,8 +10,7 @@
 #     https://docs.fastlane.tools/plugins/available-plugins
 #
 
-# Uncomment the line if you want fastlane to automatically update itself
-# update_fastlane
+update_fastlane
 
 default_platform(:ios)
 
@@ -33,8 +32,6 @@ platform :ios do
 
   desc "Bump version number (type: [patch | minor | major])"
   desc "Example: `fastlane ios bump_version type:patch`"
-  desc "**Should only be run prior to building for uploading to Testflight**"
-  desc "This will upload a new version to S3 as well."
   lane :bump_version do |options|
     version = increment_version_number(
       bump_type: options[:type] # without providing a type, defaults to 'patch'
@@ -46,6 +43,7 @@ platform :ios do
     commit_version_bump(message: "Version Bump: #{version}.#{build_number}")
   end
 
+  desc "Bump build number and create/push a new git tag"
   lane :bump_build_number do
     version = get_version_number
     build_number = increment_build_number
