@@ -52,7 +52,7 @@ PODS:
   - PTTimer (1.1.1)
   - SimulatorStatusMagic (2.3.2)
   - SlideMenuControllerSwift (4.2.0)
-  - SnapKit (4.0.1)
+  - SnapKit (4.2.0)
   - ValueStepper (1.5)
 
 DEPENDENCIES:
@@ -61,7 +61,7 @@ DEPENDENCIES:
   - PTTimer
   - SimulatorStatusMagic
   - SlideMenuControllerSwift (from `https://github.com/huuphuc/SlideMenuControllerSwift.git`, commit `7790a2e`)
-  - SnapKit (~> 4.0.1)
+  - SnapKit
   - ValueStepper (from `https://github.com/caitlin615/ValueStepper.git`, tag `1.6`)
 
 SPEC REPOS:
@@ -111,9 +111,9 @@ SPEC CHECKSUMS:
   PTTimer: 9e4876aacd172c4eaca33fd7c86e21964d3456a1
   SimulatorStatusMagic: 0c0e711acef6e70dd8a0710962347635a9cdef24
   SlideMenuControllerSwift: 4cdeb5a8d4fa76f64fe4de71823a1db2dfbab9fe
-  SnapKit: 0de968a9fec17499afa29683b05d0c775b6d1c29
+  SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
   ValueStepper: 577857afaa07313c82a7ac686ae2f06994b913c4
 
-PODFILE CHECKSUM: f1ec019251b9a363eac96ee61dea4159f0362b52
+PODFILE CHECKSUM: 452551423925d9eb866a223be92db1a7c0f78e07
 
 COCOAPODS: 1.5.3
