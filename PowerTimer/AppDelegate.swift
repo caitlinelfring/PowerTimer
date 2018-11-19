@@ -25,6 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     #endif
 
+    _ = Defaults.hasAppBeenUpdatedSinceLastRun()
+    StoreReviewHelper.incrementAppOpenedCount()
+
     self.window!.backgroundColor = .black
     self.window!.makeKeyAndVisible()
     let root = MainViewController()

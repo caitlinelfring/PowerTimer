@@ -124,7 +124,8 @@ class SettingTableViewController: UITableViewController {
 
     self.secondItems.append(Item(title: "Rate PowerTimer", didPress: {
       Tracking.log("settings.rating")
-      SKStoreReviewController.requestReview()
+      let url = "itms-apps://itunes.apple.com/us/app/powertimer-app/id1440431695?mt=8&action=write-review"
+      UIApplication.shared.open(URL(string: url)!, options: [:], completionHandler: nil)
     }))
 
     self.tableView.delegate = self

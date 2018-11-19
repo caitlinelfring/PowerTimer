@@ -9,10 +9,47 @@
 import Foundation
 import UIKit
 import PTTimer
+import StoreKit
 
 fileprivate var defaults = UserDefaults.standard
 
-class Settings {
+struct StoreReviewHelper {
+  // https://medium.com/@abhimuralidharan/asking-customers-for-ratings-and-reviews-from-inside-the-app-in-ios-d85f256dd4ef
+  private static let appOpenedCountKey = "APP_OPENED_COUNT"
+  static func incrementAppOpenedCount() {
+    let appOpenCount = defaults.integer(forKey: appOpenedCountKey) + 1
+    defaults.set(appOpenCount, forKey: appOpenedCountKey)
+  }
+
+  static func checkAndAskForReview() {
+    // this will not be shown everytime. Apple has some internal logic on how to show this.
+    let appOpenCount = defaults.integer(forKey: appOpenedCountKey)
+    switch appOpenCount {
+    case 5,10:
+      SKStoreReviewController.requestReview()
+    case _ where appOpenCount%25 == 0 :
+      SKStoreReviewController.requestReview()
+    default:
+      break
+    }
+  }
+}
+
+struct Defaults {
+  // https://stackoverflow.com/questions/29304859/find-out-the-first-time-opening-the-app-when-updated-to-newer-version
+  static func hasAppBeenUpdatedSinceLastRun() -> Bool {
+    if let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String {
+      if defaults.string(forKey: "currentVersion") == currentVersion {
+        return false
+      }
+      defaults.set(currentVersion, forKey: "currentVersion")
+      return true
+    }
+    return false
+  }
+}
+
+struct Settings {
   static let DeviceID = UIDevice.current.identifierForVendor?.uuidString ?? "unknown"
 
   static var SavedTimerType: PTTimerType {

@@ -105,6 +105,8 @@ class TimerViewController: UIViewController {
     self.resetButton.addTarget(self, action: #selector(self.resetBtnTapped), for: .touchUpInside)
 
     self.setupTimerObservers()
+
+    StoreReviewHelper.checkAndAskForReview()
   }
 
   override func viewDidAppear(_ animated: Bool) {
