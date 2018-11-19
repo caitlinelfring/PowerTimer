@@ -108,11 +108,12 @@ class SettingTableViewController: UITableViewController {
       let email = "support@powertimer.app"
 
       if MFMailComposeViewController.canSendMail() {
-        let mail = MFMailComposeViewController(rootViewController: self)
+        let mail = MFMailComposeViewController()
         mail.mailComposeDelegate = self
         mail.setSubject("PowerTimer App")
         mail.setToRecipients([email])
         mail.setMessageBody("<br><br><br><br><br><br><hr><strong>Technical info for developer, please don't delete</strong><hr><p>ID: \(Settings.DeviceID)</p>", isHTML: true)
+        mail.modalPresentationStyle = .overCurrentContext
         self.present(mail, animated: true, completion: nil)
       } else {
         let alert = UIAlertController(title: "Mail not configured", message: "But you can still send an email to '\(email)'", preferredStyle: .alert)
