@@ -22,7 +22,8 @@ def create_and_push_tag(version, build_number)
   end
   commit_version_bump(message: "Version bump: #{git_tag}")
   add_git_tag(tag: git_tag)
-  push_git_tags
+  push_git_tags(tag: git_tag)
+  push_to_git_remote
 end
 
 platform :ios do
