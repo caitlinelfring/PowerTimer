@@ -128,6 +128,7 @@
 		4870AFAE20A9B0E800DAB1C1 /* PowerTimer */ = {
 			isa = PBXGroup;
 			children = (
+				4870AFBB20A9B0E900DAB1C1 /* Info.plist */,
 				486DAA2D2157372A00A05187 /* GoogleService-Info.plist */,
 				4870AFAF20A9B0E800DAB1C1 /* AppDelegate.swift */,
 				485B75DC211F3711007391BD /* MainViewController.swift */,
@@ -138,7 +139,6 @@
 				489033BB20AC5DC3009234E3 /* Models */,
 				4870AFB620A9B0E900DAB1C1 /* Assets.xcassets */,
 				4870AFB820A9B0E900DAB1C1 /* LaunchScreen.storyboard */,
-				4870AFBB20A9B0E900DAB1C1 /* Info.plist */,
 				485B75DA211F2C0D007391BD /* sounds */,
 			);
 			path = PowerTimer;
