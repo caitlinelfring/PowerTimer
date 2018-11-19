@@ -72,7 +72,11 @@ platform :ios do
       workspace: "PowerTimer.xcworkspace",
       export_xcargs: "-allowProvisioningUpdates"
     )
-    upload_to_app_store
+    upload_to_app_store(
+      precheck_include_in_app_purchases: false,
+      app_version: get_version_number,
+      automatic_release: true,
+    )
   end
 
   lane :update_metadata do
@@ -80,7 +84,8 @@ platform :ios do
       skip_binary_upload: true,
       skip_app_version_update: true,
       force: true,
-      overwrite_screenshots: true
+      precheck_include_in_app_purchases: false,
+      skip_screenshots: true
     )
   end
 end
