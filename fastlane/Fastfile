@@ -64,8 +64,8 @@ platform :ios do
 
   lane :release do
     bump_build_number
-    screenshots
-    frame
+    # screenshots
+    # frame
     build_app(
       clean: true,
       include_bitcode: true,
