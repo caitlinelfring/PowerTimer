@@ -33,6 +33,11 @@ class SettingTableViewController: UITableViewController {
     }
   }
 
+  var overrideStatusBarStyle: Bool = false
+  override var preferredStatusBarStyle: UIStatusBarStyle {
+    return self.overrideStatusBarStyle ? .default : super.preferredStatusBarStyle
+  }
+
   convenience init() {
     self.init(style: .plain)
   }
@@ -113,8 +118,10 @@ class SettingTableViewController: UITableViewController {
         mail.setSubject("PowerTimer App")
         mail.setToRecipients([email])
         mail.setMessageBody("<br><br><br><br><br><br><hr><strong>Technical info for developer, please don't delete</strong><hr><p>ID: \(Settings.DeviceID)</p>", isHTML: true)
-        mail.modalPresentationStyle = .overCurrentContext
-        self.present(mail, animated: true, completion: nil)
+        self.present(mail, animated: true, completion: {
+          self.overrideStatusBarStyle = true
+          self.setNeedsStatusBarAppearanceUpdate()
+        })
       } else {
         let alert = UIAlertController(title: "Mail not configured", message: "But you can still send an email to '\(email)'", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
@@ -303,7 +310,10 @@ class SettingTableViewController: UITableViewController {
 extension SettingTableViewController: MFMailComposeViewControllerDelegate {
   func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
     if let err = error { print(err) }
-    controller.dismiss(animated: true, completion: nil)
+    controller.dismiss(animated: true) {
+      self.overrideStatusBarStyle = false
+      self.setNeedsStatusBarAppearanceUpdate()
+    }
   }
 }
 
