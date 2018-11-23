@@ -16,9 +16,12 @@ class RestTimerView: TimerActions {
 
   var isEnabled: Bool = false
   let stepper = RestTimerStepper()
+  let feedback: UIImpactFeedbackGenerator!
 
   override init(frame: CGRect) {
+    self.feedback = UIImpactFeedbackGenerator(style: .heavy)
     super.init(frame: frame)
+
     self.timer = PTTimer.Up()
     self.timer.delegate = self
 
@@ -165,9 +168,8 @@ extension RestTimerView: PTTimerDelegate {
     if self.timerLabelColorChanged(to: textColor) {
       self.timerView.shake()
       Sounds.playIfConfigured()
-      let feedback = UINotificationFeedbackGenerator()
-      feedback.prepare()
-      feedback.notificationOccurred(.warning)
+      self.feedback.prepare()
+      self.feedback.impactOccurred()
     }
 
     self.timerView.color = textColor
