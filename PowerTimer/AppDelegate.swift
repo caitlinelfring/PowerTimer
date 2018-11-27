@@ -36,6 +36,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     print(Date())
     FirebaseApp.configure()
     Analytics.setUserID(Settings.DeviceID)
+    #if DEBUG
+    Analytics.setUserProperty("true", forName: "debug")
+    #endif
+
+    if let deviceID = Settings.DeviceID, deviceID == "4F293BE5-E02B-4BD0-9957-6E83BA57E5CD" {
+      Analytics.setUserProperty("true", forName: "caitlin_iphone_8")
+    }
 
     TipManager.setup()
     return true
