@@ -117,7 +117,9 @@ class SettingTableViewController: UITableViewController {
         mail.mailComposeDelegate = self
         mail.setSubject("PowerTimer App")
         mail.setToRecipients([email])
-        mail.setMessageBody("<br><br><br><br><br><br><hr><strong>Technical info for developer, please don't delete</strong><hr><p>ID: \(Settings.DeviceID)</p>", isHTML: true)
+        if let deviceID = Settings.DeviceID {
+          mail.setMessageBody("<br><br><br><br><br><br><hr><strong>Technical info for developer, please don't delete</strong><hr><p>ID: \(deviceID)</p>", isHTML: true)
+        }
         self.present(mail, animated: true, completion: {
           self.overrideStatusBarStyle = true
           self.setNeedsStatusBarAppearanceUpdate()

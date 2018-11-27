@@ -50,7 +50,7 @@ struct Defaults {
 }
 
 struct Settings {
-  static let DeviceID = UIDevice.current.identifierForVendor?.uuidString ?? "unknown"
+  static let DeviceID = UIDevice.current.identifierForVendor?.uuidString
 
   static var SavedTimerType: PTTimerType {
     set(value) {
