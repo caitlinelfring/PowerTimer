@@ -35,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     print(Date())
     FirebaseApp.configure()
+    print("Device ID:", Settings.DeviceID!)
     Analytics.setUserID(Settings.DeviceID)
     #if DEBUG
     Analytics.setUserProperty("true", forName: "debug")
