@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
    LastUpgradeVersion = "1000"
-   version = "1.3">
+   version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES">
@@ -27,6 +27,51 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES">
+      <PreActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "xcrun simctl boot &quot;${TARGET_DEVICE_IDENTIFIER}&quot;&#10;xcrun simctl status_bar &quot;${TARGET_DEVICE_IDENTIFIER}&quot; override   \&#10;  --time &apos;9:41 AM&apos; \&#10;  --dataNetwork wifi \&#10;  --batteryState charged \&#10;  --cellularMode notSupported \&#10;  --wifiMode active \&#10;  --wifiBars 3 \&#10;  --cellularBars 4&#10;">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "48309B732166F66400B0D9AD"
+                     BuildableName = "PowerTimerUITests.xctest"
+                     BlueprintName = "PowerTimerUITests"
+                     ReferencedContainer = "container:PowerTimer.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PreActions>
+      <PostActions>
+         <ExecutionAction
+            ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
+            <ActionContent
+               title = "Run Script"
+               scriptText = "# Type a script or drag a script file from your workspace to insert its path.&#10;#xcrun simctl status_bar &quot;${TARGET_DEVICE_IDENTIFIER}&quot; clear&#10;">
+               <EnvironmentBuildable>
+                  <BuildableReference
+                     BuildableIdentifier = "primary"
+                     BlueprintIdentifier = "48309B732166F66400B0D9AD"
+                     BuildableName = "PowerTimerUITests.xctest"
+                     BlueprintName = "PowerTimerUITests"
+                     ReferencedContainer = "container:PowerTimer.xcodeproj">
+                  </BuildableReference>
+               </EnvironmentBuildable>
+            </ActionContent>
+         </ExecutionAction>
+      </PostActions>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "4870AFAB20A9B0E800DAB1C1"
+            BuildableName = "PowerTimer.app"
+            BlueprintName = "PowerTimer"
+            ReferencedContainer = "container:PowerTimer.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -39,17 +84,6 @@
             </BuildableReference>
          </TestableReference>
       </Testables>
-      <MacroExpansion>
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4870AFAB20A9B0E800DAB1C1"
-            BuildableName = "PowerTimer.app"
-            BlueprintName = "PowerTimer"
-            ReferencedContainer = "container:PowerTimer.xcodeproj">
-         </BuildableReference>
-      </MacroExpansion>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -71,8 +105,6 @@
             ReferencedContainer = "container:PowerTimer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <AdditionalOptions>
-      </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"

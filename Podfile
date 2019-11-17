@@ -10,6 +10,4 @@ target 'PowerTimer' do
   pod 'SlideMenuControllerSwift', :git => 'https://github.com/huuphuc/SlideMenuControllerSwift.git', :commit => '7790a2e'
   pod 'Firebase/Core'
   pod 'PTTimer' #, :path => '../PTTimer/PTTimer.podspec'
-
-  pod 'SimulatorStatusMagic', :configurations => ['Debug']
 end
