@@ -28,6 +28,7 @@
 		489033C520ACBAF0009234E3 /* ClockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489033C420ACBAF0009234E3 /* ClockView.swift */; };
 		489033C920ACD594009234E3 /* TipManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489033C820ACD594009234E3 /* TipManager.swift */; };
 		489308D820B6EBE60060E3EB /* Sounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 489308D720B6EBE60060E3EB /* Sounds.swift */; };
+		48AB7E1523816A2400256794 /* SettingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48AB7E1423816A2400256794 /* SettingCell.swift */; };
 		48E697162156C6F70071A9ED /* PowerTimerLogo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E697152156C6F70071A9ED /* PowerTimerLogo.swift */; };
 		48E6971A2156F1780071A9ED /* PrepareTimerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48E697192156F1780071A9ED /* PrepareTimerViewController.swift */; };
 		964A9FB5A0C690FDB64CFC71 /* Pods_PowerTimer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB528AF57F0CB7EFC18CF2BB /* Pods_PowerTimer.framework */; };
@@ -69,6 +70,7 @@
 		489033C420ACBAF0009234E3 /* ClockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClockView.swift; sourceTree = "<group>"; };
 		489033C820ACD594009234E3 /* TipManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TipManager.swift; sourceTree = "<group>"; };
 		489308D720B6EBE60060E3EB /* Sounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sounds.swift; sourceTree = "<group>"; };
+		48AB7E1423816A2400256794 /* SettingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCell.swift; sourceTree = "<group>"; };
 		48E697152156C6F70071A9ED /* PowerTimerLogo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerTimerLogo.swift; sourceTree = "<group>"; };
 		48E697192156F1780071A9ED /* PrepareTimerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrepareTimerViewController.swift; sourceTree = "<group>"; };
 		A5922A6C0B8AAFBDF94C35A1 /* Pods-PowerTimer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PowerTimer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PowerTimer/Pods-PowerTimer.debug.xcconfig"; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 				489033C420ACBAF0009234E3 /* ClockView.swift */,
 				48331C4D20AF80DC00E20B37 /* RestTimeStepper.swift */,
 				48E697152156C6F70071A9ED /* PowerTimerLogo.swift */,
+				48AB7E1423816A2400256794 /* SettingCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -367,6 +370,7 @@
 				489033C320ACA97A009234E3 /* Settings.swift in Sources */,
 				4870AFB020A9B0E800DAB1C1 /* AppDelegate.swift in Sources */,
 				489033BF20AC6396009234E3 /* TimerView.swift in Sources */,
+				48AB7E1523816A2400256794 /* SettingCell.swift in Sources */,
 				489033C920ACD594009234E3 /* TipManager.swift in Sources */,
 				485B75DD211F3711007391BD /* MainViewController.swift in Sources */,
 				4870E05920B0BDDE00C6ABF6 /* TimerViewController.swift in Sources */,
