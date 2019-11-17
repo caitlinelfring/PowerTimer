@@ -32,6 +32,13 @@ class RestTimerStepper: ValueStepper {
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
+
+  // Only way I could figure out how to redraw when the layout changes
+  // (like when this is in a UITableViewCell and the height changes)
+  override func layoutSubviews() {
+    super.layoutSubviews()
+    self.draw(self.bounds)
+  }
 }
 
 class SettingsCountDownTimerStepper: RestTimerStepper {

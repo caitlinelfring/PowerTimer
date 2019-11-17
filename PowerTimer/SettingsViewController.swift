@@ -241,6 +241,7 @@ class SettingTableViewController: UITableViewController {
   @objc private func didChangeTimerType(sender: UISegmentedControl) {
     Settings.SavedTimerType = PTTimerType(rawValue: PTTimerType.available[sender.selectedSegmentIndex].rawValue)!
     Tracking.log("settings.timer.changed", parameters: ["type": Settings.SavedTimerType.rawValue])
+    self.tableView.layoutSubviews()
     self.tableView.reloadData()
   }
 
