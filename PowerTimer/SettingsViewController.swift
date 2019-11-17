@@ -146,9 +146,6 @@ class SettingTableViewController: UITableViewController {
     self.tableView.estimatedRowHeight = 44
     self.tableView.rowHeight = 44
     self.tableView.sectionHeaderHeight = 30
-    if #available(iOS 13.0, *) {
-      self.tableView.overrideUserInterfaceStyle = .light
-    }
     self.navigationItem.title = "SETTINGS"
 
     // This is the area the is under the status bar
@@ -194,7 +191,6 @@ class SettingTableViewController: UITableViewController {
 
   func countDownTimerStepper() -> ValueStepper {
     let stepper = SettingsCountDownTimerStepper()
-    stepper.labelTextColor = self.view.tintColor
     stepper.value = Double(Settings.CountDownTimerMinutes)
     stepper.addTarget(self, action: #selector(self.didChangeCountDownTimerMinutes), for: .valueChanged)
     return stepper

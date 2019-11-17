@@ -20,7 +20,7 @@ class RestTimerStepper: ValueStepper {
     self.backgroundLabelColor = .clear
     self.backgroundColor = .clear
     self.backgroundButtonColor = .clear
-    self.highlightedBackgroundColor = .gray
+    self.highlightedBackgroundColor = .clear
     self.updateColors()
   }
 
