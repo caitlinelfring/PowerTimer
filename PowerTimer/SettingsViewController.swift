@@ -23,6 +23,7 @@ class SettingTableViewController: UITableViewController {
     var didPress: (() -> ())?
     var height: CGFloat
     var shouldEnable: (() -> Bool)
+    var shouldHide: (() -> Bool)
 
     init(title: String, height: CGFloat = 44, cell: UITableViewCell = UITableViewCell(), didPress: (() -> ())? = nil) {
       self.title = title
@@ -30,6 +31,7 @@ class SettingTableViewController: UITableViewController {
       self.cell = cell
       self.didPress = didPress
       self.shouldEnable = { return true }
+      self.shouldHide = { return false }
     }
   }
 
@@ -85,6 +87,7 @@ class SettingTableViewController: UITableViewController {
     let countDownTimerMinutesCell = SettingsCell(accessory: countDownTimerStepper())
     var cdt = Item(title: "Countdown Minutes", height: 80, cell: countDownTimerMinutesCell)
     cdt.shouldEnable = { return Settings.SavedTimerType == .down && self.canChangeTimerType }
+    cdt.shouldHide = { return !cdt.shouldEnable() }
     self.items.append(cdt)
 
     #if DEBUG
@@ -233,7 +236,6 @@ class SettingTableViewController: UITableViewController {
   @objc func soundSwitchDidChange(sender: UISwitch) {
     Settings.Sound.playSoundAlert = sender.isOn
     Tracking.log("settings.sound.changed", parameters: ["state": sender.isOn])
-
   }
 
   @objc func didChangeCountDownTimerMinutes(sender: UIStepper) {
@@ -307,6 +309,9 @@ class SettingTableViewController: UITableViewController {
 
   override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
     let item = self.getItem(at: indexPath)
+    if item.shouldHide() {
+      return 0
+    }
     return item.height
   }
 }

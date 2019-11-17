@@ -37,7 +37,9 @@ class SettingsCell: UITableViewCell {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     self.contentView.addSubview(self.container)
     self.container.snp.makeConstraints { (make) in
-      make.edges.equalToSuperview().inset(UIEdgeInsets(top: 5, left: 16, bottom: 10, right: 0))
+      make.edges.equalToSuperview()
+        .inset(UIEdgeInsets(top: 5, left: 16, bottom: 10, right: 0))
+        .priority(999)
     }
     self.container.addSubview(self.label)
     self.label.snp.makeConstraints({ (make) in
