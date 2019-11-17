@@ -1,62 +1,76 @@
 PODS:
-  - EasyTipView (2.0.1)
-  - Firebase/Core (5.13.0):
+  - EasyTipView (2.0.4)
+  - Firebase/Core (6.13.0):
     - Firebase/CoreOnly
-    - FirebaseAnalytics (= 5.3.0)
-  - Firebase/CoreOnly (5.13.0):
-    - FirebaseCore (= 5.1.8)
-  - FirebaseAnalytics (5.3.0):
-    - FirebaseCore (~> 5.1)
-    - FirebaseInstanceID (~> 3.3)
-    - GoogleAppMeasurement (~> 5.3)
-    - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
-    - GoogleUtilities/MethodSwizzler (~> 5.2)
-    - GoogleUtilities/Network (~> 5.2)
-    - "GoogleUtilities/NSData+zlib (~> 5.2)"
-    - nanopb (~> 0.3)
-  - FirebaseCore (5.1.8):
-    - GoogleUtilities/Logger (~> 5.2)
-  - FirebaseInstanceID (3.3.0):
-    - FirebaseCore (~> 5.1)
-    - GoogleUtilities/Environment (~> 5.3)
-    - GoogleUtilities/UserDefaults (~> 5.3)
-  - GoogleAppMeasurement (5.3.0):
-    - GoogleUtilities/AppDelegateSwizzler (~> 5.2)
-    - GoogleUtilities/MethodSwizzler (~> 5.2)
-    - GoogleUtilities/Network (~> 5.2)
-    - "GoogleUtilities/NSData+zlib (~> 5.2)"
-    - nanopb (~> 0.3)
-  - GoogleUtilities/AppDelegateSwizzler (5.3.6):
+    - FirebaseAnalytics (= 6.1.6)
+  - Firebase/CoreOnly (6.13.0):
+    - FirebaseCore (= 6.4.0)
+  - FirebaseAnalytics (6.1.6):
+    - FirebaseCore (~> 6.4)
+    - FirebaseInstanceID (~> 4.2)
+    - GoogleAppMeasurement (= 6.1.6)
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
+    - GoogleUtilities/MethodSwizzler (~> 6.0)
+    - GoogleUtilities/Network (~> 6.0)
+    - "GoogleUtilities/NSData+zlib (~> 6.0)"
+    - nanopb (= 0.3.9011)
+  - FirebaseCore (6.4.0):
+    - FirebaseCoreDiagnostics (~> 1.0)
+    - FirebaseCoreDiagnosticsInterop (~> 1.0)
+    - GoogleUtilities/Environment (~> 6.2)
+    - GoogleUtilities/Logger (~> 6.2)
+  - FirebaseCoreDiagnostics (1.1.1):
+    - FirebaseCoreDiagnosticsInterop (~> 1.0)
+    - GoogleDataTransportCCTSupport (~> 1.0)
+    - GoogleUtilities/Environment (~> 6.2)
+    - GoogleUtilities/Logger (~> 6.2)
+    - nanopb (~> 0.3.901)
+  - FirebaseCoreDiagnosticsInterop (1.1.0)
+  - FirebaseInstanceID (4.2.7):
+    - FirebaseCore (~> 6.0)
+    - GoogleUtilities/Environment (~> 6.0)
+    - GoogleUtilities/UserDefaults (~> 6.0)
+  - GoogleAppMeasurement (6.1.6):
+    - GoogleUtilities/AppDelegateSwizzler (~> 6.0)
+    - GoogleUtilities/MethodSwizzler (~> 6.0)
+    - GoogleUtilities/Network (~> 6.0)
+    - "GoogleUtilities/NSData+zlib (~> 6.0)"
+    - nanopb (= 0.3.9011)
+  - GoogleDataTransport (3.1.0)
+  - GoogleDataTransportCCTSupport (1.2.1):
+    - GoogleDataTransport (~> 3.0)
+    - nanopb (~> 0.3.901)
+  - GoogleUtilities/AppDelegateSwizzler (6.3.2):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (5.3.6)
-  - GoogleUtilities/Logger (5.3.6):
+  - GoogleUtilities/Environment (6.3.2)
+  - GoogleUtilities/Logger (6.3.2):
     - GoogleUtilities/Environment
-  - GoogleUtilities/MethodSwizzler (5.3.6):
+  - GoogleUtilities/MethodSwizzler (6.3.2):
     - GoogleUtilities/Logger
-  - GoogleUtilities/Network (5.3.6):
+  - GoogleUtilities/Network (6.3.2):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (5.3.6)"
-  - GoogleUtilities/Reachability (5.3.6):
+  - "GoogleUtilities/NSData+zlib (6.3.2)"
+  - GoogleUtilities/Reachability (6.3.2):
     - GoogleUtilities/Logger
-  - GoogleUtilities/UserDefaults (5.3.6):
+  - GoogleUtilities/UserDefaults (6.3.2):
     - GoogleUtilities/Logger
-  - nanopb (0.3.901):
-    - nanopb/decode (= 0.3.901)
-    - nanopb/encode (= 0.3.901)
-  - nanopb/decode (0.3.901)
-  - nanopb/encode (0.3.901)
+  - nanopb (0.3.9011):
+    - nanopb/decode (= 0.3.9011)
+    - nanopb/encode (= 0.3.9011)
+  - nanopb/decode (0.3.9011)
+  - nanopb/encode (0.3.9011)
   - PTTimer (1.1.1)
-  - SimulatorStatusMagic (2.3.2)
+  - SimulatorStatusMagic (2.4.1)
   - SlideMenuControllerSwift (4.2.0)
   - SnapKit (4.2.0)
-  - ValueStepper (1.5)
+  - ValueStepper (1.6)
 
 DEPENDENCIES:
-  - EasyTipView (from `https://github.com/teodorpatras/EasyTipView.git`, commit `651a16e83cd15b58a92feadae117ab8ccbeb786b`)
+  - EasyTipView
   - Firebase/Core
   - PTTimer
   - SimulatorStatusMagic
@@ -66,11 +80,16 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
+    - EasyTipView
     - Firebase
     - FirebaseAnalytics
     - FirebaseCore
+    - FirebaseCoreDiagnostics
+    - FirebaseCoreDiagnosticsInterop
     - FirebaseInstanceID
     - GoogleAppMeasurement
+    - GoogleDataTransport
+    - GoogleDataTransportCCTSupport
     - GoogleUtilities
     - nanopb
     - PTTimer
@@ -78,9 +97,6 @@ SPEC REPOS:
     - SnapKit
 
 EXTERNAL SOURCES:
-  EasyTipView:
-    :commit: 651a16e83cd15b58a92feadae117ab8ccbeb786b
-    :git: https://github.com/teodorpatras/EasyTipView.git
   SlideMenuControllerSwift:
     :commit: 7790a2e
     :git: https://github.com/huuphuc/SlideMenuControllerSwift.git
@@ -89,9 +105,6 @@ EXTERNAL SOURCES:
     :tag: '1.6'
 
 CHECKOUT OPTIONS:
-  EasyTipView:
-    :commit: 651a16e83cd15b58a92feadae117ab8ccbeb786b
-    :git: https://github.com/teodorpatras/EasyTipView.git
   SlideMenuControllerSwift:
     :commit: 7790a2e
     :git: https://github.com/huuphuc/SlideMenuControllerSwift.git
@@ -100,20 +113,24 @@ CHECKOUT OPTIONS:
     :tag: '1.6'
 
 SPEC CHECKSUMS:
-  EasyTipView: 1515544456d6e943240012e9be5d25d1bb766603
-  Firebase: 6df9a6114bc9f106a98fe83d5438d4d9833c2019
-  FirebaseAnalytics: 63202d2665de4e6adcbdce189135255d8b5962ba
-  FirebaseCore: fba2bfaa691c49028309b92e4dd37cc4b5512fbe
-  FirebaseInstanceID: e2fa4cb35ef5558c200f7f0ad8a53e212215f93e
-  GoogleAppMeasurement: 5029d78f2b438bd30ffb44e6c558b57c21622727
-  GoogleUtilities: 95996bea7c7d9b8fb811b7507669a4a8762f80c7
-  nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
+  EasyTipView: 4f8beae0a82db2ca4a9b5fd658785fc5f61d296b
+  Firebase: 458d109512200d1aca2e1b9b6cf7d68a869a4a46
+  FirebaseAnalytics: 45f36d9c429fc91d206283900ab75390cd05ee8a
+  FirebaseCore: 307ea2508df730c5865334e41965bd9ea344b0e5
+  FirebaseCoreDiagnostics: af29e43048607588c050889d19204f4d7b758c9f
+  FirebaseCoreDiagnosticsInterop: e9b1b023157e3a2fc6418b5cb601e79b9af7b3a0
+  FirebaseInstanceID: ebd2ea79ee38db0cb5f5167b17a0d387e1cc7b6e
+  GoogleAppMeasurement: dfe55efa543e899d906309eaaac6ca26d249862f
+  GoogleDataTransport: 67cc56f6280d1bc9d470285e851ec49ee9013dba
+  GoogleDataTransportCCTSupport: f6ab1962e9dc05ab1fb938b795e5b310209edeec
+  GoogleUtilities: 547a86735c6f0ee30ad17e94df4fc21f616b71cb
+  nanopb: 18003b5e52dab79db540fe93fe9579f399bd1ccd
   PTTimer: 9e4876aacd172c4eaca33fd7c86e21964d3456a1
-  SimulatorStatusMagic: 0c0e711acef6e70dd8a0710962347635a9cdef24
+  SimulatorStatusMagic: 28d4a9d1a500ac7cea0b2b5a43c1c6ddb40ba56c
   SlideMenuControllerSwift: 4cdeb5a8d4fa76f64fe4de71823a1db2dfbab9fe
   SnapKit: fe8a619752f3f27075cc9a90244d75c6c3f27e2a
-  ValueStepper: 577857afaa07313c82a7ac686ae2f06994b913c4
+  ValueStepper: 5451e4211ccb11eb68cf06536e7e5f577218853d
 
-PODFILE CHECKSUM: 452551423925d9eb866a223be92db1a7c0f78e07
+PODFILE CHECKSUM: 5612e86e781f6137cbe7dfdadb1ca1868516319b
 
 COCOAPODS: 1.6.1
