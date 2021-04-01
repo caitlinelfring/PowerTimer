@@ -8,9 +8,6 @@
 
 import Foundation
 import UIKit
-#if DEBUG
-import SimulatorStatusMagic
-#endif
 
 class ClockView: UIView {
   let clock = UILabel()
