@@ -77,7 +77,7 @@ DEPENDENCIES:
   - ValueStepper (from `https://github.com/caitlin615/ValueStepper.git`, tag `1.6`)
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - EasyTipView
     - Firebase
     - FirebaseAnalytics
@@ -129,4 +129,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 397e01568c41471b5c9f48ab749d93c2f68719af
 
-COCOAPODS: 1.6.1
+COCOAPODS: 1.10.1
