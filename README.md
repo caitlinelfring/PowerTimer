@@ -1,6 +1,8 @@
 PowerTimer: A Workout timer with a built-in Rest Timer
 ---
 
+**This app is no longer on the App store and will not be updated or supported any longer.**
+
 PowerTimer is a standard workout timer, which also includes a second, rest timer.
 
 If you're a powerlifter, you typically need to time your rests between sets.
